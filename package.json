@@ -1,5 +1,6 @@
 {
-  "name": "station-weather",
+  "name": "mausam",
+  "description": "Visualize weather metrics like never before",
   "private": true,
   "version": "0.0.0",
   "type": "module",
