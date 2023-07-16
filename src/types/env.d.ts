@@ -2,7 +2,7 @@
 
 interface ImportMetaEnv {
   readonly VITE_MAPBOX_PUBLIC_KEY: string;
-  // more env variables...
+  readonly VITE_SYNOPTIC_KEY: string;
 }
 
 interface ImportMeta {

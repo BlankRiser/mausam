@@ -6,8 +6,16 @@ A data-vis solution for meteorological data.
 
 - React
 - Tailwind
-- Deck.gl / React-map-gl / Maplibre-gl
+- Deck.gl / React-map-gl 
+
+## Prerequisites
+
+### Creentials Needed
+
+- [Mapbox](https://www.mapbox.com/)
+- [Synoptic Data](https://customer.synopticdata.com/credentials/)
 
 ### Resources
 
 - [CartoDB/carto-react-template/](https://github.com/CartoDB/carto-react-template/tree/7c6200f9bedafba6e1230360a7e4e56e2bc9eb70)
+
