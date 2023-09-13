@@ -1,5 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Explore } from "./pages";
+import { Home } from "./pages";
 import {
   QueryClient,
   QueryClientProvider,
@@ -31,7 +31,8 @@ const queryClient = new QueryClient({
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Explore />,
+    element: <Home />,
+    hasErrorBoundary: false
   },
 ]);
 

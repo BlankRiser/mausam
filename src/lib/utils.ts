@@ -7,14 +7,14 @@ export function cn(...inputs: ClassValue[]) {
 
 type UrlSerializerParams = {
   url: string;
-  params: Record<string, string>;
+  params: Record<string, string | number>;
   removeToken?: boolean;
 };
 
 export function urlSerializer({ url, params }: UrlSerializerParams) {
   const httpUrl = new URL(url);
   Object.entries(params).forEach(([key, value]) => {
-    httpUrl.searchParams.append(key, value);
+    httpUrl.searchParams.append(key, value.toString());
   });
   httpUrl.searchParams.append("token", import.meta.env.VITE_SYNOPTIC_KEY);
   return httpUrl.toString();
