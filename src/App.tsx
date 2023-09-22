@@ -1,11 +1,9 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Home } from "./pages";
-import {
-  QueryClient,
-  QueryClientProvider,
-} from 'react-query'
+import { QueryClient, QueryClientProvider } from "react-query";
 import { Suspense } from "react";
-
+import { Home } from "./pages";
+import { MapRefProvider } from "./providers/mapProvider";
+import { GlobalErrorBoundary } from "./components/common/GlobalErrorBoundary";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,40 +13,47 @@ const queryClient = new QueryClient({
       staleTime: (1 / 2) * 60 * 1000,
       refetchOnMount: false,
       onError(error) {
-        console.error(error)
+        console.error(error);
       },
       retry(failureCount, error) {
         if (failureCount < 3) {
-          return true
+          return true;
         }
-        console.error(error)
-        return false
+        console.error(error);
+        return false;
       },
     },
   },
-})
+});
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
-    hasErrorBoundary: false
+    element: (
+      <GlobalErrorBoundary>
+        <Home />
+      </GlobalErrorBoundary>
+    ),
+    hasErrorBoundary: true,
   },
 ]);
 
-function App() {
+const App = () => {
   return (
-    <Suspense fallback={
-      <div className="w-full h-screen flex justify-center items-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900" />
-      </div>
-    }>
-
+    <Suspense
+      fallback={
+        <div className="w-full h-screen flex justify-center items-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900" />
+        </div>
+      }
+    >
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider >
+        <MapRefProvider>
+          <RouterProvider router={router} />
+        </MapRefProvider>
+      </QueryClientProvider>
     </Suspense>
   );
-}
+};
 
 export default App;
