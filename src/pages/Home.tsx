@@ -1,4 +1,4 @@
-import { useStationData } from "@/api/use-station-data";
+import { useStationMetadata } from "@/api/use-station-data";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Map, { Marker, NavigationControl, useMap } from "react-map-gl";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
@@ -10,17 +10,13 @@ export const Home = () => {
 
  const mapDefault = useMap();
 
-  const { isLoading, data , refetch } = useStationData({
+  const { mutate, data, isLoading } = useStationMetadata({
     map: map 
   });
 
-  const fetchMapData = () => async () => {
-    await refetch();
+  const fetchMapData = () => {
+     mutate();
   };
-
-  if (isLoading) {
-    return <>loading...</>;
-  }
 
   return (
     <section className="w-full h-screen ">
@@ -36,7 +32,7 @@ export const Home = () => {
           <div className="h-8 m-2 rounded-md group-hover:bg-neutral-200 group-data-[resize-handle-active='pointer']:bg-neutral-400"></div>
         </PanelResizeHandle>
         <Panel
-          className="w-full"
+          className="w-full relative"
           defaultSize={60}
           minSize={50}
           maxSize={65}
@@ -50,20 +46,20 @@ export const Home = () => {
             reuseMaps
             mapboxAccessToken={import.meta.env.VITE_MAPBOX_PUBLIC_KEY}
             initialViewState={{
-              longitude: 77.6122,
-              latitude: 12.9645,
-              zoom: 11,
+              longitude: -113.698,
+              latitude: 37.155,
+              zoom: 7,
             }}
             style={{ width: "100%", height: "100%" }}
             mapStyle="mapbox://styles/mapbox/streets-v9"
             onZoomEnd={ () =>{  fetchMapData()}}
             onDragEnd={() =>{  fetchMapData()}}
             onMoveEnd={() =>{  fetchMapData()}}
-            onClick={(e) => {
-              alert(e.lngLat);
-            }}
             onLoad={() =>{  fetchMapData()}}
           >
+            {isLoading && <div className="absolute top-0 inset-x-0 z-10 text-center bg-white">
+              loading...
+            </div>}
             <NavigationControl position="top-left" />
             {data?.STATION?.map((station) => {
               return (
