@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-export function cn(...inputs: ClassValue[]) {
+export const cn = (...inputs: ClassValue[]) =>{
   return twMerge(clsx(inputs));
 }
 
@@ -11,9 +11,9 @@ type UrlSerializerParams = {
   removeToken?: boolean;
 };
 
-export function urlSerializer({ url, params }: UrlSerializerParams) {
+export const urlSerializer = ({ url, params }: UrlSerializerParams)=> {
   const httpUrl = new URL(url);
-  Object.entries(params).forEach(([key, value]) => {
+  Object.entries(params).forEach(([ key, value ]) => {
     if (!value) return;
 
     httpUrl.searchParams.append(key, value.toString());
@@ -22,10 +22,10 @@ export function urlSerializer({ url, params }: UrlSerializerParams) {
   return httpUrl.toString();
 }
 
-export async function fetcher<T>(url: string) {
-  return fetch(url)
-    .then((res) => res.json() as Promise<T>)
+export const fetcher = async <T>(url: string) => {
+    return fetch(url).then((res) => res.json() as Promise<T>)
     .catch((err) => {
       throw err;
     });
-}
+  
+};

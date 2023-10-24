@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { Home } from "./pages";
 import { MapRefProvider } from "./providers/mapProvider";
 import { GlobalErrorBoundary } from "./components/common/GlobalErrorBoundary";
+import { MapProvider } from "react-map-gl";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -49,7 +50,10 @@ const App = () => {
     >
       <QueryClientProvider client={queryClient}>
         <MapRefProvider>
+           <MapProvider>
+
           <RouterProvider router={router} />
+           </MapProvider>
         </MapRefProvider>
       </QueryClientProvider>
     </Suspense>

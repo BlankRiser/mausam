@@ -10,6 +10,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
+    "plugin:@tanstack/eslint-plugin-query/recommended",
     // This disables the formatting rules in ESLint that Prettier is going to be responsible for handling.
     // Make sure it's always the last config, so it gets the chance to override other configs.
     "eslint-config-prettier",
@@ -21,7 +22,7 @@ module.exports = {
     project: true,
     tsconfigRootDir: __dirname,
   },
-  plugins: ["react-refresh"],
+  plugins: ["react-refresh", "@tanstack/query"],
   rules: {
     "react/react-in-jsx-scope": "off",
     "react/jsx-uses-react": "off",
@@ -38,6 +39,9 @@ module.exports = {
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": "warn",
     "func-style": ["warn", "expression"],
+    "@tanstack/query/exhaustive-deps": "warn",
+    "@tanstack/query/prefer-query-object-syntax": "off",
+    "@tanstack/query/stable-query-client": "warn"
   },
   ignorePatterns: [".eslintrc.cjs", "vite.config.ts", "tailwind.config.js"],
 };

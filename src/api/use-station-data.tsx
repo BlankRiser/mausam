@@ -4,29 +4,28 @@ import { API } from "./constants";
 import { format, subDays } from "date-fns";
 
 import { useKy } from "@/providers/KyProvider";
-import { useMapRef } from "@/providers/mapProvider";
+import { MapRef } from "react-map-gl";
 
-const NETWORK_IMPORTANCE = [1, 2, 28, 153, 185, 206, 210, 239, 240];
+const NETWORK_IMPORTANCE = [ 1, 2, 28, 153, 185, 206, 210, 239, 240 ];
 
-export const useStationData = () => {
-  const { mapRef } = useMapRef();
+export const useStationData = ({ map }:{
+  map:  MapRef 
+}) => {
 
   const now = new Date();
   const query = useKy();
 
-  const bounds = mapRef?.current?.getBounds();
-  const boundingBox = bounds
-    ? `${bounds?.getWest()},${bounds?.getSouth()},${bounds?.getEast()},${bounds?.getNorth()}`
-    : "";
-  const height = mapRef?.current?.getContainer().clientHeight;
-  const width = mapRef?.current?.getContainer().clientWidth;
+  const bounds = map?.getBounds();
+  const boundingBox = `${bounds?.getWest()},${bounds?.getSouth()},${bounds?.getEast()},${bounds?.getNorth()}`
+   
+  const height = map?.getContainer().clientHeight;
+  const width = map?.getContainer().clientWidth;
 
-  console.log(bounds, height, width);
 
   const params = {
     height: height,
     width: width,
-    spacing: 20,
+    spacing: 36,
     bbox: boundingBox,
     sensorvars: 1,
     networkimportance: NETWORK_IMPORTANCE.join(","),
@@ -39,16 +38,14 @@ export const useStationData = () => {
     params: params,
   });
 
-  console.log(url);
-
-  return useQuery({
-    queryKey: ["stationData", mapRef?.current, url],
-    queryFn: () => query.get(url).json<useStationDataResponse>(),
-    enabled: !!mapRef?.current,
-    onSuccess(data) {
-      console.log(data);
-    },
+  const reactQuery =  useQuery({
+    // eslint-disable-next-line @tanstack/query/exhaustive-deps
+    queryKey: [ "stationData" , boundingBox, map ],
+    queryFn: async () => query.get(url).json<useStationDataResponse>(),
+    enabled: !!map,    
   });
+
+  return reactQuery
 };
 
 type useStationDataResponse = {
@@ -56,7 +53,7 @@ type useStationDataResponse = {
   SUMMARY: SUMMARY;
 };
 
-interface SUMMARY {
+type SUMMARY = {
   NUMBER_OF_OBJECTS: number;
   RESPONSE_CODE: number;
   VERSION: string;
@@ -64,7 +61,7 @@ interface SUMMARY {
   METADATA_RESPONSE_TIME: string;
 }
 
-interface STATION {
+type STATION = {
   MNET_ID: string;
   NAME: string;
   STID: string;
