@@ -2,9 +2,11 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Suspense } from "react";
 import { Home } from "./pages";
-import { MapRefProvider } from "./providers/mapProvider";
+import { MapRefProvider } from "./providers/map-provider";
 import { GlobalErrorBoundary } from "./components/common/GlobalErrorBoundary";
 import { MapProvider } from "react-map-gl";
+import { Toaster } from "sonner";
+import { TooltipProvider } from "./components/ui/tooltip";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -48,14 +50,18 @@ const App = () => {
         </div>
       }
     >
-      <QueryClientProvider client={queryClient}>
-        <MapRefProvider>
-           <MapProvider>
-
-          <RouterProvider router={router} />
-           </MapProvider>
-        </MapRefProvider>
-      </QueryClientProvider>
+      <TooltipProvider>
+        <QueryClientProvider client={queryClient}>
+          <MapRefProvider>
+            <MapProvider>
+              <div>
+                <RouterProvider router={router} />
+              </div>
+              <Toaster />
+            </MapProvider>
+          </MapRefProvider>
+        </QueryClientProvider>
+      </TooltipProvider>
     </Suspense>
   );
 };

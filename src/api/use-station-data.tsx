@@ -3,21 +3,19 @@ import { useMutation } from "react-query";
 import { API } from "./constants";
 import { format, subDays } from "date-fns";
 
-import { useKy } from "@/providers/KyProvider";
+import { useKy } from "@/providers/ky-provider";
 import { MapRef } from "react-map-gl";
+import type { STATION, SUMMARY } from "@/types/synoptic";
 
-const NETWORK_IMPORTANCE = [ 1, 2, 28, 153, 185, 206, 210, 239, 240 ];
+const NETWORK_IMPORTANCE = [1, 2, 28, 153, 185, 206, 210, 239, 240];
 
-export const useStationMetadata = ({ map }:{
-  map:  MapRef 
-}) => {
-
+export const useStationMetadata = ({ map }: { map: MapRef }) => {
   const now = new Date();
   const query = useKy();
 
   const bounds = map?.getBounds();
-  const boundingBox = `${bounds?.getWest()},${bounds?.getSouth()},${bounds?.getEast()},${bounds?.getNorth()}`
-   
+  const boundingBox = `${bounds?.getWest()},${bounds?.getSouth()},${bounds?.getEast()},${bounds?.getNorth()}`;
+
   const height = map?.getContainer().clientHeight;
   const width = map?.getContainer().clientWidth;
 
@@ -28,7 +26,8 @@ export const useStationMetadata = ({ map }:{
     bbox: boundingBox,
     sensorvars: 1,
     networkimportance: NETWORK_IMPORTANCE.join(","),
-    fields: "stid,name,latitude,longitude,mnet_id",
+    // fields: "stid,name,latitude,longitude,mnet_id",
+    complete: 1,
     obrange: format(subDays(now, 1), "yyyyMMddHHmm") + "," + format(now, "yyyyMMddHHmm"),
   };
 
@@ -38,32 +37,14 @@ export const useStationMetadata = ({ map }:{
   });
 
   const reactQuery = useMutation({
-  mutationFn: async () => query.get(url).json<useStationDataResponse>(),
-  mutationKey:[ "metadata" , boundingBox, map ]
+    mutationFn: async () => query.get(url).json<useStationDataResponse>(),
+    mutationKey: ["metadata", boundingBox, map],
+  });
 
-})
-
-  return reactQuery
+  return reactQuery;
 };
 
 type useStationDataResponse = {
   STATION: STATION[];
   SUMMARY: SUMMARY;
 };
-
-type SUMMARY = {
-  NUMBER_OF_OBJECTS: number;
-  RESPONSE_CODE: number;
-  VERSION: string;
-  RESPONSE_MESSAGE: string;
-  METADATA_RESPONSE_TIME: string;
-}
-
-type STATION = {
-  MNET_ID: string;
-  NAME: string;
-  STID: string;
-  LONGITUDE: string;
-  RESTRICTED: boolean;
-  LATITUDE: string;
-}

@@ -26,13 +26,12 @@ module.exports = {
   rules: {
     "react/react-in-jsx-scope": "off",
     "react/jsx-uses-react": "off",
+    "react/prop-types": "off",
     "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
     "@typescript-eslint/no-non-null-assertion": "off",
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["warn", { varsIgnorePattern: "^_", argsIgnorePattern: "^_" }],
     "@typescript-eslint/ban-ts-comment": "off",
-    "object-curly-spacing": ["warn", "always"],
-    "array-bracket-spacing": ["warn", "always"],
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
@@ -41,7 +40,7 @@ module.exports = {
     "func-style": ["warn", "expression"],
     "@tanstack/query/exhaustive-deps": "warn",
     "@tanstack/query/prefer-query-object-syntax": "off",
-    "@tanstack/query/stable-query-client": "warn"
+    "@tanstack/query/stable-query-client": "warn",
   },
   ignorePatterns: [".eslintrc.cjs", "vite.config.ts", "tailwind.config.js"],
 };
