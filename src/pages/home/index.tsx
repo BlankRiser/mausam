@@ -49,7 +49,13 @@ const StationSummary = () => {
 
   return (
     <div>
-      <div>{JSON.stringify(currentStation)}</div>
+      <div>{currentStation.NAME}</div>
+      <div>{currentStation.TIMEZONE}</div>
+      <div>{currentStation.LATITUDE}</div>
+      <div>{currentStation.LONGITUDE}</div>
+      <div>{currentStation.MNET_SHORTNAME}</div>
+      <div>{currentStation.MNET_LONGNAME}</div>
+      <div>{currentStation.COUNTRY}</div>
     </div>
   );
 };

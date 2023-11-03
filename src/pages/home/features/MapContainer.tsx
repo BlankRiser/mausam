@@ -1,13 +1,15 @@
 import { useStationMetadata } from "@/api/use-station-data";
+import { MapMarker } from "@/assets/icons";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import Map, { Marker, NavigationControl, useMap } from "react-map-gl";
-import * as RadixTooltip from "@radix-ui/react-tooltip";
+import { cn } from "@/lib/utils";
 import { useCurrentStation } from "@/providers/station-store";
+import * as RadixTooltip from "@radix-ui/react-tooltip";
+import Map, { Marker, NavigationControl, useMap } from "react-map-gl";
 
 export default function MapContainer() {
   // map is the "id" attribute of <Map/>
   // https://visgl.github.io/react-map-gl/docs/api-reference/use-map
-  const { setCurrentStation } = useCurrentStation();
+  const { currentStation, setCurrentStation } = useCurrentStation();
   const { map } = useMap();
 
   const { mutate, data, isLoading } = useStationMetadata({
@@ -48,7 +50,7 @@ export default function MapContainer() {
       <NavigationControl position="top-left" />
       {data?.STATION?.map((station) => {
         return (
-          <Tooltip key={station.STID} delayDuration={0}>
+          <Tooltip key={station.STID} delayDuration={0} open={currentStation?.STID === station.STID}>
             <Marker
               latitude={+station.LATITUDE}
               longitude={+station.LONGITUDE}
@@ -57,11 +59,22 @@ export default function MapContainer() {
               }}
             >
               <TooltipTrigger>
-                <div className="z-50 w-3 h-3 bg-neutral-50 border rounded-full border-neutral-900 hover:bg-neutral-300" />
+                <div
+                  className={cn(
+                    "z-50 w-3 h-3 rounded-full grid place-items-center",
+                    currentStation?.STID === station.STID
+                      ? "bg-transparent"
+                      : "bg-neutral-50 border border-neutral-900 hover:bg-neutral-300",
+                  )}
+                >
+                  {currentStation?.STID === station.STID ? <MapMarker /> : null}
+                </div>
               </TooltipTrigger>
               <RadixTooltip.Portal>
-                <TooltipContent>
-                  <p>{station.NAME}</p>
+                <TooltipContent className="flex flex-col justify-center items-center">
+                  <p className="text-lg font-semibold text-neutral-50">{station.STID}</p>
+                  <p className="text-sm font-semibold text-neutral-200">{station.NAME}</p>
+                  <p className="text-xs font-semibold text-neutral-200">{station.MNET_SHORTNAME}</p>
                 </TooltipContent>
               </RadixTooltip.Portal>
             </Marker>
