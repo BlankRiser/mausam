@@ -1,3 +1,3 @@
 export const API = {
-  BaseUrl: "https://api.synopticdata.com/v2/",
+    BaseUrl: "https://api.synopticdata.com/v2/",
 };
