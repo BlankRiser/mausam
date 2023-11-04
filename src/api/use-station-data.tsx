@@ -11,7 +11,7 @@ const NETWORK_IMPORTANCE = [1, 2, 28, 153, 185, 206, 210, 239, 240];
 
 type useStationMetadataProps = {
     map: MapRef;
-    setStationData: React.Dispatch<React.SetStateAction<useStationDataResponse | undefined>>;
+    setStationData?: React.Dispatch<React.SetStateAction<useStationDataResponse | undefined>>;
     fields?: string;
     obrange?: string;
 };
@@ -20,7 +20,6 @@ const now = new Date();
 
 export const useStationMetadata = ({
     map,
-    setStationData,
     obrange = format(subDays(now, 1), "yyyyMMddHHmm") + "," + format(now, "yyyyMMddHHmm"),
 }: useStationMetadataProps) => {
     const query = useKy();
@@ -51,8 +50,8 @@ export const useStationMetadata = ({
     const reactQuery = useMutation({
         mutationKey: ["metadata", boundingBox, map],
         mutationFn: async () => query.get(url).json<useStationDataResponse>(),
-        onSuccess: (data) => {
-            setStationData(data);
+        onSuccess: () => {
+            // setStationData(data);
         },
     });
 

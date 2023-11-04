@@ -1,4 +1,4 @@
-import { useStationDataResponse, useStationMetadata } from "@/api/use-station-data";
+import { useStationMetadata } from "@/api/use-station-data";
 import { MAP_STYLES } from "@/assets/data/mapbox";
 import { MapMarker } from "@/assets/icons";
 import { GlobalErrorBoundary } from "@/components/common/GlobalErrorBoundary";
@@ -9,7 +9,6 @@ import { cn } from "@/lib/utils";
 import { useCurrentStation } from "@/providers/station-store";
 import { STATION } from "@/types/synoptic";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
-import { useState } from "react";
 import Map, { Marker, NavigationControl, useMap } from "react-map-gl";
 
 export default function MapContainer() {
@@ -20,11 +19,8 @@ export default function MapContainer() {
     // https://visgl.github.io/react-map-gl/docs/api-reference/use-map
     const { map } = useMap();
 
-    const [stationData, setStationData] = useState<useStationDataResponse | undefined>(undefined);
-
-    const { mutate, isLoading } = useStationMetadata({
+    const { data, mutate, isLoading } = useStationMetadata({
         map: map,
-        setStationData: setStationData,
     });
 
     const fetchMapData = () => {
@@ -35,7 +31,7 @@ export default function MapContainer() {
         <GlobalErrorBoundary>
             <div className="relative w-full h-full">
                 {isLoading && (
-                    <div className="w-full h-full z-[100] absolute bg-transparent inset-0 flex justify-center items-center">
+                    <div className="w-full h-full z-[100] relative bg-transparent flex justify-center items-center">
                         <Loader />
                     </div>
                 )}
@@ -65,7 +61,7 @@ export default function MapContainer() {
                     }}
                 >
                     <NavigationControl position="top-left" />
-                    {stationData?.STATION?.map((station) => {
+                    {data?.["STATION"]?.map((station) => {
                         return (
                             <Tooltip key={station.STID} delayDuration={0}>
                                 <Marker
