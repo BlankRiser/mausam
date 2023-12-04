@@ -15,20 +15,29 @@ import { cn } from "@/lib/utils";
 import { useCurrentStation } from "@/providers/station-store";
 import { STATION } from "@/types/synoptic";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
+import { useEffect, useState } from "react";
 import Map, { Marker, NavigationControl, useMap } from "react-map-gl";
 
 export default function MapContainer() {
-  const { theme } = useTheme();
-
   // map is the "id" attribute of <Map/>
   // https://visgl.github.io/react-map-gl/docs/api-reference/use-map
   const { map } = useMap();
+  const { theme } = useTheme();
 
-  const { data, mutate, isLoading } = useStationMetadata({
+  const [isMutating, setIsMutating] = useState(false);
+
+  const { data, mutate, isLoading, isSuccess } = useStationMetadata({
     map: map,
   });
 
+  useEffect(() => {
+    if (isSuccess) {
+      setIsMutating(false);
+    }
+  }, [isSuccess]);
+
   const fetchMapData = () => {
+    if (isMutating) return;
     mutate();
   };
 
@@ -63,23 +72,37 @@ export default function MapContainer() {
           <NavigationControl position="top-left" />
           <MapContents stations={data?.["STATION"]} />
         </Map>
-        {isLoading && (
-          <div className="w-full h-full z-[100] relative bg-transparent flex justify-center items-center">
+        {isLoading || isMutating ? (
+          <div className="w-full h-full z-[100] absolute inset-0 bg-transparent flex justify-center items-center">
             <Loader />
           </div>
-        )}
+        ) : null}
+
         <div className="absolute right-4 inset-y-0 grid place-items-center  ">
           <div className="bg-clip-padding backdrop-filter backdrop-blur-md rounded-lg text-black bg-neutral-100/50 dark:bg-neutral-800/70 shadow-md dark:text-white">
             {variables.map((variable) => {
               return (
                 <div key={variable.label} className="p-1">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="grid place-items-center hover:shadow-sm"
-                  >
-                    {variable.icon}
-                  </Button>
+                  <Tooltip delayDuration={0}>
+                    <TooltipTrigger>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className={cn([
+                          "grid place-items-center hover:shadow-sm",
+                          variable.label === "Air temperature" &&
+                            "bg-neutral-100",
+                        ])}
+                      >
+                        {variable.icon}
+                      </Button>
+                    </TooltipTrigger>
+                    <RadixTooltip.Portal>
+                      <TooltipContent>
+                        <p>{variable.label}</p>
+                      </TooltipContent>
+                    </RadixTooltip.Portal>
+                  </Tooltip>
                 </div>
               );
             })}
