@@ -12,25 +12,25 @@ import {
 export const variables = [
   {
     label: "Air temperature",
-    value: "air-temperature",
+    value: "air_temp",
     apiLookup: ["air_temp"],
     icon: <AirTemperature width={32} height={32} />,
   },
   {
     label: "Dew point temp.",
-    value: "dew-point-temperature",
+    value: "dew_point_temperature",
     apiLookup: ["dew_point_temperature"],
     icon: <DewPointTemperature width={28} height={28} />,
   },
   {
     label: "Relative humidity",
-    value: "relative-humidity",
+    value: "relative_humidity",
     apiLookup: ["relative_humidity"],
     icon: <RelativeHumidity width={32} height={32} />,
   },
   {
     label: "Surface winds",
-    value: "surface-winds",
+    value: "wind_speed",
     apiLookup: [
       "wind_speed",
       "wind_gust",
@@ -59,7 +59,7 @@ export const variables = [
   },
   {
     label: "Solar radiation",
-    value: "solar-radiation",
+    value: "solar_radiation",
     apiLookup: ["solar_radiation"],
     icon: <SolarRadiation width={16} height={16} />,
   },

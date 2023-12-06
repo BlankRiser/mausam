@@ -7,6 +7,7 @@ import { API } from "./constants";
 import { useKy } from "@/providers/ky-provider";
 import type { STATION, SUMMARY } from "@/types/synoptic";
 import { MapRef } from "react-map-gl";
+import { useCurrentState } from "@/providers/station-store";
 
 const NETWORK_IMPORTANCE = [1, 2, 28, 153, 185, 206, 210, 239, 240];
 
@@ -28,8 +29,9 @@ export const useStationMetadata = ({
     format(now, "yyyyMMddHHmm"),
 }: useStationMetadataProps) => {
   const query = useKy();
-
   const controller = new AbortController();
+
+  const { currentVariable } = useCurrentState();
 
   const bounds = map?.getBounds();
   const boundingBox = `${bounds?.getWest()},${bounds?.getSouth()},${bounds?.getEast()},${bounds?.getNorth()}`;
@@ -44,22 +46,24 @@ export const useStationMetadata = ({
     spacing: transformZoom({ zoom }),
     minmax: 2,
     bbox: boundingBox,
-    sensorvars: 1,
     networkimportance: NETWORK_IMPORTANCE.join(","),
+    // sensorvars: 1,
     // fields: "stid,name,latitude,longitude,mnet_id",
     // timeformat: "%s",
+    vars: currentVariable,
+    obtimezone: "utc",
     complete: 1,
-    obrange: obrange,
+    units: "temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa",
     status: "active",
   };
 
   const url = urlSerializer({
-    url: `${API.BaseUrl}/stations/metadata`,
+    url: `${API.BaseUrl}/stations/latest`,
     params: params,
   });
 
   const reactQuery = useMutation({
-    mutationKey: ["metadata", boundingBox, map],
+    mutationKey: ["latest", boundingBox, map, currentVariable],
     mutationFn: async () =>
       query
         .get(url, {
