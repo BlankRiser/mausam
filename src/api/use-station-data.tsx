@@ -8,6 +8,7 @@ import { useKy } from "@/providers/ky-provider";
 import type { STATION, SUMMARY } from "@/types/synoptic";
 import { MapRef } from "react-map-gl";
 import { useCurrentState } from "@/providers/station-store";
+import { useEffect } from "react";
 
 const NETWORK_IMPORTANCE = [1, 2, 28, 153, 185, 206, 210, 239, 240];
 
@@ -31,7 +32,7 @@ export const useStationMetadata = ({
   const query = useKy();
   const controller = new AbortController();
 
-  const { currentVariable } = useCurrentState();
+  const { currentVariable, setFetchedStations } = useCurrentState();
 
   const bounds = map?.getBounds();
   const boundingBox = `${bounds?.getWest()},${bounds?.getSouth()},${bounds?.getEast()},${bounds?.getNorth()}`;
@@ -71,6 +72,12 @@ export const useStationMetadata = ({
         })
         .json<useStationDataResponse>(),
   });
+
+  useEffect(() => {
+    if (reactQuery.isSuccess) {
+      setFetchedStations(reactQuery.data?.STATION);
+    }
+  }, [reactQuery.data?.STATION, reactQuery.isSuccess, setFetchedStations]);
 
   return reactQuery;
 };

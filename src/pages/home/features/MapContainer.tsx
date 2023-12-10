@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Map, { NavigationControl, useMap } from "react-map-gl";
 import { StationMarker } from "./station-marker";
 import VariableSelector from "./variable-selector";
+import { useCurrentState } from "@/providers/station-store";
 
 export default function MapContainer() {
   // map is the "id" attribute of <Map/>
@@ -16,7 +17,9 @@ export default function MapContainer() {
 
   const [isMutating, setIsMutating] = useState(false);
 
-  const { data, mutate, isLoading, isSuccess } = useStationMetadata({
+  const { fetchedStations } = useCurrentState();
+
+  const { mutate, isLoading, isSuccess } = useStationMetadata({
     map: map,
   });
 
@@ -60,7 +63,7 @@ export default function MapContainer() {
           }
         >
           <NavigationControl position="top-left" />
-          <StationMarker stations={data?.["STATION"]} />
+          <StationMarker stations={fetchedStations} />
         </Map>
         {isLoading || isMutating ? (
           <div className="w-fit h-fit z-[100] absolute top-1/2 translate-y-[-50%] left-1/2 translate-x-[-50%] bg-transparent flex justify-center items-center">
