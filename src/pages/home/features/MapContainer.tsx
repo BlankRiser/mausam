@@ -3,36 +3,14 @@ import { MAP_STYLES } from "@/assets/data/mapbox";
 import { GlobalErrorBoundary } from "@/components/common/GlobalErrorBoundary";
 import { Loader } from "@/components/ui/loader";
 import { useTheme } from "@/hooks/use-theme";
-import { useEffect, useState } from "react";
-import Map, { NavigationControl, useMap } from "react-map-gl";
+import Map, { NavigationControl } from "react-map-gl";
 import { StationMarker } from "./station-marker";
 import VariableSelector from "./variable-selector";
-import { useCurrentState } from "@/providers/station-store";
 
 export default function MapContainer() {
-  // map is the "id" attribute of <Map/>
-  // https://visgl.github.io/react-map-gl/docs/api-reference/use-map
-  const { map } = useMap();
   const { theme } = useTheme();
 
-  const [isMutating, setIsMutating] = useState(false);
-
-  const { fetchedStations } = useCurrentState();
-
-  const { mutate, isLoading, isSuccess } = useStationMetadata({
-    map: map,
-  });
-
-  useEffect(() => {
-    if (isSuccess) {
-      setIsMutating(false);
-    }
-  }, [isSuccess]);
-
-  const fetchMapData = () => {
-    if (isMutating) return;
-    mutate();
-  };
+  const { isLoading, data, refetch, isFetching } = useStationMetadata();
 
   return (
     <GlobalErrorBoundary>
@@ -41,10 +19,15 @@ export default function MapContainer() {
           id="map"
           hash="map"
           reuseMaps
-          onLoad={fetchMapData}
-          onZoomEnd={fetchMapData}
-          onDragEnd={fetchMapData}
-          onMoveEnd={fetchMapData}
+          onZoomEnd={() => {
+            void refetch();
+          }}
+          onDragEnd={() => {
+            void refetch();
+          }}
+          onMoveEnd={() => {
+            void refetch();
+          }}
           mapboxAccessToken={import.meta.env.VITE_MAPBOX_PUBLIC_KEY}
           initialViewState={{
             longitude: -113.698,
@@ -63,9 +46,9 @@ export default function MapContainer() {
           }
         >
           <NavigationControl position="top-left" />
-          <StationMarker stations={fetchedStations} />
+          <StationMarker stations={data?.STATION} />
         </Map>
-        {isLoading || isMutating ? (
+        {isLoading || isFetching ? (
           <div className="w-fit h-fit z-[100] absolute top-1/2 translate-y-[-50%] left-1/2 translate-x-[-50%] bg-transparent flex justify-center items-center">
             <Loader />
           </div>

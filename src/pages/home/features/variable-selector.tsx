@@ -22,7 +22,7 @@ export const VariableSelector = () => {
         return (
           <div key={variable.label} className="p-1">
             <Tooltip delayDuration={0}>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
