@@ -8,6 +8,7 @@ export const Home = () => {
   // map is the "id" attribute of <Map/>
   // https://visgl.github.io/react-map-gl/docs/api-reference/use-map
   const { map } = useMap();
+
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
 
   return (

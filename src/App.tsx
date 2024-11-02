@@ -5,7 +5,6 @@ import { Toaster } from "sonner";
 import { GlobalErrorBoundary } from "./components/common/GlobalErrorBoundary";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { Home } from "./pages";
-import { MapRefProvider } from "./providers/map-provider";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,16 +41,14 @@ const router = createBrowserRouter([
 
 const App = () => {
   return (
-    <TooltipProvider>
-      <QueryClientProvider client={queryClient}>
-        <MapRefProvider>
-          <MapProvider>
-            <RouterProvider router={router} />
-            <Toaster />
-          </MapProvider>
-        </MapRefProvider>
-      </QueryClientProvider>
-    </TooltipProvider>
+    <MapProvider>
+      <TooltipProvider>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+          <Toaster />
+        </QueryClientProvider>
+      </TooltipProvider>
+    </MapProvider>
   );
 };
 

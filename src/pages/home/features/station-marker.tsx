@@ -4,6 +4,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { getFormattedTimezone } from "@/lib/date-utils";
 import { getVariableData } from "@/lib/synoptic-utils";
 import { cn } from "@/lib/utils";
 import { useCurrentState } from "@/providers/station-store";
@@ -11,8 +12,6 @@ import { STATION } from "@/types/synoptic";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { useMemo } from "react";
 import { Marker } from "react-map-gl";
-import { toDate, getTimezoneOffset, format, utcToZonedTime } from "date-fns-tz";
-import { getFormattedTimezone } from "@/lib/date-utils";
 
 export const StationMarker: React.FC<{
   stations: Array<STATION> | undefined;
