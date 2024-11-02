@@ -1,6 +1,8 @@
 import { Moon, Sun } from "@/assets/icons";
 import { useTheme } from "@/hooks/use-theme";
 import { useCurrentState } from "@/providers/station-store";
+import { childRoutes } from "@/router/child-routes";
+import { useMemo } from "react";
 
 export const Header = () => {
   const { theme, toggleTheme } = useTheme();
@@ -26,6 +28,12 @@ export const Header = () => {
 
 export const StationSummary = () => {
   const { currentStation, currentVariable } = useCurrentState();
+  const { variableLabels } = childRoutes.useLoaderData();
+
+  const selectedVariable = useMemo(
+    () => variableLabels.get(currentVariable)!.long_name,
+    [currentVariable, variableLabels],
+  );
 
   if (!currentStation) {
     return <>Select a station</>;
@@ -33,16 +41,12 @@ export const StationSummary = () => {
 
   return (
     <div className="flex flex-col gap-3 px-2">
-      <p className="text-black text-lg">{currentVariable ?? "none"}</p>
-      <InfoCard name="Station ID" value={currentStation.STID} />
+      <InfoCard name="STID" value={currentStation.STID} />
+      <InfoCard name="Station Variable" value={selectedVariable} />
       <InfoCard name="Station Name" value={currentStation.NAME} />
       <InfoCard name="Timezone" value={currentStation.TIMEZONE} />
       <InfoCard name="Latitude" value={currentStation.LATITUDE} />
       <InfoCard name="Longitude" value={currentStation.LONGITUDE} />
-      <InfoCard
-        name="Network Short Name"
-        value={currentStation.MNET_SHORTNAME ?? ""}
-      />
     </div>
   );
 };

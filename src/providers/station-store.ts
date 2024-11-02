@@ -1,4 +1,4 @@
-import { SENSORVARIABLES, STATION } from "@/types/synoptic";
+import { SENSORVARIABLES, STATION } from "@/types/station";
 import { create } from "zustand";
 
 type State = {

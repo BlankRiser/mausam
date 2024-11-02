@@ -1,11 +1,3 @@
-export type SUMMARY = {
-  NUMBER_OF_OBJECTS: number;
-  RESPONSE_CODE: number;
-  RESPONSE_MESSAGE: string;
-  METADATA_RESPONSE_TIME: string;
-  VERSION: string;
-};
-
 export type STATION = {
   ID: string;
   STID: string;

@@ -15,7 +15,7 @@ export const router = createRouter({
     queryClient,
   },
   defaultPendingComponent: () => (
-    <div className={`p-2 text-2xl`}>
+    <div className={`w-screen h-screen grid place-items-center`}>
       <Loader />
     </div>
   ),

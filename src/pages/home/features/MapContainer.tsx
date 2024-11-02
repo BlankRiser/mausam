@@ -9,7 +9,6 @@ import VariableSelector from "./variable-selector";
 
 export default function MapContainer() {
   const { theme } = useTheme();
-
   const { isLoading, data, refetch, isFetching } = useStationMetadata();
 
   return (
@@ -53,7 +52,6 @@ export default function MapContainer() {
             <Loader />
           </div>
         ) : null}
-
         <div className="absolute right-4 inset-y-0 grid place-items-center ">
           <VariableSelector />
         </div>

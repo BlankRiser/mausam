@@ -2,7 +2,8 @@
 import { urlSerializer } from "@/lib/utils";
 import { useKy } from "@/providers/ky-provider";
 import { useCurrentState } from "@/providers/station-store";
-import type { STATION, SUMMARY } from "@/types/synoptic";
+import { SUMMARY } from "@/types/common";
+import type { STATION } from "@/types/station";
 import { useQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { useMap } from "react-map-gl";

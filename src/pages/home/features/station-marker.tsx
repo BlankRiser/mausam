@@ -8,7 +8,8 @@ import { getFormattedTimezone } from "@/lib/date-utils";
 import { getVariableData } from "@/lib/synoptic-utils";
 import { cn } from "@/lib/utils";
 import { useCurrentState } from "@/providers/station-store";
-import { STATION } from "@/types/synoptic";
+import { childRoutes } from "@/router/child-routes";
+import { STATION } from "@/types/station";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { useMemo } from "react";
 import { Marker } from "react-map-gl";
@@ -39,15 +40,12 @@ export const StationMarker: React.FC<{
                     "z-50 w-3 h-3 rounded-full grid place-items-center",
                     currentStation?.STID === station.STID
                       ? "bg-transparent"
-                      : "bg-neutral-50 dark:bg-neutral-300 dark:hover:bg-neutral-800 border dark:border-neutral-900 border-neutral-900 hover:bg-neutral-300",
+                      : "",
+                    "bg-neutral-50 dark:bg-neutral-300 dark:hover:bg-neutral-800 border dark:border-neutral-900 border-neutral-900 hover:bg-neutral-300",
                   )}
                 >
                   {currentStation?.STID === station.STID ? (
-                    <LocationMarker
-                      width={18}
-                      height={18}
-                      className="text-black dark:text-white"
-                    />
+                    <LocationMarker className="size-8 text-blue-600 dark:text-blue-400" />
                   ) : null}
                 </div>
               </TooltipTrigger>
@@ -67,6 +65,7 @@ export const StationMarker: React.FC<{
 const MarkerContents: React.FC<{
   station: STATION;
 }> = ({ station }) => {
+  const { variableLabels } = childRoutes.useLoaderData();
   const currentVariable = useCurrentState((state) => state.currentVariable);
 
   const variables = useMemo(
@@ -98,14 +97,14 @@ const MarkerContents: React.FC<{
           return (
             <div key={variable.sensor} className="flex gap-2">
               <p className=" text-neutral-700 dark:text-neutral-200">
-                {currentVariable}
+                {variableLabels.get(currentVariable)?.long_name}
               </p>
               <p className=" text-neutral-700 dark:text-neutral-200">
                 {variable.value}
               </p>
-              {/* <p className=" text-neutral-700 dark:text-neutral-200">
+              <p className=" text-neutral-700 dark:text-neutral-200">
                 {formattedDate}
-              </p> */}
+              </p>
             </div>
           );
         })}

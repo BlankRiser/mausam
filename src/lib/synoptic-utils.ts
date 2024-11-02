@@ -1,4 +1,6 @@
-import { STATION } from "@/types/synoptic";
+import { MNETLabelItems } from "@/types/networks";
+import { STATION } from "@/types/station";
+import { VariableLabelItems } from "@/types/variables";
 
 type VariableData = {
   sensor: string;
@@ -25,4 +27,25 @@ export const getVariableData = (station: STATION, currentVariable: string) => {
     }
   });
   return variableData;
+};
+
+export const extractMetaDetails = ({
+  variableArr,
+  networksArr,
+}: {
+  variableArr: any[];
+  networksArr: any[];
+}) => {
+  const variableLabels = new Map<string, VariableLabelItems>();
+  const networkLabels = new Map<string, MNETLabelItems>();
+
+  for (const variable of variableArr) {
+    const [key, value] = Object.entries(variable)[0];
+    variableLabels.set(key, value as VariableLabelItems);
+  }
+  for (const network of networksArr) {
+    const [key, value] = Object.entries(network)[0];
+    networkLabels.set(key, value as MNETLabelItems);
+  }
+  return { variableLabels, networkLabels };
 };

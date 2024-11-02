@@ -1,3 +1,4 @@
+import { childRoutes } from "@/router/child-routes";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useMap } from "react-map-gl";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
