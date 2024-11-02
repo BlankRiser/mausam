@@ -1,5 +1,5 @@
 import { MapProvider } from "react-map-gl";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Toaster } from "sonner";
 import { GlobalErrorBoundary } from "./components/common/GlobalErrorBoundary";
@@ -9,13 +9,10 @@ import { Home } from "./pages/home/home";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      suspense: true,
       refetchOnWindowFocus: import.meta.env.PROD,
       staleTime: (1 / 2) * 60 * 1000,
       refetchOnMount: false,
-      onError(error) {
-        console.error(error);
-      },
+
       retry(failureCount, error) {
         if (failureCount < 3) {
           return true;

@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/require-await */
 import { urlSerializer } from "@/lib/utils";
-import { useQuery } from "react-query";
-import { API } from "./constants";
-
 import { useKy } from "@/providers/ky-provider";
 import { useCurrentState } from "@/providers/station-store";
 import type { STATION, SUMMARY } from "@/types/synoptic";
-import { useMap } from "react-map-gl";
+import { useQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
+import { useMap } from "react-map-gl";
+import { API } from "./constants";
 
 const NETWORK_IMPORTANCE = [1, 2, 28, 153, 185, 206, 210, 239, 240];
 
