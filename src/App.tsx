@@ -4,7 +4,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Toaster } from "sonner";
 import { GlobalErrorBoundary } from "./components/common/GlobalErrorBoundary";
 import { TooltipProvider } from "./components/ui/tooltip";
-import { Home } from "./pages";
+import { Home } from "./pages/home/home";
 
 const queryClient = new QueryClient({
   defaultOptions: {
