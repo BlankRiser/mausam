@@ -5,14 +5,21 @@ import { useCurrentState } from "@/providers/station-store";
 export const Header = () => {
   const { theme, toggleTheme } = useTheme();
   return (
-    <div className="flex gap-2 items-center justify-center w-full">
-      <h1 className="text-center text-lg font-semibold text-neutral-800 dark:text-neutral-200 py-4">
-        Mausam
-      </h1>
-      <button onClick={toggleTheme}>
-        {" "}
-        {theme === "light" ? <Sun /> : <Moon />}
-      </button>
+    <div className="flex flex-col gap-0.5 items-center py-4">
+      <div className="flex gap-2 items-center justify-center w-full">
+        <h1 className="text-center text-lg font-semibold text-neutral-800 dark:text-neutral-200 ">
+          Mausam
+        </h1>
+        <button onClick={toggleTheme}>
+          {theme === "light" ? <Sun /> : <Moon />}
+        </button>
+      </div>
+      <a
+        className="text-sm text-blue-600 dark:text-blue-400"
+        href="https://docs.synopticdata.com/services/weather-data-api"
+      >
+        Built using Synoptic Weather Data API
+      </a>
     </div>
   );
 };

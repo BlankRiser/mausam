@@ -1,10 +1,10 @@
-import { MapProvider } from "react-map-gl";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { MapProvider } from "react-map-gl";
+
+import { RouterProvider } from "@tanstack/react-router";
 import { Toaster } from "sonner";
-import { GlobalErrorBoundary } from "./components/common/GlobalErrorBoundary";
 import { TooltipProvider } from "./components/ui/tooltip";
-import { Home } from "./pages/home/home";
+import { router } from "./router/router";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,18 +23,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <GlobalErrorBoundary>
-        <Home />
-      </GlobalErrorBoundary>
-    ),
-    hasErrorBoundary: true,
-  },
-]);
 
 const App = () => {
   return (

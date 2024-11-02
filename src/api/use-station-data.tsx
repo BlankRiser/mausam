@@ -28,6 +28,7 @@ export const useStationMetadata = () => {
   const reactQuery = useQuery({
     enabled: !!map,
     queryKey: ["latest", map, currentVariable, controller.signal],
+    placeholderData: (data) => data,
     queryFn: async () => {
       const boundingBox = getBoundingBox();
       if (!boundingBox) throw new Error("No map bounds available");
@@ -39,7 +40,7 @@ export const useStationMetadata = () => {
       const params = {
         height: height,
         width: width,
-        spacing: transformZoom({ zoom }),
+        spacing: transformZoom({ zoom: zoom! }),
         minmax: 2,
         bbox: boundingBox,
         networkimportance: NETWORK_IMPORTANCE.join(","),
