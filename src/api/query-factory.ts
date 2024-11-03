@@ -82,3 +82,28 @@ export const stationLatestQueryOptions = ({ stid }: { stid: string }) => {
     },
   });
 };
+export const variableTimeseriesQueryOptions = ({
+  stid,
+  vars,
+}: {
+  stid: string;
+  vars: Array<string>;
+}) => {
+  return queryOptions({
+    queryKey: ["stations", "timeseries", stid, vars],
+    queryFn: () => {
+      return ky
+        .get(`${API.BaseUrl}/stations/timeseries`, {
+          searchParams: {
+            stid,
+            vars: vars.join(","),
+            recent: 25 * 60, // 25 hours to account for values close to the hour
+            timeformat: "%s",
+            units: "temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa",
+            token: import.meta.env.VITE_SYNOPTIC_KEY,
+          },
+        })
+        .json<LatestStationResponse>();
+    },
+  });
+};
