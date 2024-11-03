@@ -1,12 +1,21 @@
-import { createRouter, ErrorComponent } from "@tanstack/react-router";
-
-import { QueryClient } from "@tanstack/react-query";
-import { rootRoute } from "./root-route";
 import { Loader } from "@/components/ui/loader";
-import { childRoutes } from "./child-routes";
+import { QueryClient } from "@tanstack/react-query";
+import { createRouter, ErrorComponent } from "@tanstack/react-router";
+import { rootRoute } from "./root-route";
+import {
+  indexRoute,
+  stationIndexRoute,
+  stationRoute,
+  stationsRoute,
+} from "./routes";
+
 const queryClient = new QueryClient();
 
-const routeTree = rootRoute.addChildren([childRoutes]);
+const routeTree = rootRoute.addChildren([
+  indexRoute.addChildren([
+    stationsRoute.addChildren([stationIndexRoute, stationRoute]),
+  ]),
+]);
 
 export const router = createRouter({
   routeTree,

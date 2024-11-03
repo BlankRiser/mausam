@@ -1,10 +1,21 @@
 import { Moon, Sun } from "@/assets/icons";
+import { InfoCard } from "@/components/common/info-card";
 import { useTheme } from "@/hooks/use-theme";
 import { useCurrentState } from "@/providers/station-store";
-import { childRoutes } from "@/router/child-routes";
+import { indexRoute } from "@/router/routes";
+import { Link } from "@tanstack/react-router";
 import { useMemo } from "react";
 
-export const Header = () => {
+export const LeftPanel = () => {
+  return (
+    <section className="w-full overflow-y-auto h-full px-2 space-y-2">
+      <Header />
+      <StationSummary />
+    </section>
+  );
+};
+
+const Header = () => {
   const { theme, toggleTheme } = useTheme();
   return (
     <div className="flex flex-col gap-0.5 items-center py-4">
@@ -26,9 +37,9 @@ export const Header = () => {
   );
 };
 
-export const StationSummary = () => {
+const StationSummary = () => {
   const { currentStation, currentVariable } = useCurrentState();
-  const { variableLabels } = childRoutes.useLoaderData();
+  const { variableLabels } = indexRoute.useLoaderData();
 
   const selectedVariable = useMemo(
     () => variableLabels.get(currentVariable)!.long_name,
@@ -40,27 +51,25 @@ export const StationSummary = () => {
   }
 
   return (
-    <div className="flex flex-col gap-3 px-2">
+    <div className="flex flex-col gap-1 bg-neutral-200 dark:bg-neutral-700 p-2 rounded-md">
+      <div className="flex justify-between items-center">
+        <span>Station Details</span>
+        <Link
+          to="/station/$stationId"
+          params={{
+            stationId: currentStation.STID,
+          }}
+          className="text-sm text-blue-600 dark:text-blue-400 underline underline-offset-4"
+        >
+          Get more details
+        </Link>
+      </div>
       <InfoCard name="STID" value={currentStation.STID} />
       <InfoCard name="Station Variable" value={selectedVariable} />
       <InfoCard name="Station Name" value={currentStation.NAME} />
       <InfoCard name="Timezone" value={currentStation.TIMEZONE} />
       <InfoCard name="Latitude" value={currentStation.LATITUDE} />
       <InfoCard name="Longitude" value={currentStation.LONGITUDE} />
-    </div>
-  );
-};
-
-type InfoCardProps = {
-  name: string;
-  value: string | number;
-};
-
-export const InfoCard: React.FC<InfoCardProps> = ({ name, value }) => {
-  return (
-    <div className="px-4 py-2 rounded-md bg-neutral-200 dark:bg-neutral-800">
-      <p className="text-xs text-neutral-500 dark:text-neutral-300">{name}</p>
-      <span>{value}</span>
     </div>
   );
 };

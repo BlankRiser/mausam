@@ -17,7 +17,7 @@ export default function MapContainer() {
         <Map
           id="map"
           hash="map"
-          reuseMaps
+          reuseMaps={true}
           onZoomEnd={() => {
             void refetch();
           }}

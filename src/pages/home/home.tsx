@@ -1,8 +1,7 @@
-import { childRoutes } from "@/router/child-routes";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useMap } from "react-map-gl";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import { Header, StationSummary } from "./features/LeftPanel";
+import { LeftPanel } from "./features/LeftPanel";
 import MapContainer from "./features/MapContainer";
 
 export const Home = () => {
@@ -16,10 +15,7 @@ export const Home = () => {
     <section className="w-full h-screen ">
       <PanelGroup direction={isSmallDevice ? "vertical" : "horizontal"}>
         <Panel>
-          <section className="w-full overflow-y-auto h-full">
-            <Header />
-            <StationSummary />
-          </section>
+          <LeftPanel />
         </Panel>
         <PanelResizeHandle className="transition-colors w-full md:w-2 group flex flex-col justify-center items-center data-[resize-handle-active='pointer']:bg-blue-100 dark:data-[resize-handle-active='pointer']:bg-neutral-800 border md:border-none border-neutral-400 border-dashed">
           <div className="bg-neutral-200 w-8 h-1 my-2 md:h-8 md:w-1 rounded-md group-hover:bg-blue-300 group-data-[resize-handle-active='pointer']:bg-blue-400" />

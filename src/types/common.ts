@@ -8,4 +8,9 @@ export interface SUMMARY {
 
   // keys that are not always present
   RESPONSE_TIME?: string;
+
+  // from metadata request
+  METADATA_PARSE_TIME?: string;
+  METADATA_DB_QUERY_TIME?: string;
+  VERSION?: string;
 }

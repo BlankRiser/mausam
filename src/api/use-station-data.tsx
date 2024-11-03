@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/require-await */
-import { urlSerializer } from "@/lib/utils";
 import { useKy } from "@/providers/ky-provider";
 import { useCurrentState } from "@/providers/station-store";
 import { SUMMARY } from "@/types/common";
-import type { STATION } from "@/types/station";
+
 import { useQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { useMap } from "react-map-gl";
 import { API } from "./constants";
+import { Station } from "@/types/station";
 
 const NETWORK_IMPORTANCE = [1, 2, 28, 153, 185, 206, 210, 239, 240];
 
@@ -38,31 +38,26 @@ export const useStationMetadata = () => {
       const width = map?.getContainer().clientWidth;
       const zoom = map?.getZoom();
 
-      const params = {
-        height: height,
-        width: width,
-        spacing: transformZoom({ zoom: zoom! }),
-        minmax: 2,
-        bbox: boundingBox,
-        networkimportance: NETWORK_IMPORTANCE.join(","),
-        // sensorvars: 1,
-        // fields: "stid,name,latitude,longitude,mnet_id",
-        // timeformat: "%s",
-        vars: currentVariable,
-        obtimezone: "utc",
-        complete: 1,
-        units: "temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa",
-        status: "active",
-      };
-
-      const url = urlSerializer({
-        url: `${API.BaseUrl}/stations/latest`,
-        params: params,
-      });
-
       return query
-        .get(url, {
+        .get(`${API.BaseUrl}/stations/latest`, {
           signal: controller.signal,
+          searchParams: {
+            height: height!,
+            width: width!,
+            spacing: transformZoom({ zoom: zoom! }),
+            minmax: 2,
+            bbox: boundingBox,
+            networkimportance: NETWORK_IMPORTANCE.join(","),
+            // sensorvars: 1,
+            // fields: "stid,name,latitude,longitude,mnet_id",
+            // timeformat: "%s",
+            vars: currentVariable as string,
+            obtimezone: "utc",
+            complete: 1,
+            units: "temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa",
+            status: "active",
+            token: import.meta.env.VITE_SYNOPTIC_KEY,
+          },
         })
         .json<useStationDataResponse>();
     },
@@ -72,7 +67,7 @@ export const useStationMetadata = () => {
 };
 
 export type useStationDataResponse = {
-  STATION: STATION[];
+  STATION: Station[];
   SUMMARY: SUMMARY;
 };
 

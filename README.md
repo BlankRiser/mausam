@@ -41,3 +41,8 @@ return (
 - [Mapbox](https://www.mapbox.com/)
 - [Synoptic Data](https://customer.synopticdata.com/credentials/)
 
+
+
+## Dev Note
+
+- [Use loader in tanstac-query to only seed cached data](https://github.com/TanStack/router/discussions/1563) 
