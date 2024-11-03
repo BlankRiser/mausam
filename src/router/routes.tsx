@@ -1,6 +1,5 @@
 import {
   networksQueryOptions,
-  stationMetadataQueryOptions,
   variablesQueryOptions,
 } from "@/api/query-factory";
 import { extractMetaDetails } from "@/lib/synoptic-utils";
@@ -51,8 +50,7 @@ export const stationRoute = createRoute({
   getParentRoute: () => stationsRoute,
   path: "/$stationId",
   component: StationDetails,
-  pendingComponent: () => {},
-  loader: async (opts) => {
+  loader: (opts) => {
     const stationId = opts.params.stationId;
     if (!stationId) {
       console.error(`Station ID: ${stationId ?? "N/A"} does not exist`);

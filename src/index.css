@@ -69,9 +69,11 @@
 }
 
 @layer base {
-  * {
-    @apply border-border;
+  html,
+  body {
+    @apply w-full h-full;
   }
+
   body {
     @apply bg-white text-neutral-900 dark:bg-black dark:text-neutral-200;
   }

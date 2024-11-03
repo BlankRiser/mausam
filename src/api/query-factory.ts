@@ -39,7 +39,7 @@ export const networksQueryOptions = () => {
 
 export const stationMetadataQueryOptions = ({ stid }: { stid: string }) => {
   return queryOptions({
-    queryKey: ["networks"],
+    queryKey: ["networks", stid],
     queryFn: () => {
       return ky
         .get(`${API.BaseUrl}/stations/metadata`, {
