@@ -1,6 +1,6 @@
 import { InfoCard } from "@/components/common/info-card";
 import { useCurrentState } from "@/providers/station-store";
-import { indexRoute } from "@/router/routes";
+import { rootRoute } from "@/router/root-route";
 import { Link } from "@tanstack/react-router";
 import { useMemo } from "react";
 
@@ -28,7 +28,7 @@ const Header = () => {
 
 const StationSummary = () => {
   const { currentStation, currentVariable } = useCurrentState();
-  const { variableLabels } = indexRoute.useLoaderData();
+  const { variableLabels } = rootRoute.useLoaderData();
 
   const selectedVariable = useMemo(
     () => variableLabels.get(currentVariable)!.long_name,

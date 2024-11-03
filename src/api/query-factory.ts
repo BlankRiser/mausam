@@ -1,5 +1,6 @@
 import { API } from "@/api/constants";
 import { Networks } from "@/types/networks";
+import { LatestStationResponse } from "@/types/station";
 import { StationMetadata } from "@/types/station-metadata";
 import { Variables } from "@/types/variables";
 import { queryOptions } from "@tanstack/react-query";
@@ -39,7 +40,7 @@ export const networksQueryOptions = () => {
 
 export const stationMetadataQueryOptions = ({ stid }: { stid: string }) => {
   return queryOptions({
-    queryKey: ["networks", stid],
+    queryKey: ["stations", "metadata", stid],
     queryFn: () => {
       return ky
         .get(`${API.BaseUrl}/stations/metadata`, {
@@ -58,7 +59,7 @@ export const stationMetadataQueryOptions = ({ stid }: { stid: string }) => {
 
 export const stationLatestQueryOptions = ({ stid }: { stid: string }) => {
   return queryOptions({
-    queryKey: ["networks"],
+    queryKey: ["stations", "latest", stid],
     queryFn: () => {
       return ky
         .get(`${API.BaseUrl}/stations/latest`, {
@@ -77,7 +78,7 @@ export const stationLatestQueryOptions = ({ stid }: { stid: string }) => {
             token: import.meta.env.VITE_SYNOPTIC_KEY,
           },
         })
-        .json<StationMetadata>();
+        .json<LatestStationResponse>();
     },
   });
 };

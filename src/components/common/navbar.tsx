@@ -7,7 +7,7 @@ export const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <nav className="w-full border-b border-b-neutral-100">
+    <nav className="w-full border-b border-b-neutral-100 dark:border-b-neutral-900">
       <div className="max-w-7xl mx-auto p-1 flex items-center justify-between ">
         <Link
           to="/"

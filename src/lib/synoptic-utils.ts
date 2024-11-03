@@ -1,5 +1,5 @@
 import { MNETLabelItems } from "@/types/networks";
-import { STATION } from "@/types/station";
+import { Station } from "@/types/station";
 import { VariableLabelItems } from "@/types/variables";
 
 type VariableData = {
@@ -8,7 +8,7 @@ type VariableData = {
   value: number | string;
 };
 
-export const getVariableData = (station: STATION, currentVariable: string) => {
+export const getVariableData = (station: Station, currentVariable: string) => {
   const variableData: Array<VariableData> = [];
   Object.entries(station?.SENSOR_VARIABLES ?? {}).forEach(([key, value]) => {
     if (key === currentVariable) {

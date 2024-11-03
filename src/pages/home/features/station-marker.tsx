@@ -8,14 +8,14 @@ import { getFormattedTimezone } from "@/lib/date-utils";
 import { getVariableData } from "@/lib/synoptic-utils";
 import { cn } from "@/lib/utils";
 import { useCurrentState } from "@/providers/station-store";
-import { indexRoute } from "@/router/routes";
-import { STATION } from "@/types/station";
+import { rootRoute } from "@/router/root-route";
+import { Station } from "@/types/station";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { useMemo } from "react";
 import { Marker } from "react-map-gl";
 
 export const StationMarker: React.FC<{
-  stations: Array<STATION> | undefined;
+  stations: Array<Station> | undefined;
 }> = ({ stations }) => {
   const currentStation = useCurrentState((state) => state.currentStation);
   const setCurrentStation = useCurrentState((state) => state.setCurrentStation);
@@ -63,9 +63,9 @@ export const StationMarker: React.FC<{
 };
 
 const MarkerContents: React.FC<{
-  station: STATION;
+  station: Station;
 }> = ({ station }) => {
-  const { variableLabels } = indexRoute.useLoaderData();
+  const { variableLabels } = rootRoute.useLoaderData();
   const currentVariable = useCurrentState((state) => state.currentVariable);
 
   const variables = useMemo(
