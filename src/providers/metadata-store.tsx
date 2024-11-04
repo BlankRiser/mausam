@@ -1,4 +1,5 @@
 import { API } from "@/api/constants";
+import env from "@/env";
 import { create } from "zustand";
 
 type State = {
@@ -23,7 +24,7 @@ export const useMetadataStore = create<State & Actions>()((set) => ({
   setNetworks: async () => {
     const res = await fetch(
       `${API.BaseUrl}/variables?token=
-      ${import.meta.env.VITE_SYNOPTIC_KEY}`,
+      ${env.VITE_SYNOPTIC_KEY}`,
     );
     set({
       networks: res.json(),
@@ -33,7 +34,7 @@ export const useMetadataStore = create<State & Actions>()((set) => ({
   setVariables: async () => {
     const res = await fetch(
       `${API.BaseUrl}/variables?token=
-      ${import.meta.env.VITE_SYNOPTIC_KEY}`,
+      ${env.VITE_SYNOPTIC_KEY}`,
     );
 
     set({

@@ -6,6 +6,7 @@ import { useTheme } from "@/hooks/use-theme";
 import Map, { NavigationControl } from "react-map-gl";
 import { StationMarker } from "./station-marker";
 import VariableSelector from "./variable-selector";
+import env from "@/env";
 
 export default function MapContainer() {
   const { theme } = useTheme();
@@ -27,7 +28,7 @@ export default function MapContainer() {
           onMoveEnd={() => {
             void refetch();
           }}
-          mapboxAccessToken={import.meta.env.VITE_MAPBOX_PUBLIC_KEY}
+          mapboxAccessToken={env.VITE_MAPBOX_PUBLIC_KEY}
           initialViewState={{
             longitude: -113.698,
             latitude: 37.155,

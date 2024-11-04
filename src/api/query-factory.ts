@@ -1,4 +1,5 @@
 import { API } from "@/api/constants";
+import env from "@/env";
 import { Networks } from "@/types/networks";
 import { LatestStationResponse } from "@/types/station";
 import { StationMetadata } from "@/types/station-metadata";
@@ -13,7 +14,7 @@ export const variablesQueryOptions = () => {
       return ky
         .get(`${API.BaseUrl}/variables`, {
           searchParams: {
-            token: import.meta.env.VITE_SYNOPTIC_KEY,
+            token: env.VITE_SYNOPTIC_KEY,
           },
         })
         .json<Variables>();
@@ -29,7 +30,7 @@ export const networksQueryOptions = () => {
       return ky
         .get(`${API.BaseUrl}/networks`, {
           searchParams: {
-            token: import.meta.env.VITE_SYNOPTIC_KEY,
+            token: env.VITE_SYNOPTIC_KEY,
           },
         })
         .json<Networks>();
@@ -49,7 +50,7 @@ export const stationMetadataQueryOptions = ({ stid }: { stid: string }) => {
             complete: 1,
             sensorvars: 1,
             stationhistory: 1,
-            token: import.meta.env.VITE_SYNOPTIC_KEY,
+            token: env.VITE_SYNOPTIC_KEY,
           },
         })
         .json<StationMetadata>();
@@ -75,7 +76,7 @@ export const stationLatestQueryOptions = ({ stid }: { stid: string }) => {
             units: "temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa",
             within: 1 * 24 * 60, // 1 day
             vars: "air_temp,relative_humidity,wind_speed,wind_gust,wind_direction,solar_radiation,precip_accum",
-            token: import.meta.env.VITE_SYNOPTIC_KEY,
+            token: env.VITE_SYNOPTIC_KEY,
           },
         })
         .json<LatestStationResponse>();
@@ -100,7 +101,7 @@ export const variableTimeseriesQueryOptions = ({
             recent: 25 * 60, // 25 hours to account for values close to the hour
             timeformat: "%s",
             units: "temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa",
-            token: import.meta.env.VITE_SYNOPTIC_KEY,
+            token: env.VITE_SYNOPTIC_KEY,
           },
         })
         .json<LatestStationResponse>();

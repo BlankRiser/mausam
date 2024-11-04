@@ -3,11 +3,12 @@ import { useKy } from "@/providers/ky-provider";
 import { useCurrentState } from "@/providers/station-store";
 import { SUMMARY } from "@/types/common";
 
+import env from "@/env";
+import { Station } from "@/types/station";
 import { useQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { useMap } from "react-map-gl";
 import { API } from "./constants";
-import { Station } from "@/types/station";
 
 const NETWORK_IMPORTANCE = [1, 2, 28, 153, 185, 206, 210, 239, 240];
 
@@ -56,7 +57,7 @@ export const useStationMetadata = () => {
             complete: 1,
             units: "temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa",
             status: "active",
-            token: import.meta.env.VITE_SYNOPTIC_KEY,
+            token: env.VITE_SYNOPTIC_KEY,
           },
         })
         .json<useStationDataResponse>();
