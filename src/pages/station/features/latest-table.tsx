@@ -84,21 +84,23 @@ const transformData = (data: LatestStationResponse) => {
 
   Object.entries(sensorVariables).forEach(([key, value]) => {
     const hasMultipleSensors = Object.keys(value).length > 1;
-
     Object.entries(value).forEach(([sensorKey, sensorValue]) => {
-      sensorRows.push({
-        variable: key,
-        hasMultipleSensors,
-        position: {
-          value: sensorValue["position"]!,
-          unit: station["UNITS"]["position"],
-        },
-        observation: {
-          dateTime: station["OBSERVATIONS"]![sensorKey]["date_time"],
-          value: station["OBSERVATIONS"]![sensorKey]["value"],
-          unit: data.UNITS[key],
-        },
-      });
+      if (station["OBSERVATIONS"]?.[sensorKey]) {
+        sensorRows.push({
+          variable: key,
+          hasMultipleSensors,
+          position: {
+            value: sensorValue["position"]!,
+            unit: station["UNITS"]["position"],
+          },
+
+          observation: {
+            dateTime: station["OBSERVATIONS"][sensorKey]["date_time"] ?? "N/A",
+            value: station["OBSERVATIONS"][sensorKey]["value"] ?? -Infinity,
+            unit: data.UNITS[key],
+          },
+        });
+      }
     });
   });
 

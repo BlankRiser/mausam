@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/require-await */
 import { useKy } from "@/providers/ky-provider";
-import { useCurrentState } from "@/providers/station-store";
+import { useKeysStore } from "@/store/env-keys.store";
+import { useCurrentState } from "@/store/station.store";
 import { SUMMARY } from "@/types/common";
-
-import env from "@/env";
 import { Station } from "@/types/station";
 import { useQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
@@ -57,7 +56,7 @@ export const useStationMetadata = () => {
             complete: 1,
             units: "temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa",
             status: "active",
-            token: env.VITE_SYNOPTIC_KEY,
+            token: useKeysStore.getState().synopticToken,
           },
         })
         .json<useStationDataResponse>();

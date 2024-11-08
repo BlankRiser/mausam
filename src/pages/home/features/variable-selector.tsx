@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/tooltip";
 import { variables } from "@/data/variables";
 import { cn } from "@/lib/utils";
-import { useCurrentState } from "@/providers/station-store";
+import { useCurrentState } from "@/store/station.store";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
 
 export const VariableSelector = () => {

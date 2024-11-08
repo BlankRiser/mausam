@@ -2,7 +2,9 @@ import ky from "ky";
 import React from "react";
 
 export const KyProvider: React.FC<KyProviderProps> = ({ children }) => {
-    return <KyContext.Provider value={ky.create({})}>{children}</KyContext.Provider>;
+  return (
+    <KyContext.Provider value={ky.create({})}>{children}</KyContext.Provider>
+  );
 };
 
 // eslint-disable-next-line react-refresh/only-export-components

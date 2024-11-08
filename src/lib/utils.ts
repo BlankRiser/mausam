@@ -19,7 +19,7 @@ export const urlSerializer = ({ url, params }: UrlSerializerParams) => {
 
     httpUrl.searchParams.append(key, value.toString());
   });
-  httpUrl.searchParams.append("token", env.VITE_SYNOPTIC_KEY);
+  httpUrl.searchParams.append("token", env.data.VITE_SYNOPTIC_KEY);
   return httpUrl.toString();
 };
 

@@ -1,5 +1,5 @@
 import { InfoCard } from "@/components/common/info-card";
-import { useCurrentState } from "@/providers/station-store";
+import { useCurrentState } from "@/store/station.store";
 import { rootRoute } from "@/router/root-route";
 import { Link } from "@tanstack/react-router";
 import { useMemo } from "react";

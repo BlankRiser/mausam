@@ -7,6 +7,7 @@ import Map, { NavigationControl } from "react-map-gl";
 import { StationMarker } from "./station-marker";
 import VariableSelector from "./variable-selector";
 import env from "@/env";
+import { useKeysStore } from "@/store/env-keys.store";
 
 export default function MapContainer() {
   const { theme } = useTheme();
@@ -28,7 +29,7 @@ export default function MapContainer() {
           onMoveEnd={() => {
             void refetch();
           }}
-          mapboxAccessToken={env.VITE_MAPBOX_PUBLIC_KEY}
+          mapboxAccessToken={useKeysStore.getState().mapboxToken}
           initialViewState={{
             longitude: -113.698,
             latitude: 37.155,
