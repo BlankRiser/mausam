@@ -30,10 +30,10 @@ const StationSummary = () => {
   const { currentStation, currentVariable } = useCurrentState();
   const { variableLabels } = rootRoute.useLoaderData();
 
-  const selectedVariable = useMemo(
-    () => variableLabels.get(currentVariable)!.long_name,
-    [currentVariable, variableLabels],
-  );
+  const selectedVariable = useMemo(() => {
+    const variable = variableLabels.get(currentVariable);
+    return variable ? variable.long_name : "Unknown Variable";
+  }, [currentVariable, variableLabels]);
 
   if (!currentStation) {
     return <>Select a station</>;
