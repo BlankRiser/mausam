@@ -17,7 +17,10 @@ export const variablesQueryOptions = () => {
             token: useKeysStore.getState().synopticToken,
           },
         })
-        .json<Variables>();
+        .json<Variables>()
+        .catch((error) => {
+          console.error(error);
+        });
     },
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
   });
@@ -33,7 +36,10 @@ export const networksQueryOptions = () => {
             token: useKeysStore.getState().synopticToken,
           },
         })
-        .json<Networks>();
+        .json<Networks>()
+        .catch((error) => {
+          console.error(error);
+        });
     },
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
   });

@@ -13,34 +13,29 @@ export const rootRoute = createRootRouteWithContext<{
 }>()({
   component: RootComponent,
   // errorComponent: () => <div>Something went wrong</div>,
-  beforeLoad: (opts) => {
+  beforeLoad: ({ location }) => {
     if (
       (!useKeysStore.getState().mapboxToken ||
         !useKeysStore.getState().synopticToken) &&
-      opts.location.pathname !== "/token"
+      location.pathname !== "/token"
     ) {
       throw redirect({
         to: "/token",
       });
     }
   },
-  loader: async (opts) => {
-    if (
-      useKeysStore.getState().mapboxToken ||
-      useKeysStore.getState().synopticToken
-    ) {
-      const variables = opts.context.queryClient.ensureQueryData(
-        variablesQueryOptions(),
-      );
-      const networks = opts.context.queryClient.ensureQueryData(
-        networksQueryOptions(),
-      );
-      const resolvedData = await Promise.all([variables, networks]);
+  loader: async ({ context }) => {
+    const variables = context.queryClient.ensureQueryData(
+      variablesQueryOptions(),
+    );
+    const networks = context.queryClient.ensureQueryData(
+      networksQueryOptions(),
+    );
+    const resolvedData = await Promise.all([variables, networks]);
 
-      return extractMetaDetails({
-        variableArr: resolvedData[0]?.["VARIABLES"],
-        networksArr: resolvedData[1]?.["MNET"],
-      });
-    }
+    return extractMetaDetails({
+      variableArr: resolvedData[0]?.["VARIABLES"] ?? [],
+      networksArr: resolvedData[1]?.["MNET"] ?? [],
+    });
   },
 });

@@ -10,6 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { router } from "@/router/router";
 import { useKeysStore } from "@/store/env-keys.store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "@tanstack/react-router";
@@ -32,6 +33,7 @@ export const AddTokensForm = () => {
 
   const onSubmit = (values: z.infer<typeof AddTokensFormSchema>) => {
     setTokens(values);
+    router.invalidate().catch(console.error);
     navigate({ to: "/" }).catch(console.error);
   };
 
