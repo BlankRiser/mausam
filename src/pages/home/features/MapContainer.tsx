@@ -3,11 +3,10 @@ import { MAP_STYLES } from "@/assets/data/mapbox";
 import { GlobalErrorBoundary } from "@/components/common/GlobalErrorBoundary";
 import { Loader } from "@/components/ui/loader";
 import { useTheme } from "@/hooks/use-theme";
+import { useKeysStore } from "@/store/env-keys.store";
 import Map, { NavigationControl } from "react-map-gl";
 import { StationMarker } from "./station-marker";
 import VariableSelector from "./variable-selector";
-import env from "@/env";
-import { useKeysStore } from "@/store/env-keys.store";
 
 export default function MapContainer() {
   const { theme } = useTheme();

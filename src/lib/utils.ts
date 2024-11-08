@@ -1,4 +1,4 @@
-import env from "@/env";
+import { useKeysStore } from "@/store/env-keys.store";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -19,7 +19,7 @@ export const urlSerializer = ({ url, params }: UrlSerializerParams) => {
 
     httpUrl.searchParams.append(key, value.toString());
   });
-  httpUrl.searchParams.append("token", env.data.VITE_SYNOPTIC_KEY);
+  httpUrl.searchParams.append("token", useKeysStore.getState().synopticToken);
   return httpUrl.toString();
 };
 
