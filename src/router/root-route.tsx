@@ -25,8 +25,12 @@ export const rootRoute = createRootRouteWithContext<{
     }
   },
   loader: async ({ context }) => {
-    const variables = context.queryClient.fetchQuery(variablesQueryOptions());
-    const networks = context.queryClient.fetchQuery(networksQueryOptions());
+    const variables = context.queryClient.ensureQueryData(
+      variablesQueryOptions(),
+    );
+    const networks = context.queryClient.ensureQueryData(
+      networksQueryOptions(),
+    );
     const resolvedData = await Promise.all([variables, networks]);
 
     return extractMetaDetails({
