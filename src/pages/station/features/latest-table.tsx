@@ -93,7 +93,6 @@ const transformData = (data: LatestStationResponse) => {
             value: sensorValue["position"]!,
             unit: station["UNITS"]["position"],
           },
-
           observation: {
             dateTime: station["OBSERVATIONS"][sensorKey]["date_time"] ?? "N/A",
             value: station["OBSERVATIONS"][sensorKey]["value"] ?? -Infinity,
