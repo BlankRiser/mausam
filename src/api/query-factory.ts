@@ -81,7 +81,7 @@ export const stationLatestQueryOptions = ({ stid }: { stid: string }) => {
             minmaxtimezone: "utc",
             units: "temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa",
             within: 1 * 24 * 60, // 1 day
-            vars: "air_temp,relative_humidity,wind_speed,wind_gust,wind_direction,solar_radiation,precip_accum",
+            // vars: "air_temp,relative_humidity,wind_speed,wind_gust,wind_direction,solar_radiation,precip_accum",
             token: useKeysStore.getState().synopticToken,
           },
         })

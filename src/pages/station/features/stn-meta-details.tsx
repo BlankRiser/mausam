@@ -1,9 +1,19 @@
 import { StationMetadata } from "@/types/station-metadata";
 import { useMemo } from "react";
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+const formatter = new (Intl as any).ListFormat("en", {
+  style: "long",
+  type: "conjunction",
+});
+
 export const StnMetaDetails = ({ data }: { data: StationMetadata }) => {
   const CardData = useMemo(
     () => [
+      {
+        label: "Status",
+        value: data.STATION[0].STATUS,
+      },
       {
         label: "STID",
         value: data.STATION[0].STID,
@@ -13,8 +23,12 @@ export const StnMetaDetails = ({ data }: { data: StationMetadata }) => {
         value: data.STATION[0].NAME,
       },
       {
-        label: "Network",
+        label: "Network ID",
         value: data.STATION[0].MNET_ID,
+      },
+      {
+        label: "National Weather Service Zone",
+        value: data.STATION[0].NWSZONE ?? "N/A",
       },
       {
         label: "Longitude",
@@ -32,8 +46,16 @@ export const StnMetaDetails = ({ data }: { data: StationMetadata }) => {
         label: "Elevation",
         value: data.STATION[0].ELEVATION + data.STATION[0].UNITS.elevation,
       },
+      {
+        label: "Sensor Variables",
+        value: Object.keys(data.STATION[0].SENSOR_VARIABLES ?? {}).length,
+      },
+      {
+        label: "Data Providers",
+        value: formatter.format(data.STATION[0].PROVIDERS.map((p) => p.name)),
+      },
     ],
-    [],
+    [data.STATION],
   );
 
   return (

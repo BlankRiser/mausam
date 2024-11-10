@@ -23,12 +23,16 @@ export const StationDetails = () => {
   });
 
   return (
-    <div className="p-2 space-y-4">
-      <div className="grid grid-cols-2 gap-2">
-        <LatestStnDataTable data={latest.data} />
-        <StationMap data={latest.data} />
-      </div>
+    <div className="p-2 space-y-2">
       <StnMetaDetails data={metadata.data} />
+      <div className="grid md:grid-cols-2 gap-2">
+        <div className="order-last md:order-first">
+          <LatestStnDataTable data={latest.data} />
+        </div>
+        <div className="order-first md:order-last h-48 md:h-96">
+          <StationMap data={metadata.data} />
+        </div>
+      </div>
     </div>
   );
 };

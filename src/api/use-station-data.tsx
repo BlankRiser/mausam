@@ -2,8 +2,7 @@
 import { useKy } from "@/providers/ky-provider";
 import { useKeysStore } from "@/store/env-keys.store";
 import { useCurrentState } from "@/store/station.store";
-import { SUMMARY } from "@/types/common";
-import { Station } from "@/types/station";
+import { LatestStationResponse } from "@/types/station";
 import { useQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
 import { useMap } from "react-map-gl";
@@ -59,16 +58,11 @@ export const useStationMetadata = () => {
             token: useKeysStore.getState().synopticToken,
           },
         })
-        .json<useStationDataResponse>();
+        .json<LatestStationResponse>();
     },
   });
 
   return reactQuery;
-};
-
-export type useStationDataResponse = {
-  STATION: Station[];
-  SUMMARY: SUMMARY;
 };
 
 type transformParams = {

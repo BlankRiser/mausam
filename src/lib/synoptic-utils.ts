@@ -49,3 +49,21 @@ export const extractMetaDetails = ({
   }
   return { variableLabels, networkLabels };
 };
+
+export const parseSensorString = (input: string) => {
+  const regex = /^(.*)_(value|set)_(\d+)(d?)$/;
+  const match = input.match(regex);
+
+  if (!match) {
+    throw new Error("Invalid input format");
+  }
+
+  const [, variable, , setNumber, derived] = match;
+
+  return {
+    set: parseInt(setNumber, 10),
+    isDerived: derived === "d",
+    variable: variable,
+    originalValue: input,
+  };
+};

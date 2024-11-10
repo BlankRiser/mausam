@@ -17,7 +17,7 @@ export const VariableSelector = () => {
   };
 
   return (
-    <div className="bg-clip-padding backdrop-filter backdrop-blur-md rounded-lg text-black bg-neutral-50/50 dark:bg-neutral-800/70 shadow-md dark:text-white">
+    <div className="bg-clip-padding backdrop-filter backdrop-blur-md rounded-lg text-black bg-neutral-50/50 dark:bg-neutral-900 shadow-md dark:text-white">
       {variables.map((variable) => {
         return (
           <div key={variable.label} className="p-1">
@@ -30,7 +30,7 @@ export const VariableSelector = () => {
                   className={cn([
                     "grid place-items-center hover:shadow-sm",
                     variable.value === currentVariable &&
-                      "bg-neutral-100 shadow-sm",
+                      "bg-neutral-100 shadow-sm dark:bg-neutral-900",
                   ])}
                 >
                   {variable.icon}
