@@ -27,7 +27,14 @@ export const LatestStnDataTable = ({
     enableRowSelection: true,
   });
 
-  return <DataTable table={table} columns={columns} />;
+  if (
+    data.STATION.length === 0 ||
+    Object.keys(data.STATION[0].SENSOR_VARIABLES ?? {}).length === 0
+  ) {
+    return <LatestStnDataTableFallback />;
+  }
+
+  return <DataTable table={table} columns={columns} className="h-96" />;
 };
 
 const getLatestStnDataTableColumns = (
@@ -37,9 +44,15 @@ const getLatestStnDataTableColumns = (
     {
       id: "variable",
       header: "Variable",
-      cell: ({ row }) =>
-        variableLabels.get(row.original.variable)!.long_name ??
-        row.original.variable,
+      cell: ({ row }) => {
+        if (variableLabels) {
+          return (
+            variableLabels.get(row.original.variable)?.long_name ??
+            row.original.variable
+          );
+        }
+        return row.original.variable;
+      },
     },
     {
       id: "position",
@@ -71,7 +84,14 @@ const getLatestStnDataTableColumns = (
           return "N/A";
         }
 
-        return `${value} ${unit}`;
+        return (
+          <p>
+            {value}{" "}
+            <span className="text-neutral-400 dark:text-neutral-600">
+              {unit}{" "}
+            </span>
+          </p>
+        );
       },
     },
   ];
@@ -79,8 +99,12 @@ const getLatestStnDataTableColumns = (
 
 const transformData = (data: LatestStationResponse) => {
   const station = data.STATION[0];
-  const sensorVariables = station.SENSOR_VARIABLES;
   const sensorRows: Array<TransformedData> = [];
+
+  if (!station || Object.keys(station.SENSOR_VARIABLES).length === 0) {
+    return sensorRows;
+  }
+  const sensorVariables = station.SENSOR_VARIABLES ?? {};
 
   Object.entries(sensorVariables).forEach(([key, value]) => {
     const hasMultipleSensors = Object.keys(value).length > 1;
@@ -119,3 +143,13 @@ interface TransformedData {
     unit: string;
   };
 }
+
+const LatestStnDataTableFallback = () => {
+  return (
+    <div className="rounded-md grid place-items-center border border-neutral-200 dark:border-neutral-800">
+      <span className="">
+        There seems to be an issue with the data. <br /> Please try again later.
+      </span>
+    </div>
+  );
+};

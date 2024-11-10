@@ -71,11 +71,21 @@ export type Station = {
   RESTRICTED: boolean;
 
   QC_FLAGGED: boolean;
-  MINMAX: Record<string, SensorMeasurement>;
+  MINMAX: MinMax;
+};
+
+export type MinMax = {
+  dates: Array<string>;
+  value_min_local: Array<number>;
+  value_max_local: Array<number>;
+  datetime_min_local: Array<string>;
+  datetime_max_local: Array<string>;
+  datetime_timezone: string;
 };
 
 // Optimized SensorVariables type
 export type SensorVariables =
+  | Record<string, SensorMeasurement>
   | {
       // Temperature related
       air_temp?: SensorMeasurement;
@@ -198,8 +208,7 @@ export type SensorVariables =
       qc?: SensorMeasurement;
       created_time_stamp?: SensorMeasurement;
       last_modified?: SensorMeasurement;
-    }
-  | Record<string, SensorMeasurement>;
+    };
 
 interface QcSummmary {
   QC_CHECKS_APPLIED: string[];

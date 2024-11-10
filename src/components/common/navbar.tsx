@@ -16,7 +16,7 @@ export const Navbar = () => {
           Mausam
         </Link>
         <div>
-          <Button variant={"outline"} onClick={toggleTheme}>
+          <Button variant={"ghost"} onClick={toggleTheme}>
             {theme === "light" ? <Sun /> : <Moon />}
           </Button>
         </div>

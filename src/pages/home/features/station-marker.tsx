@@ -1,4 +1,3 @@
-import { LocationMarker } from "@/assets/icons";
 import {
   Tooltip,
   TooltipContent,
@@ -8,23 +7,25 @@ import { getFormattedTimezone } from "@/lib/date-utils";
 import { getVariableData } from "@/lib/synoptic-utils";
 import { cn } from "@/lib/utils";
 import { useCurrentState } from "@/store/station.store";
-import { rootRoute } from "@/router/root-route";
 import { Station } from "@/types/station";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { useMemo } from "react";
 import { Marker } from "react-map-gl";
 
 export const StationMarker: React.FC<{
-  stations: Array<Station> | undefined;
-}> = ({ stations }) => {
+  stations: Array<Station>;
+  units: Record<string, string>;
+}> = ({ stations, units }) => {
   const currentStation = useCurrentState((state) => state.currentStation);
   const setCurrentStation = useCurrentState((state) => state.setCurrentStation);
+  const currentVariable = useCurrentState((state) => state.currentVariable);
 
   if (!stations) return null;
 
   return (
     <div>
       {stations?.map((station) => {
+        const data = getSensorVariableDetails(station, currentVariable);
         return (
           <Tooltip key={station.STID} delayDuration={0}>
             <Marker
@@ -36,22 +37,23 @@ export const StationMarker: React.FC<{
             >
               <TooltipTrigger>
                 <div
+                  key={station.STID}
                   className={cn(
-                    "z-50 w-3 h-3 rounded-full grid place-items-center",
+                    "z-50 min-w-6 min-h-6 p-1 rounded-full grid place-items-center",
+                    "bg-neutral-50/90 dark:bg-neutral-800/90 dark:hover:bg-neutral-800 border dark:border-neutral-800 border-neutral-900 hover:bg-neutral-100 transition-colors",
                     currentStation?.STID === station.STID
-                      ? "bg-transparent"
+                      ? "relative after:absolute after:ring after:content-[''] after:ring-blue-500 after:animate-ping after:w-5 after:h-5 after:grid after:place-items-center after:rounded-full"
                       : "",
-                    "bg-neutral-50 dark:bg-neutral-300 dark:hover:bg-neutral-800 border dark:border-neutral-900 border-neutral-900 hover:bg-neutral-300",
                   )}
                 >
-                  {currentStation?.STID === station.STID ? (
-                    <LocationMarker className="size-8 text-blue-600 dark:text-blue-400" />
-                  ) : null}
+                  <span className="font-mono text-xs text-neutral-600 dark:text-neutral-400">
+                    {data?.latest.value?.toFixed(0)}
+                  </span>
                 </div>
               </TooltipTrigger>
               <RadixTooltip.Portal>
                 <TooltipContent>
-                  <MarkerContents station={station} />
+                  <MarkerTooltipContents station={station} units={units} />
                 </TooltipContent>
               </RadixTooltip.Portal>
             </Marker>
@@ -62,10 +64,10 @@ export const StationMarker: React.FC<{
   );
 };
 
-const MarkerContents: React.FC<{
+const MarkerTooltipContents: React.FC<{
   station: Station;
-}> = ({ station }) => {
-  const { variableLabels } = rootRoute.useLoaderData();
+  units: Record<string, string>;
+}> = ({ station, units }) => {
   const currentVariable = useCurrentState((state) => state.currentVariable);
 
   const variables = useMemo(
@@ -74,7 +76,7 @@ const MarkerContents: React.FC<{
   );
 
   return (
-    <div className="divide-y-4">
+    <div className="">
       <div className="flex flex-col justify-center items-center">
         <p className="text-lg font-semibold text-neutral-800 dark:text-neutral-50">
           {station.STID}
@@ -83,7 +85,7 @@ const MarkerContents: React.FC<{
           {station.NAME}
         </p>
         <p className="text-xs text-neutral-700 dark:text-neutral-200">
-          {station.MNET_SHORTNAME}
+          {station.STATUS}
         </p>
       </div>
       <div className="text-xs">
@@ -94,13 +96,14 @@ const MarkerContents: React.FC<{
             formatString: "HH:mm (z)",
           });
 
+          const formattedValue = variable.value
+            ? `${variable.value} ${units[currentVariable]}`
+            : "N/A";
+
           return (
             <div key={variable.sensor} className="flex gap-2">
               <p className=" text-neutral-700 dark:text-neutral-200">
-                {variableLabels.get(currentVariable)?.long_name}
-              </p>
-              <p className=" text-neutral-700 dark:text-neutral-200">
-                {variable.value}
+                {formattedValue}
               </p>
               <p className=" text-neutral-700 dark:text-neutral-200">
                 {formattedDate}
@@ -112,3 +115,42 @@ const MarkerContents: React.FC<{
     </div>
   );
 };
+
+const getSensorVariableDetails = (
+  station: Station,
+  selectedVariable: keyof typeof station.SENSOR_VARIABLES,
+) => {
+  if (Object.keys(station.SENSOR_VARIABLES).length === 0) return null;
+
+  const sensorVariable = station.SENSOR_VARIABLES[selectedVariable];
+  const details = {} as SensorVariableDetails;
+
+  Object.entries(sensorVariable ?? {}).map(([key, _value]) => {
+    if (station.OBSERVATIONS?.[key]) {
+      details["latest"] = station.OBSERVATIONS[key] as Latest;
+    }
+    // @ts-expect-error - this is a hack to get around the fact that the API is not typed
+    details["minMax"] = station.MINMAX?.[key];
+  });
+
+  return details;
+};
+
+interface SensorVariableDetails {
+  latest: Latest;
+  minMax?: MinMax;
+}
+
+type MinMax = {
+  dates: Array<string>;
+  value_min_local: Array<number>;
+  value_max_local: Array<number>;
+  datetime_min_local: Array<string>;
+  datetime_max_local: Array<string>;
+  datetime_timezone: string;
+};
+
+interface Latest {
+  value: number;
+  date_time: string;
+}

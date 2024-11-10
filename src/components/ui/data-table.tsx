@@ -8,27 +8,30 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 import { ColumnDef, flexRender, useReactTable } from "@tanstack/react-table";
 
 interface DataTableProps<TData, TValue> {
   table: ReturnType<typeof useReactTable<TData>>;
   columns: ColumnDef<TData, TValue>[];
+  className?: string;
 }
 
 export const DataTable = <TData, TValue>({
   table,
   columns,
+  className = "",
 }: DataTableProps<TData, TValue>) => {
   return (
-    <div className="rounded-md border border-neutral-200 dark:border-neutral-800 overflow-hidden">
-      <div className="relative overflow-auto">
-        <Table>
-          <TableHeader className="sticky top-0 bg-neutral-100 dark:bg-neutral-900 z-10 border-b border-b-neutral-800 dark:border-b-neutral-600">
+    <div className="rounded-md border border-neutral-200 dark:border-neutral-800">
+      <div className={cn(["relative overflow-auto", className])}>
+        <Table className="w-full relative">
+          <TableHeader className=" bg-neutral-100 dark:bg-neutral-900 z-10 border-b border-b-neutral-800 dark:border-b-neutral-600">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} className="sticky top-0">
                       {header.isPlaceholder
                         ? null
                         : flexRender(

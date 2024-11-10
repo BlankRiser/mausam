@@ -19,17 +19,17 @@ export const AirTemperature = (
         <symbol id="meteoconsThermometerRaindrop0" viewBox="0 0 175 260.9">
           <path
             fill="none"
-            stroke="#2885c7"
+            stroke="currentColor"
             strokeMiterlimit="10"
             strokeWidth="15"
             d="M87.5 13.4c-48.7 72-80 117-80 160.7s35.8 79.3 80 79.3s80-35.5 80-79.3s-31.3-88.8-80-160.7Z"
           ></path>
         </symbol>
         <symbol id="meteoconsThermometerRaindrop1" viewBox="0 0 72 168">
-          <circle cx="36" cy="132" r="36" fill="#ef4444"></circle>
+          <circle cx="36" cy="132" r="36" fill="currentColor"></circle>
           <path
             fill="none"
-            stroke="#ef4444"
+            stroke="currentColor"
             strokeLinecap="round"
             strokeMiterlimit="10"
             strokeWidth="24"
@@ -49,7 +49,7 @@ export const AirTemperature = (
         <symbol id="meteoconsThermometerRaindrop2" viewBox="0 0 118 278">
           <path
             fill="none"
-            stroke="#cbd5e1"
+            stroke="currentColor"
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="6"
@@ -107,7 +107,7 @@ export const RelativeHumidity = (props: SVGProps<SVGSVGElement>) => {
         <symbol id="meteoconsHumidity0" viewBox="0 0 175 260.9">
           <path
             fill="none"
-            stroke="#2885c7"
+            stroke="currentColor"
             strokeMiterlimit="10"
             strokeWidth="15"
             d="M87.5 13.4c-48.7 72-80 117-80 160.7s35.8 79.3 80 79.3s80-35.5 80-79.3s-31.3-88.8-80-160.7Z"
@@ -132,7 +132,7 @@ export const RelativeHumidity = (props: SVGProps<SVGSVGElement>) => {
         transform="translate(168.4 123.18)"
       />
       <path
-        fill="#374151"
+        fill="currentColor"
         d="M218.8 250.5q4.8-4.5 13.7-4.5t13.6 4.5q4.8 4.4 4.8 12.4v8q0 7.8-4.8 12.2t-13.6 4.4q-9 0-13.7-4.4t-4.8-12.2v-8q0-8 4.8-12.4Zm71.2-1.6a2.8 2.8 0 0 1-.6 2.6l-53 73.3a9.4 9.4 0 0 1-2.8 2.8a12.3 12.3 0 0 1-4.6.6h-4.4c-1.3 0-2.1-.4-2.5-1.1a2.8 2.8 0 0 1 .7-2.8l53-73.3a7 7 0 0 1 2.6-2.7a12.7 12.7 0 0 1 4.4-.5h4.9c1.2 0 2 .4 2.3 1.1Zm-57.5 7.6q-7.7 0-7.7 7v6.7q0 7 7.7 7t7.7-7v-6.8q0-6.9-7.7-6.9Zm33.4 36.4q4.7-4.5 13.7-4.5t13.6 4.5q4.8 4.5 4.8 12.4v8q0 7.8-4.8 12.2t-13.7 4.5q-8.9 0-13.6-4.4t-4.8-12.3v-8q0-8 4.8-12.4Zm13.6 6.1q-7.6 0-7.6 7v6.6q0 7 7.6 7t7.7-7v-6.7q0-6.9-7.7-6.9Z"
       />
     </svg>
@@ -153,22 +153,22 @@ export const Pressure = (props: SVGProps<SVGSVGElement>) => {
         cy="256"
         r="144"
         fill="none"
-        stroke="#475569"
+        stroke="currentColor"
         strokeMiterlimit="10"
         strokeWidth="12"
       />
       <path
         fill="none"
-        stroke="#475569"
+        stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="6"
         d="M256 200v-48m108 104h-48m-116 0h-48m180-68l-24 24m-104 0l-24-24m128 112l24 24m-152 0l24-24"
       />
-      <circle cx="256" cy="256" r="24" fill="#ef4444" />
+      <circle cx="256" cy="256" r="24" fill="currentColor" />
       <path
         fill="none"
-        stroke="#ef4444"
+        stroke="currentColor"
         strokeLinecap="round"
         strokeMiterlimit="10"
         strokeWidth="12"
@@ -202,7 +202,6 @@ export const Wind = (props: SVGProps<SVGSVGElement>) => {
         <symbol id="meteoconsWind0" viewBox="0 0 342 234">
           <path
             fill="none"
-            // stroke="#e2e8f0"
             stroke="currentColor"
             strokeDasharray="148"
             strokeLinecap="round"
@@ -219,7 +218,6 @@ export const Wind = (props: SVGProps<SVGSVGElement>) => {
           </path>
           <path
             fill="none"
-            // stroke="#e2e8f0"
             stroke="currentColor"
             strokeDasharray="110"
             strokeLinecap="round"
@@ -257,7 +255,7 @@ export const Voltage = (props: SVGProps<SVGSVGElement>) => {
     >
       <defs>
         <symbol id="meteoconsLightningBolt0" viewBox="0 0 96 176">
-          <path fill="#f6a823" d="M32 0L0 96h32l-16 80L96 64H48L80 0H32z">
+          <path fill="currentColor" d="M32 0L0 96h32l-16 80L96 64H48L80 0H32z">
             <animate
               id="meteoconsLightningBolt1"
               attributeName="opacity"
@@ -331,9 +329,9 @@ export const ParticulateMatter25 = (props: SVGProps<SVGSVGElement>) => {
           y2="30.9"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stopColor="#fbbf24"></stop>
-          <stop offset=".5" stopColor="#fbbf24"></stop>
-          <stop offset="1" stopColor="#f59e0b"></stop>
+          <stop offset="0" stopColor="currentColor"></stop>
+          <stop offset=".5" stopColor="currentColor"></stop>
+          <stop offset="1" stopColor="currentColor"></stop>
         </linearGradient>
         <linearGradient
           id="meteoconsPollenFill1"
@@ -389,7 +387,7 @@ export const ParticulateMatter25 = (props: SVGProps<SVGSVGElement>) => {
             cy="17"
             r="16"
             fill="url(#meteoconsPollenFill0)"
-            stroke="#f8af18"
+            stroke="currentColor"
             strokeMiterlimit="10"
             strokeWidth="2"
           >
@@ -409,7 +407,7 @@ export const ParticulateMatter25 = (props: SVGProps<SVGSVGElement>) => {
             cy="73"
             r="21.3"
             fill="url(#meteoconsPollenFill1)"
-            stroke="#f8af18"
+            stroke="currentColor"
             strokeMiterlimit="10"
             strokeWidth="2"
           >
@@ -429,7 +427,7 @@ export const ParticulateMatter25 = (props: SVGProps<SVGSVGElement>) => {
             cy="73"
             r="21.3"
             fill="url(#meteoconsPollenFill2)"
-            stroke="#f8af18"
+            stroke="currentColor"
             strokeMiterlimit="10"
             strokeWidth="2"
           >
@@ -449,7 +447,7 @@ export const ParticulateMatter25 = (props: SVGProps<SVGSVGElement>) => {
             cy="81"
             r="16"
             fill="url(#meteoconsPollenFill3)"
-            stroke="#f8af18"
+            stroke="currentColor"
             strokeMiterlimit="10"
             strokeWidth="2"
           >
@@ -469,7 +467,7 @@ export const ParticulateMatter25 = (props: SVGProps<SVGSVGElement>) => {
             cy="81"
             r="16"
             fill="url(#meteoconsPollenFill4)"
-            stroke="#f8af18"
+            stroke="currentColor"
             strokeMiterlimit="10"
             strokeWidth="2"
           >
@@ -489,7 +487,7 @@ export const ParticulateMatter25 = (props: SVGProps<SVGSVGElement>) => {
             cy="25"
             r="10.7"
             fill="url(#meteoconsPollenFill5)"
-            stroke="#f8af18"
+            stroke="currentColor"
             strokeMiterlimit="10"
             strokeWidth="2"
           >
@@ -509,7 +507,7 @@ export const ParticulateMatter25 = (props: SVGProps<SVGSVGElement>) => {
             cy="25"
             r="10.7"
             fill="url(#meteoconsPollenFill6)"
-            stroke="#f8af18"
+            stroke="currentColor"
             strokeMiterlimit="10"
             strokeWidth="2"
           >

@@ -10,7 +10,8 @@ import VariableSelector from "./variable-selector";
 
 export default function MapContainer() {
   const { theme } = useTheme();
-  const { isLoading, data, refetch, isFetching } = useStationMetadata();
+  const { isLoading, data, refetch, isFetching, isFetched } =
+    useStationMetadata();
 
   return (
     <GlobalErrorBoundary>
@@ -46,7 +47,9 @@ export default function MapContainer() {
           }
         >
           <NavigationControl position="top-left" />
-          <StationMarker stations={data?.STATION} />
+          {isFetched && (
+            <StationMarker stations={data!.STATION} units={data!.UNITS} />
+          )}
         </Map>
         {isLoading || isFetching ? (
           <div className="w-fit h-fit z-[100] absolute top-1/2 translate-y-[-50%] left-1/2 translate-x-[-50%] bg-transparent flex justify-center items-center">
