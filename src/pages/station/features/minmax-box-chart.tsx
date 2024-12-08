@@ -23,7 +23,7 @@ import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 export const MinmaxBoxChart = ({ data }: { data: LatestStationResponse }) => {
   const { variableLabels } = rootRoute.useLoaderData();
 
-  const [selectedVariable, setSelectedVariable] = useState(
+  const [selectedVariable, _setSelectedVariable] = useState(
     Object.keys(
       data.STATION[0]["SENSOR_VARIABLES"],
     )?.[0] as keyof (typeof data.STATION)[0]["SENSOR_VARIABLES"],
