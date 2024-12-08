@@ -45,6 +45,10 @@ export const AddTokensForm = () => {
           <span className="text-neutral-500 text-sm">
             Enter Mapbox and Synoptic tokens to display weather data.
           </span>
+          <br />
+          <span className="text-neutral-500 text-sm">
+            Your tokens are hidden from the input field.
+          </span>
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -55,7 +59,11 @@ export const AddTokensForm = () => {
                 <FormItem>
                   <FormLabel>Mapbox Token</FormLabel>
                   <FormControl>
-                    <Input placeholder="********************" {...field} />
+                    <Input
+                      type="password"
+                      placeholder="********************"
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription>
                     This token is used to display the map on the dashboard.{" "}
@@ -81,7 +89,11 @@ export const AddTokensForm = () => {
                 <FormItem>
                   <FormLabel>Synoptic Token</FormLabel>
                   <FormControl>
-                    <Input placeholder="********************" {...field} />
+                    <Input
+                      type="password"
+                      placeholder="********************"
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription>
                     This token is used to fetch weather data for the dashboard.

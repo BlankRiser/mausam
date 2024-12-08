@@ -9,7 +9,8 @@
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "scan": "vite && npx react-scan@latest localhost:5173"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.0.8",

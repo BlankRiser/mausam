@@ -71,16 +71,24 @@ export type Station = {
   RESTRICTED: boolean;
 
   QC_FLAGGED: boolean;
-  MINMAX: MinMax;
+  MINMAX: Record<string, MinMax>;
 };
 
 export type MinMax = {
   dates: Array<string>;
-  value_min_local: Array<number>;
-  value_max_local: Array<number>;
-  datetime_min_local: Array<string>;
-  datetime_max_local: Array<string>;
   datetime_timezone: string;
+
+  value_min_local?: Array<number>;
+  value_min_utc?: Array<number>;
+
+  value_max_local?: Array<number>;
+  value_max_utc?: Array<number>;
+
+  datetime_min_local?: Array<string>;
+  datetime_min_utc?: Array<string>;
+
+  datetime_max_local?: Array<string>;
+  datetime_max_utc?: Array<string>;
 };
 
 // Optimized SensorVariables type

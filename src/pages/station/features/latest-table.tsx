@@ -76,16 +76,35 @@ const getLatestStnDataTableColumns = (
     },
     {
       id: "sensor-value",
-      header: "Value",
+      header: () => {
+        return <p className="text-right">Current Value</p>;
+      },
+
       cell: ({ row }) => {
         const { value, unit } = row.original.observation;
 
         if (!value) {
-          return "N/A";
+          return (
+            <p className="text-right text-neutral-400 dark:text-neutral-600">
+              N/A
+            </p>
+          );
+        }
+
+        if (typeof value === "object") {
+          // If this value is an object, it probably is cloud layer with `sky_condition` and `height_agl` keys
+          return (
+            <p className="text-right">
+              {value["sky_condition"]} at {value["height_agl"]}{" "}
+              <span className="text-neutral-400 dark:text-neutral-600">
+                {unit}{" "}
+              </span>
+            </p>
+          );
         }
 
         return (
-          <p>
+          <p className="text-right">
             {value}{" "}
             <span className="text-neutral-400 dark:text-neutral-600">
               {unit}{" "}

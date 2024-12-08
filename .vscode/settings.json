@@ -10,7 +10,8 @@
   "window.nativeTabs": true, // mac only
   "workbench.editor.highlightModifiedTabs": true,
   "editor.stickyScroll.enabled": true,
-  "editor.fontFamily": "DankMono-Regular",
+  "editor.fontFamily": "'Fira Code'",
+  // "editor.fontFamily": "DankMono-Regular",
   "terminal.integrated.fontFamily": "'Fira Code'",
   "editor.fontLigatures": true,
   "editor.tabSize": 4,
@@ -30,9 +31,6 @@
     "source.organizeImports": "never"
   },
   "terminal.integrated.env.osx": {},
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "diffEditor.ignoreTrimWhitespace": true,
   "search.exclude": {
     "**/.git": true,
@@ -66,23 +64,8 @@
   // "typescript.inlayHints.variableTypes.enabled": true,
 
   "workbench.productIconTheme": "icons-carbon",
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "window.zoomLevel": 1,
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "github.copilot.enable": {
     "*": true,
     "plaintext": false,
@@ -90,7 +73,5 @@
     "scminput": false,
     "typescriptreact": true
   },
-  "workbench.iconTheme": "file-icons",
   "git.openRepositoryInParentFolders": "never",
-  "liveServer.settings.donotShowInfoMsg": true
 }
