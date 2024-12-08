@@ -74,7 +74,7 @@ export const stationLatestQueryOptions = ({ stid }: { stid: string }) => {
             stid,
             complete: 1,
             sensorvars: 1,
-            minmax: 2,
+            minmax: 7,
             status: "active",
             obtimezone: "utc",
             minmaxtype: "utc",
