@@ -4,6 +4,9 @@ import { createRouter, ErrorComponent } from "@tanstack/react-router";
 import { rootRoute } from "./root-route";
 import {
   indexRoute,
+  networkRoute,
+  networksIndexRoute,
+  networksRoute,
   stationIndexRoute,
   stationRoute,
   stationsRoute,
@@ -17,6 +20,7 @@ const routeTree = rootRoute.addChildren([
   indexRoute.addChildren([
     stationsRoute.addChildren([stationIndexRoute, stationRoute]),
     tokenRoute.addChildren([tokenIndexRoute]),
+    networksRoute.addChildren([networksIndexRoute, networkRoute]),
   ]),
 ]);
 

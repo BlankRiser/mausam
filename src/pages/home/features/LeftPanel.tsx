@@ -54,6 +54,12 @@ const StationSummary = () => {
         </Link>
       </div>
       <InfoCard name="STID" value={currentStation.STID} />
+      <InfoCard name="Station Name" value={currentStation.NAME} />
+      <InfoCard
+        linkValue={currentStation.MNET_ID}
+        name="Network"
+        value={currentStation?.SHORTNAME ?? "N/A"}
+      />
       <InfoCard name="Station Variable" value={selectedVariable} />
       <InfoCard name="Station Name" value={currentStation.NAME} />
       <InfoCard name="Timezone" value={currentStation.TIMEZONE} />

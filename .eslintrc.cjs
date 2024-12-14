@@ -22,8 +22,9 @@ module.exports = {
     project: true,
     tsconfigRootDir: __dirname,
   },
-  plugins: ["react-refresh", "@tanstack/query"],
+  plugins: ["react-refresh", "@tanstack/query", "eslint-plugin-react-compiler"],
   rules: {
+    "react-compiler/react-compiler": "error",
     "react/react-in-jsx-scope": "off",
     "react/jsx-uses-react": "off",
     "react/prop-types": "off",

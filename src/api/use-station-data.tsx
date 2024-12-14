@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/require-await */
 import { useKy } from "@/providers/ky-provider";
 import { useKeysStore } from "@/store/env-keys.store";
 import { useCurrentState } from "@/store/station.store";

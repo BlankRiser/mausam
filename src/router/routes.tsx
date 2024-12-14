@@ -2,7 +2,10 @@ import { Home } from "@/pages/home/home";
 import { StationDetails } from "@/pages/station/station";
 import { createRoute, redirect } from "@tanstack/react-router";
 import { rootRoute } from "./root-route";
-import { AddTokensForm } from "@/pages/add-token/features/add-tokens-form";
+import { AddTokensForm } from "@/pages/add-token/add-tokens-form";
+import { ChooseStation } from "@/pages/station/features/choose-station";
+import { Networks } from "@/pages/networks/networks";
+import { NetworkDetails } from "@/pages/networks/network-details";
 
 export const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -34,18 +37,7 @@ export const stationsRoute = createRoute({
 export const stationIndexRoute = createRoute({
   getParentRoute: () => stationsRoute,
   path: "/",
-  component: () => {
-    return (
-      <div className="w-full h-full grid place-items-center">
-        <div className="flex flex-col items-center gap-4">
-          <h3 className="text-7xl font-semibold">Select a station</h3>
-          <span className="text-blue-600 dark:text-blue-400 underline underline-offset-4">
-            Go back to the home page and select a station to view its details.
-          </span>
-        </div>
-      </div>
-    );
-  },
+  component: ChooseStation,
 });
 
 export const stationRoute = createRoute({
@@ -56,6 +48,32 @@ export const stationRoute = createRoute({
     const stationId = opts.params.stationId;
     if (!stationId) {
       console.error(`Station ID: ${stationId ?? "N/A"} does not exist`);
+      throw redirect({
+        to: "/",
+      });
+    }
+  },
+});
+
+export const networksRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "networks",
+});
+
+export const networksIndexRoute = createRoute({
+  getParentRoute: () => networksRoute,
+  path: "/",
+  component: Networks,
+});
+
+export const networkRoute = createRoute({
+  getParentRoute: () => networksRoute,
+  path: "/$networkId",
+  component: NetworkDetails,
+  loader: (opts) => {
+    const networkId = opts.params.networkId;
+    if (!networkId) {
+      console.error(`Network ID: ${networkId ?? "N/A"} does not exist`);
       throw redirect({
         to: "/",
       });

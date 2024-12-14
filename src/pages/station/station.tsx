@@ -32,7 +32,7 @@ export const StationDetails = () => {
         {/* <div className="order-first md:order-last h-48 md:h-96">
           <StationMap data={metadata.data} />
         </div> */}
-        <div className="w-1/2 h-12">
+        <div className="w-1/2">
           <MinmaxBoxChart data={latest.data} />
         </div>
       </div>

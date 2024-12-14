@@ -10,6 +10,7 @@ import VariableSelector from "./variable-selector";
 
 export default function MapContainer() {
   const { theme } = useTheme();
+  const mapboxToken = useKeysStore((state) => state.mapboxToken);
   const { isLoading, data, refetch, isFetching, isFetched } =
     useStationMetadata();
 
@@ -29,7 +30,7 @@ export default function MapContainer() {
           onMoveEnd={() => {
             void refetch();
           }}
-          mapboxAccessToken={useKeysStore.getState().mapboxToken}
+          mapboxAccessToken={mapboxToken}
           initialViewState={{
             longitude: -113.698,
             latitude: 37.155,

@@ -7,6 +7,7 @@ import Map, { Marker } from "react-map-gl";
 
 export const StationMap = ({ data }: { data: StationMetadata }) => {
   const { theme } = useTheme();
+  const mapboxToken = useKeysStore((state) => state.mapboxToken);
 
   return (
     <div className="w-full h-full rounded-md overflow-hidden">
@@ -14,7 +15,7 @@ export const StationMap = ({ data }: { data: StationMetadata }) => {
         id="single-station-map"
         hash="map"
         reuseMaps={true}
-        mapboxAccessToken={useKeysStore.getState().mapboxToken}
+        mapboxAccessToken={mapboxToken}
         initialViewState={{
           longitude: +data.STATION[0].LONGITUDE,
           latitude: +data.STATION[0].LATITUDE,
