@@ -5,7 +5,7 @@ export const RootComponent = () => {
   return (
     <div className="w-full h-full">
       <Navbar />
-      <main className="w-full">
+      <main className="w-full h-full">
         <Outlet />
       </main>
       <footer className="flex justify-between items-center px-2 py-2 bg-neutral-100">
