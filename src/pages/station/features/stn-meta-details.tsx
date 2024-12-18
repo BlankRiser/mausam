@@ -2,7 +2,7 @@ import { StationMetadata } from "@/types/station-metadata";
 import { useMemo } from "react";
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-const formatter = new (Intl as any).ListFormat("en", {
+const formatter = new Intl.ListFormat("en", {
   style: "long",
   type: "conjunction",
 });

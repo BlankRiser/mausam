@@ -1,11 +1,11 @@
 import { Home } from "@/pages/home/home";
-import { StationDetails } from "@/pages/station/station";
+import { StationDetailsPage } from "@/pages/station/station";
 import { createRoute, redirect } from "@tanstack/react-router";
 import { rootRoute } from "./root-route";
-import { AddTokensForm } from "@/pages/add-token/add-tokens-form";
-import { ChooseStation } from "@/pages/station/features/choose-station";
-import { Networks } from "@/pages/networks/networks";
-import { NetworkDetails } from "@/pages/networks/network-details";
+import { TokensPage } from "@/pages/add-token/add-tokens-form";
+import { StationIndexPage } from "@/pages/station/features/choose-station";
+import { NetworksPage } from "@/pages/networks/networks";
+import { NetworkDetailsPage } from "@/pages/networks/network-details";
 
 export const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -26,7 +26,7 @@ export const tokenRoute = createRoute({
 export const tokenIndexRoute = createRoute({
   getParentRoute: () => tokenRoute,
   path: "/",
-  component: AddTokensForm,
+  component: TokensPage,
 });
 
 export const stationsRoute = createRoute({
@@ -37,13 +37,14 @@ export const stationsRoute = createRoute({
 export const stationIndexRoute = createRoute({
   getParentRoute: () => stationsRoute,
   path: "/",
-  component: ChooseStation,
+  component: StationIndexPage,
 });
 
 export const stationRoute = createRoute({
   getParentRoute: () => stationsRoute,
   path: "/$stationId",
-  component: StationDetails,
+  component: StationDetailsPage,
+  wrapInSuspense: true,
   loader: (opts) => {
     const stationId = opts.params.stationId;
     if (!stationId) {
@@ -63,13 +64,13 @@ export const networksRoute = createRoute({
 export const networksIndexRoute = createRoute({
   getParentRoute: () => networksRoute,
   path: "/",
-  component: Networks,
+  component: NetworksPage,
 });
 
 export const networkRoute = createRoute({
   getParentRoute: () => networksRoute,
   path: "/$networkId",
-  component: NetworkDetails,
+  component: NetworkDetailsPage,
   loader: (opts) => {
     const networkId = opts.params.networkId;
     if (!networkId) {

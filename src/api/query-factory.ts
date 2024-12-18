@@ -10,17 +10,14 @@ import ky from "ky";
 export const variablesQueryOptions = () => {
   return queryOptions({
     queryKey: ["variables"],
-    queryFn: () => {
+    queryFn: async () => {
       return ky
         .get(`${API.BaseUrl}/variables`, {
           searchParams: {
             token: useKeysStore.getState().synopticToken,
           },
         })
-        .json<Variables>()
-        .catch((error) => {
-          console.error(error);
-        });
+        .json<Variables>();
     },
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
   });
@@ -29,17 +26,14 @@ export const variablesQueryOptions = () => {
 export const networksQueryOptions = () => {
   return queryOptions({
     queryKey: ["networks"],
-    queryFn: () => {
+    queryFn: async () => {
       return ky
         .get(`${API.BaseUrl}/networks`, {
           searchParams: {
             token: useKeysStore.getState().synopticToken,
           },
         })
-        .json<Networks>()
-        .catch((error) => {
-          console.error(error);
-        });
+        .json<Networks>();
     },
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
   });
@@ -48,7 +42,7 @@ export const networksQueryOptions = () => {
 export const stationMetadataQueryOptions = ({ stid }: { stid: string }) => {
   return queryOptions({
     queryKey: ["stations", "metadata", stid],
-    queryFn: () => {
+    queryFn: async () => {
       return ky
         .get(`${API.BaseUrl}/stations/metadata`, {
           searchParams: {
@@ -67,7 +61,7 @@ export const stationMetadataQueryOptions = ({ stid }: { stid: string }) => {
 export const stationLatestQueryOptions = ({ stid }: { stid: string }) => {
   return queryOptions({
     queryKey: ["stations", "latest", stid],
-    queryFn: () => {
+    queryFn: async () => {
       return ky
         .get(`${API.BaseUrl}/stations/latest`, {
           searchParams: {
@@ -89,6 +83,7 @@ export const stationLatestQueryOptions = ({ stid }: { stid: string }) => {
     },
   });
 };
+
 export const variableTimeseriesQueryOptions = ({
   stid,
   vars,

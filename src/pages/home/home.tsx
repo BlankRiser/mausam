@@ -12,7 +12,7 @@ export const Home = () => {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
 
   return (
-    <section className="bg-neutral-50 dark:bg-neutral-950 h-full rounded-md h-[calc(100dvh-42px)]">
+    <section className="bg-neutral-50 dark:bg-neutral-950 rounded-md h-[calc(100svh-var(--nav-height)-var(--footer-height))]">
       <PanelGroup direction={isSmallDevice ? "vertical" : "horizontal"}>
         <Panel>
           <LeftPanel />

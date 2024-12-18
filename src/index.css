@@ -9,6 +9,9 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+
+    --nav-height: 44px;
+    --footer-height: 42px;
   }
 
   .dark {

@@ -1,3 +1,9 @@
-export const Networks = () => {
-  return <div>Networks</div>;
+import { NetworksTable } from "./features/network-table";
+
+export const NetworksPage = () => {
+  return (
+    <div>
+      <NetworksTable />
+    </div>
+  );
 };

@@ -24,9 +24,9 @@ export const DataTable = <TData, TValue>({
 }: DataTableProps<TData, TValue>) => {
   return (
     <div className="rounded-md border border-neutral-200 dark:border-neutral-800">
-      <div className={cn(["relative overflow-auto", className])}>
-        <Table className="w-full relative">
-          <TableHeader className=" bg-neutral-100 dark:bg-neutral-900 z-10 border-b border-b-neutral-800 dark:border-b-neutral-600">
+      <div className={cn(["relative ", className])}>
+        <Table className="w-full relative h-[200px]">
+          <TableHeader className=" bg-neutral-100 dark:bg-neutral-900 z-10 border-b border-b-neutral-800 dark:border-b-neutral-600 sticky top-0">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {

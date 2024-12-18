@@ -4,11 +4,11 @@ import {
 } from "@/api/query-factory";
 import { stationRoute } from "@/router/routes";
 import { useSuspenseQueries } from "@tanstack/react-query";
-import { LatestStnDataTable } from "./features/latest-table";
+import { LatestStnDataTable } from "./features/station-table";
 import { StnMetaDetails } from "./features/stn-meta-details";
 import { MinmaxBoxChart } from "./features/minmax-box-chart";
 
-export const StationDetails = () => {
+export const StationDetailsPage = () => {
   const { stationId } = stationRoute.useParams();
 
   const [metadata, latest] = useSuspenseQueries({
@@ -23,7 +23,7 @@ export const StationDetails = () => {
   });
 
   return (
-    <div className="p-2 space-y-2">
+    <div className="p-2 space-y-2 ">
       <StnMetaDetails data={metadata.data} />
       <div className="flex flex-col gap-2">
         <div className="">

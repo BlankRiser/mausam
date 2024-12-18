@@ -17,7 +17,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-export const AddTokensForm = () => {
+export const TokensPage = () => {
   const navigate = useNavigate({ from: "/token" });
   const synopticToken = useKeysStore((state) => state.synopticToken);
   const mapboxToken = useKeysStore((state) => state.mapboxToken);
@@ -38,7 +38,7 @@ export const AddTokensForm = () => {
   };
 
   return (
-    <div className="h-full grid place-items-center">
+    <div className="h-[calc(100svh-var(--nav-height)-var(--footer-height))] grid place-items-center">
       <div className="max-w-4xl bg-neutral-50 dark:bg-neutral-950 rounded-md p-4 border border-neutral-200 dark:border-neutral-800">
         <div className="mb-4">
           <h2 className="text-2xl font-semibold">Add Your Tokens</h2>

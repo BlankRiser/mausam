@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 
-export const ChooseStation = () => {
+export const StationIndexPage = () => {
   return (
-    <div className="w-full h-full grid place-items-center">
+    <div className="w-full h-[calc(100svh-var(--nav-height)-var(--footer-height))] grid place-items-center">
       <div className="flex flex-col items-center gap-4">
         <h3 className="text-7xl font-semibold">Select a station</h3>
         <Link
