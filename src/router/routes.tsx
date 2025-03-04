@@ -6,6 +6,10 @@ import { TokensPage } from "@/pages/add-token/add-tokens-form";
 import { StationIndexPage } from "@/pages/station/features/choose-station";
 import { NetworksPage } from "@/pages/networks/networks";
 import { NetworkDetailsPage } from "@/pages/networks/network-details";
+import {
+  stationLatestQueryOptions,
+  stationMetadataQueryOptions,
+} from "@/api/query-factory";
 
 export const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -45,14 +49,27 @@ export const stationRoute = createRoute({
   path: "/$stationId",
   component: StationDetailsPage,
   wrapInSuspense: true,
-  loader: (opts) => {
-    const stationId = opts.params.stationId;
+  loader: ({ params, context }) => {
+    const stationId = params.stationId;
+
     if (!stationId) {
       console.error(`Station ID: ${stationId ?? "N/A"} does not exist`);
       throw redirect({
         to: "/",
       });
     }
+
+    void context.queryClient.ensureQueryData(
+      stationMetadataQueryOptions({
+        stid: stationId,
+      }),
+    );
+
+    void context.queryClient.ensureQueryData(
+      stationLatestQueryOptions({
+        stid: stationId,
+      }),
+    );
   },
 });
 
@@ -71,8 +88,8 @@ export const networkRoute = createRoute({
   getParentRoute: () => networksRoute,
   path: "/$networkId",
   component: NetworkDetailsPage,
-  loader: (opts) => {
-    const networkId = opts.params.networkId;
+  loader: ({ params }) => {
+    const networkId = params.networkId;
     if (!networkId) {
       console.error(`Network ID: ${networkId ?? "N/A"} does not exist`);
       throw redirect({

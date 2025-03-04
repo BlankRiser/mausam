@@ -9,7 +9,7 @@ type State = {
 
 type Actions = {
   setFetchedStations: (stations: Array<Station>) => void;
-  setCurrentStation: (station: Station) => void;
+  setCurrentStation: (station: Station | null) => void;
   setCurrentVariable: (variable: string) => void;
   reset: () => void;
 };
@@ -24,7 +24,7 @@ export const useCurrentState = create<State & Actions>()((set) => ({
   currentStation: initialState.currentStation,
   currentVariable: initialState.currentVariable,
   fetchedStations: initialState.fetchedStations,
-  setCurrentStation: (station: Station) => {
+  setCurrentStation: (station: Station | null) => {
     set({
       currentStation: station,
     });

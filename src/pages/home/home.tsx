@@ -18,7 +18,7 @@ export const Home = () => {
           <LeftPanel />
         </Panel>
         <PanelResizeHandle className="transition-colors w-full md:w-2 group flex flex-col justify-center items-center data-[resize-handle-active='pointer']:bg-blue-100 dark:data-[resize-handle-active='pointer']:bg-neutral-800">
-          <div className="bg-neutral-200 w-8 h-1 my-2 md:h-8 md:w-1 rounded-md group-hover:bg-blue-300 group-data-[resize-handle-active='pointer']:bg-blue-400" />
+          <div className="bg-neutral-200 w-8 h-1 my-2 md:h-8 md:w-1 rounded-md group-hover:bg-blue-300 group-data-[resize-handle-active='pointer']:h-full group-data-[resize-handle-active='pointer']:bg-blue-400" />
         </PanelResizeHandle>
         <Panel
           className="w-full relative rounded-md"

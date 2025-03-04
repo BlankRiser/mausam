@@ -8,20 +8,20 @@ export const RootComponent = () => {
       <main className="w-full h-full">
         <Outlet />
       </main>
-      <footer className="flex justify-between items-center px-2 py-2 bg-neutral-100">
+      <footer className="flex justify-between items-center px-2 py-2 bg-neutral-100 dark:bg-neutral-900">
         <p>
-          Made with
+          Made with {" "}
           <span role="img" aria-label="love">
             ❤️
           </span>
-          by{" "}
+         {" "} by{" "}
           <a
             href="https://github.com/BlankRiser"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-500"
           >
-            Ram Shankar
+            Ram
           </a>
         </p>
         <p>

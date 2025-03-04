@@ -24,7 +24,6 @@ export const NetworksTable = () => {
     enableRowSelection: true,
   });
 
-  console.log(data);
   return (
     <div className="overflow-auto max-h-[calc(100svh-var(--nav-height)-var(--footer-height))]">
       <DataTable table={table} columns={columns} />

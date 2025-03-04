@@ -30,7 +30,9 @@ export const rootRoute = createRootRouteWithContext<{
     );
     const networks = context.queryClient.ensureQueryData(
       networksQueryOptions(),
-    );
+    ).catch((e: Error)=>{
+      throw e
+    })
     const resolvedData = await Promise.all([variables, networks]);
 
     return extractMetaDetails({

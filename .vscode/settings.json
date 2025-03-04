@@ -10,8 +10,8 @@
   "window.nativeTabs": true, // mac only
   "workbench.editor.highlightModifiedTabs": true,
   "editor.stickyScroll.enabled": true,
-  "editor.fontFamily": "'Fira Code'",
-  // "editor.fontFamily": "DankMono-Regular",
+  // "editor.fontFamily": "'Fira Code'",
+  "editor.fontFamily": "DankMono-Regular",
   "terminal.integrated.fontFamily": "'Fira Code'",
   "editor.fontLigatures": true,
   "editor.tabSize": 4,

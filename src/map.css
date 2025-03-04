@@ -159,24 +159,18 @@
 }
 /* override some mapbox classes */
 .mapboxgl-popup-content {
-    background-color: #aaa;
+    background-color: transparent;
     border-radius: 10px;
     padding: 0px;
     box-shadow: 0;
 }
 .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
-    border-top-color: #aaa;
+    border-top-color: transparent;
 }
 .mapboxgl-popup-close-button {
-    background-color: #ebebeb;
-    color: #666;
-    border: 3px solid #666;
-    border-radius: 20px;
     font-size: 150%;
     cursor: pointer;
-    position: absolute;
-    right: -10px;
-    top: -10px;
+    padding: 4px;
 }
 
 .mapboxgl-popup-close-button:hover {

@@ -99,9 +99,9 @@ export const variableTimeseriesQueryOptions = ({
           searchParams: {
             stid,
             vars: vars.join(","),
-            recent: 25 * 60, // 25 hours to account for values close to the hour
-            timeformat: "%s",
             units: "temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa",
+            timeformat: "%s",
+            recent: 25 * 60, // 25 hours to account for values close to the hour
             token: useKeysStore.getState().synopticToken,
           },
         })

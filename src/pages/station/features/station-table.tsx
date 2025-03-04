@@ -7,6 +7,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { format } from "date-fns";
 import { useMemo } from "react";
 
 export const LatestStnDataTable = ({
@@ -19,22 +20,23 @@ export const LatestStnDataTable = ({
     () => getLatestStnDataTableColumns(variableLabels),
     [variableLabels],
   );
+  const rows = useMemo(() => transformData(data), [data]);
 
   const table = useReactTable({
     getCoreRowModel: getCoreRowModel(),
-    data: transformData(data),
+    data: rows,
     columns,
     enableRowSelection: true,
   });
 
   if (
-    data.STATION.length === 0 ||
-    Object.keys(data.STATION[0].SENSOR_VARIABLES ?? {}).length === 0
+    data?.STATION?.length === 0 ||
+    Object.keys(data.STATION?.[0].SENSOR_VARIABLES ?? {}).length === 0
   ) {
     return <LatestStnDataTableFallback />;
   }
 
-  return <DataTable table={table} columns={columns} className="h-96" />;
+  return <DataTable table={table} columns={columns} className="max-h-96 overflow-scroll" />;
 };
 
 const getLatestStnDataTableColumns = (
@@ -71,7 +73,16 @@ const getLatestStnDataTableColumns = (
       id: "sensor-date-time",
       header: "Date Time",
       cell: ({ row }) => {
-        return row.original.observation.dateTime;
+
+        if (row.original.observation.dateTime === "N/A") {
+          return (
+            <p className="text-right text-neutral-400 dark:text-neutral-600">
+              N/A
+            </p>
+          );
+        }
+
+        return format(new Date(row.original.observation.dateTime), "MMM d, yyyy h:mm a");
       },
     },
     {
@@ -107,7 +118,7 @@ const getLatestStnDataTableColumns = (
           <p className="text-right">
             {value}{" "}
             <span className="text-neutral-400 dark:text-neutral-600">
-              {unit}{" "}
+              {["text", "code", undefined].includes(unit) ? "" : unit }
             </span>
           </p>
         );
@@ -117,7 +128,7 @@ const getLatestStnDataTableColumns = (
 };
 
 const transformData = (data: LatestStationResponse) => {
-  const station = data.STATION[0];
+  const station = data.STATION?.[0];
   const sensorRows: Array<TransformedData> = [];
 
   if (!station || Object.keys(station.SENSOR_VARIABLES).length === 0) {
@@ -165,7 +176,7 @@ interface TransformedData {
 
 const LatestStnDataTableFallback = () => {
   return (
-    <div className="rounded-md grid place-items-center border border-neutral-200 dark:border-neutral-800">
+    <div className="aspect-video rounded-md grid place-items-center border border-neutral-200 dark:border-neutral-800">
       <span className="">
         There seems to be an issue with the data. <br /> Please try again later.
       </span>

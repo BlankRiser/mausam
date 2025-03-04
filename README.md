@@ -19,7 +19,7 @@ Mausam is a weather application that displays weather data on a map. The applica
 
 ### Implementation Notes
 
-#### When getting a map instance, use the id attribute provided to `<Map/>` component from react-map-gl.
+#### When getting a map instance, use the id attribute provided to `<Map/>` component from react-map-gl. Dont forget to wrap the parent with `<MapProvider/>` component.
 
 ```tsx
 // map is the "id" attribute of <Map/>
@@ -41,8 +41,11 @@ return (
 - [Mapbox](https://www.mapbox.com/)
 - [Synoptic Data](https://customer.synopticdata.com/credentials/)
 
-
-
 ## Dev Note
 
-- [Use loader in tanstac-query to only seed cached data](https://github.com/TanStack/router/discussions/1563) 
+- [Use loader in tanstack/react-query to only seed cached data](https://github.com/TanStack/router/discussions/1563) 
+
+
+### Test Stations
+
+- [D7349](http://localhost:5173/station/D7349)

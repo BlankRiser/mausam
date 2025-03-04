@@ -53,10 +53,24 @@ const StationSummary = () => {
           Get more details
         </Link>
       </div>
-      <InfoCard name="STID" value={currentStation.STID} />
+      <InfoCard
+        linkValue={{
+          to: "/station/$stationId",
+          params: {
+            stationId: currentStation.STID,
+          },
+        }}
+        name="STID"
+        value={currentStation.STID}
+      />
       <InfoCard name="Station Name" value={currentStation.NAME} />
       <InfoCard
-        linkValue={currentStation.MNET_ID}
+        linkValue={{
+          to: "/networks/$networkId",
+          params: {
+            networkId: currentStation.MNET_ID.toString(),
+          },
+        }}
         name="Network"
         value={currentStation?.SHORTNAME ?? "N/A"}
       />
