@@ -48,6 +48,9 @@ const StationSummary = () => {
           params={{
             stationId: currentStation.STID,
           }}
+          search={{
+            variable: currentVariable
+          }}
           className="text-sm text-blue-600 dark:text-blue-400 underline underline-offset-4"
         >
           Get more details

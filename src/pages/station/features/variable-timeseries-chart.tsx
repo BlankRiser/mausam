@@ -30,7 +30,7 @@ export const VariableTimeseriesChart = ({
     variableTimeseriesQueryOptions({ stid: stationId, vars: [variable] }),
   );
 
-  const { chartData, sets } = useMemo(
+  const { chartData } = useMemo(
     () => getChartData({ data: data!, variable }),
     [data, variable],
   );

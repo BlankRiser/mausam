@@ -72,9 +72,9 @@ export const VariableTimeseries = () => {
   );
 };
 
-const getVariables = (data: LatestStationResponse) => {
-  if (!data || data.STATION.length === 0) return [];
-  return Object.keys(data.STATION?.[0]?.SENSOR_VARIABLES ?? {}).filter(
-    (variable) => ignoreVariables.includes(variable) === false,
-  ) as Array<keyof SensorVariables>;
-};
+// const getVariables = (data: LatestStationResponse) => {
+//   if (!data || data.STATION.length === 0) return [];
+//   return Object.keys(data.STATION?.[0]?.SENSOR_VARIABLES ?? {}).filter(
+//     (variable) => ignoreVariables.includes(variable) === false,
+//   ) as Array<keyof SensorVariables>;
+// };
