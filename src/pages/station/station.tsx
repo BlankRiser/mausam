@@ -2,9 +2,8 @@ import {
   stationLatestQueryOptions,
   stationMetadataQueryOptions,
 } from "@/api/query-factory";
-import { ignoreVariables } from "@/data/ignore-list";
 import { stationRoute } from "@/router/routes";
-import { LatestStationResponse, SensorVariables } from "@/types/station";
+import { SensorVariables } from "@/types/station";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
