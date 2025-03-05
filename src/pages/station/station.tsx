@@ -56,10 +56,8 @@ export const StationDetailsPage = () => {
           <StationMap data={metadata.data} />
         </div>
         <MinmaxBoxChart data={latest.data} />
-      </div>
-      <section>
         <VariableTimeseries />
-      </section>
+      </div>
     </div>
   );
 };

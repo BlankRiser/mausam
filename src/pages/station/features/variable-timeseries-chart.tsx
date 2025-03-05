@@ -13,6 +13,10 @@ import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useMemo } from "react";
 
+const numberFormatter = new Intl.NumberFormat("en-US", {
+  maximumFractionDigits: 2,
+});
+
 export const VariableTimeseriesChart = ({
   variable,
 }: {
@@ -52,8 +56,10 @@ export const VariableTimeseriesChart = ({
               data={chartData}
               index="dateTime"
               categories={["value"]}
-              yAxisLabel={formattedVariable}
               customTooltip={CustomTooltip}
+              valueFormatter={(value) => {
+                return numberFormatter.format(value);
+              }}
             />
           )}
         </>
@@ -69,17 +75,18 @@ interface TooltipData {
 
 const CustomTooltip = ({ payload, active, label }: TooltipProps) => {
   const { variableLabels } = rootRoute.useLoaderData();
-  const { variable } = stationRoute.useSearch()
-  const formattedVariable: string = variableLabels.get(variable)?.long_name ?? variable
+  const { variable } = stationRoute.useSearch();
+  const formattedVariable: string =
+    variableLabels.get(variable)?.long_name ?? variable;
 
-  
   if (!active || !payload || payload.length === 0) return null;
 
-  const data = [{
-    label: formattedVariable,
-    value: (payload?.[0].payload as TooltipData)?.value
-  }
-]
+  const data = [
+    {
+      label: formattedVariable,
+      value: (payload?.[0].payload as TooltipData)?.value,
+    },
+  ];
 
   return (
     <>
@@ -100,7 +107,7 @@ const CustomTooltip = ({ payload, active, label }: TooltipProps) => {
               </span>
               <div className="flex items-center space-x-1">
                 <span className="font-medium text-gray-900 dark:text-gray-50">
-                  {item.value}
+                  {numberFormatter.format(item.value)}
                 </span>
               </div>
             </div>

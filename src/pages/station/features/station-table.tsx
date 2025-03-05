@@ -188,6 +188,7 @@ const LatestStnDataTableFallback = () => {
 const RenderVariableLabel = ({ variable }: { variable: string }) => {
   const { variableLabels } = rootRoute.useLoaderData();
   const { stationId } = stationRoute.useParams();
+  const { variable: selectedVariable } = stationRoute.useSearch();
   const navigate = useNavigate({ from: "/station/$stationId" });
 
   const handle = () => {
@@ -206,5 +207,13 @@ const RenderVariableLabel = ({ variable }: { variable: string }) => {
     ? (variableLabels.get(variable)?.long_name ?? variable)
     : variable;
 
-  return <Button onClick={handle}>{variableLabel}</Button>
+  return (
+    <Button
+      variant={selectedVariable === variable ? "outline" : "ghost"}
+      size="sm"
+      onClick={handle}
+    >
+      {variableLabel}
+    </Button>
+  );
 };
