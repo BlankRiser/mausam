@@ -1,7 +1,10 @@
+import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { rootRoute } from "@/router/root-route";
+import { stationRoute } from "@/router/routes";
 import { LatestStationResponse } from "@/types/station";
-import { VariableLabelItems } from "@/types/variables";
+import { useNavigate } from "@tanstack/react-router";
+
 import {
   ColumnDef,
   getCoreRowModel,
@@ -15,11 +18,7 @@ export const LatestStnDataTable = ({
 }: {
   data: LatestStationResponse;
 }) => {
-  const { variableLabels } = rootRoute.useLoaderData();
-  const columns = useMemo(
-    () => getLatestStnDataTableColumns(variableLabels),
-    [variableLabels],
-  );
+  const columns = useMemo(() => getLatestStnDataTableColumns(), []);
   const rows = useMemo(() => transformData(data), [data]);
 
   const table = useReactTable({
@@ -36,24 +35,22 @@ export const LatestStnDataTable = ({
     return <LatestStnDataTableFallback />;
   }
 
-  return <DataTable table={table} columns={columns} className="max-h-96 overflow-scroll" />;
+  return (
+    <DataTable
+      table={table}
+      columns={columns}
+      className="max-h-96 overflow-scroll"
+    />
+  );
 };
 
-const getLatestStnDataTableColumns = (
-  variableLabels: Map<string, VariableLabelItems>,
-): ColumnDef<TransformedData>[] => {
+const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
   return [
     {
       id: "variable",
       header: "Variable",
       cell: ({ row }) => {
-        if (variableLabels) {
-          return (
-            variableLabels.get(row.original.variable)?.long_name ??
-            row.original.variable
-          );
-        }
-        return row.original.variable;
+        return <RenderVariableLabel variable={row.original.variable} />;
       },
     },
     {
@@ -63,7 +60,9 @@ const getLatestStnDataTableColumns = (
         const { value, unit } = row.original.position;
 
         if (!value) {
-          return "N/A";
+          return (
+            <span className="text-neutral-400 dark:text-neutral-600">-</span>
+          );
         }
 
         return `${value} ${unit}`;
@@ -73,16 +72,18 @@ const getLatestStnDataTableColumns = (
       id: "sensor-date-time",
       header: "Date Time",
       cell: ({ row }) => {
-
         if (row.original.observation.dateTime === "N/A") {
           return (
-            <p className="text-right text-neutral-400 dark:text-neutral-600">
-              N/A
-            </p>
+            <span className="text-right text-neutral-400 dark:text-neutral-600">
+              -
+            </span>
           );
         }
 
-        return format(new Date(row.original.observation.dateTime), "MMM d, yyyy h:mm a");
+        return format(
+          new Date(row.original.observation.dateTime),
+          "MMM d, yyyy h:mm a",
+        );
       },
     },
     {
@@ -97,7 +98,7 @@ const getLatestStnDataTableColumns = (
         if (!value) {
           return (
             <p className="text-right text-neutral-400 dark:text-neutral-600">
-              N/A
+              -
             </p>
           );
         }
@@ -118,7 +119,7 @@ const getLatestStnDataTableColumns = (
           <p className="text-right">
             {value}{" "}
             <span className="text-neutral-400 dark:text-neutral-600">
-              {["text", "code", undefined].includes(unit) ? "" : unit }
+              {["text", "code", undefined].includes(unit) ? "" : unit}
             </span>
           </p>
         );
@@ -182,4 +183,28 @@ const LatestStnDataTableFallback = () => {
       </span>
     </div>
   );
+};
+
+const RenderVariableLabel = ({ variable }: { variable: string }) => {
+  const { variableLabels } = rootRoute.useLoaderData();
+  const { stationId } = stationRoute.useParams();
+  const navigate = useNavigate({ from: "/station/$stationId" });
+
+  const handle = () => {
+    void navigate({
+      to: "/station/$stationId",
+      params: {
+        stationId: stationId,
+      },
+      search: {
+        variable: variable,
+      },
+    });
+  };
+
+  const variableLabel = variableLabels
+    ? (variableLabels.get(variable)?.long_name ?? variable)
+    : variable;
+
+  return <Button onClick={handle}>{variableLabel}</Button>
 };

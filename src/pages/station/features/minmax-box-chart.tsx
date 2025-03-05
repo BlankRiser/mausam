@@ -1,35 +1,24 @@
+import { BarChart } from "@/components/charts/bar-chart";
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
 import { rootRoute } from "@/router/root-route";
+import { stationRoute } from "@/router/routes";
 import {
   LatestStationResponse,
   MinMax,
   SensorVariables,
 } from "@/types/station";
-import { format, isToday, isYesterday, parse } from "date-fns";
-import { useMemo, useState } from "react";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { useMemo } from "react";
 
 export const MinmaxBoxChart = ({ data }: { data: LatestStationResponse }) => {
   const { variableLabels } = rootRoute.useLoaderData();
+  const { variable } = stationRoute.useSearch();
 
-  const [selectedVariable, _setSelectedVariable] = useState(
-    Object.keys(data?.STATION?.[0]?.["SENSOR_VARIABLES"] ?? "")?.[0] ??
-      ("" as keyof (typeof data.STATION)[0]["SENSOR_VARIABLES"]),
-  );
-
-  const formattedVariable =
-    variableLabels.get(selectedVariable)?.long_name ?? selectedVariable;
+  const formattedVariable = variableLabels.get(variable)?.long_name ?? variable;
 
   const minmaxData = useMemo(() => {
     if (data?.STATION?.length === 0) return [];
@@ -37,19 +26,8 @@ export const MinmaxBoxChart = ({ data }: { data: LatestStationResponse }) => {
     const sensorVariables = data?.STATION?.[0]?.["SENSOR_VARIABLES"];
     const minMaxRecords = data?.STATION?.[0]?.["MINMAX"];
 
-    return getMinMaxData(sensorVariables, minMaxRecords, selectedVariable);
-  }, [data.STATION, selectedVariable]);
-
-  const chartConfig = {
-    max: {
-      label: "Maximum",
-      color: "#6366f1",
-    },
-    min: {
-      label: "Minimum",
-      color: "#ec4899",
-    },
-  } satisfies ChartConfig;
+    return getMinMaxData(sensorVariables, minMaxRecords, variable);
+  }, [data.STATION, variable]);
 
   return (
     <Card>
@@ -65,40 +43,14 @@ export const MinmaxBoxChart = ({ data }: { data: LatestStationResponse }) => {
           <p className="text-center">No data available</p>
         </div>
       ) : (
-        <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={minmaxData}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="date"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={(value) => {
-                const parsedDate = parse(
-                  value as string,
-                  "yyyy-MM-dd",
-                  new Date(),
-                );
-
-                if (isToday(parsedDate)) {
-                  return "Today";
-                }
-
-                if (isYesterday(parsedDate)) {
-                  return "Yesterday";
-                }
-
-                return format(parsedDate, "MMM dd");
-              }}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="dashed" />}
-            />
-            <Bar dataKey="max" fill="var(--color-max)" radius={4} />
-            <Bar dataKey="min" fill="var(--color-min)" radius={4} />
-          </BarChart>
-        </ChartContainer>
+        <>
+          <BarChart
+            data={minmaxData}
+            index="date"
+            categories={["min", "max"]}
+            yAxisWidth={48}
+          />
+        </>
       )}
     </Card>
   );
@@ -109,12 +61,11 @@ const getMinMaxData = (
   minMaxData: Record<string, MinMax>,
   sensor?: string,
 ) => {
-
   if (!sensorVariables || !minMaxData) return [];
 
   const sensorKey = Object.keys(
-    sensorVariables ?? {}
-  )?.[0]  as keyof typeof sensorVariables;
+    sensorVariables ?? {},
+  )?.[0] as keyof typeof sensorVariables;
   const selectedSensor =
     sensorVariables[(sensor as keyof typeof sensorVariables) ?? sensorKey];
 

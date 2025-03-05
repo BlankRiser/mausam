@@ -10,6 +10,7 @@ import {
   stationLatestQueryOptions,
   stationMetadataQueryOptions,
 } from "@/api/query-factory";
+import { z } from "zod";
 
 export const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -44,11 +45,16 @@ export const stationIndexRoute = createRoute({
   component: StationIndexPage,
 });
 
+const stationRouteSchema = z.object({
+  variable: z.string().default(""),
+});
+
 export const stationRoute = createRoute({
   getParentRoute: () => stationsRoute,
   path: "/$stationId",
   component: StationDetailsPage,
   wrapInSuspense: true,
+  validateSearch: stationRouteSchema,
   loader: ({ params, context }) => {
     const stationId = params.stationId;
 

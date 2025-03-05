@@ -1,25 +1,17 @@
 import { variableTimeseriesQueryOptions } from "@/api/query-factory";
+import { LineChart, TooltipProps } from "@/components/charts/line-chart";
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
 import { rootRoute } from "@/router/root-route";
 import { stationRoute } from "@/router/routes";
 import { LatestStationResponse, SensorVariables } from "@/types/station";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useMemo } from "react";
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 
 export const VariableTimeseriesChart = ({
   variable,
@@ -27,33 +19,22 @@ export const VariableTimeseriesChart = ({
   variable: keyof SensorVariables;
 }) => {
   const { stationId } = stationRoute.useParams();
-
   const { variableLabels } = rootRoute.useLoaderData();
   const formattedVariable = variableLabels.get(variable)?.long_name ?? variable;
+
   const { data, isFetched } = useQuery(
     variableTimeseriesQueryOptions({ stid: stationId, vars: [variable] }),
   );
 
-  const chartData = useMemo(
-    () => getChartData(data!, variable),
+  const { chartData, sets } = useMemo(
+    () => getChartData({ data: data!, variable }),
     [data, variable],
   );
-
-  const chartConfig = {
-    dateTime: {
-      label: "Date",
-      color: "#f00",
-    },
-    value: {
-      label: formattedVariable,
-      color: "#0f0",
-    },
-  } satisfies ChartConfig;
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{formattedVariable} Timeseries </CardTitle>
+        <CardTitle>{formattedVariable} </CardTitle>
         <CardDescription>
           You can select a different sensor variable from the dropdown to the
           right.
@@ -64,77 +45,92 @@ export const VariableTimeseriesChart = ({
           <p className="text-center">No data available</p>
         </div>
       ) : (
-        <div>
+        <>
           {isFetched && (
-            <ChartContainer
-              config={chartConfig}
-              className="aspect-auto h-[250px] w-full"
-            >
-              <AreaChart data={chartData}>
-                <defs>
-                  <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#f00" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#f00" stopOpacity={0.1} />
-                  </linearGradient>
-                  <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#0f0" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#0f0" stopOpacity={0.1} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid vertical={false} />
-                <XAxis
-                  dataKey="date"
-                  tickLine={false}
-                  axisLine={false}
-                  tickMargin={8}
-                  minTickGap={32}
-                  tickFormatter={(value) => {
-                    return value;
-                  }}
-                />
-                <ChartTooltip
-                  cursor={false}
-                  content={
-                    <ChartTooltipContent
-                      labelFormatter={(value) => {
-                        return value;
-                      }}
-                      indicator="dot"
-                    />
-                  }
-                />
-                <Area
-                  dataKey="value"
-                  type="natural"
-                  fill="url(#fillMobile)"
-                  stroke="var(--color-mobile)"
-                  stackId="a"
-                />
-                <ChartLegend content={<ChartLegendContent />} />
-              </AreaChart>
-            </ChartContainer>
+            <LineChart
+              className="h-80"
+              data={chartData}
+              index="dateTime"
+              categories={["value"]}
+              yAxisLabel={formattedVariable}
+              customTooltip={CustomTooltip}
+            />
           )}
-        </div>
+        </>
       )}
     </Card>
   );
 };
 
-const getChartData = (
-  data: LatestStationResponse,
-  variable: keyof SensorVariables,
-) => {
+interface TooltipData {
+  dateTime: string;
+  value: number;
+}
+
+const CustomTooltip = ({ payload, active, label }: TooltipProps) => {
+  const { variableLabels } = rootRoute.useLoaderData();
+  const { variable } = stationRoute.useSearch()
+  const formattedVariable: string = variableLabels.get(variable)?.long_name ?? variable
+
+  
+  if (!active || !payload || payload.length === 0) return null;
+
+  const data = [{
+    label: formattedVariable,
+    value: (payload?.[0].payload as TooltipData)?.value
+  }
+]
+
+  return (
+    <>
+      <div className="w-60 rounded-md border border-gray-500/10 bg-blue-500 px-2 py-1.5 text-sm shadow-md dark:border-gray-400/20 ">
+        <p className="flex items-center justify-between">
+          <span className="text-gray-50 dark:text-gray-50">Date</span>
+          <span className="font-medium text-gray-50 dark:text-gray-50">
+            {label}
+          </span>
+        </p>
+      </div>
+      <div className="mt-1 w-60 space-y-1 rounded-md border border-gray-500/10  bg-white p-2 text-sm shadow-md dark:border-gray-400/20 dark:bg-black">
+        {data.map((item, index) => (
+          <div key={index} className="flex items-center space-x-2.5">
+            <div className="flex w-full justify-between">
+              <span className=" text-gray-700 dark:text-gray-300">
+                {item.label}
+              </span>
+              <div className="flex items-center space-x-1">
+                <span className="font-medium text-gray-900 dark:text-gray-50">
+                  {item.value}
+                </span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+};
+
+const getChartData = ({
+  data,
+  variable,
+}: {
+  data: LatestStationResponse;
+  variable: keyof SensorVariables;
+}) => {
   if (!data || data.STATION?.length === 0 || variable.length === 0) {
-    return [];
+    return { chartData: [], sets: [] };
   }
 
-  const sensorVariableSet = Object.keys(
+  const variableSets = Object.keys(
     data?.STATION?.[0]?.SENSOR_VARIABLES[variable] ?? {},
-  )[0];
+  );
+
+  const sensorVariableSet = variableSets[0];
 
   const observations = data?.STATION?.[0]?.OBSERVATIONS;
   if (!observations || !observations["date_time"]) {
-    return [];
+    return { chartData: [], sets: [] };
   }
 
   const chartData: Array<{ dateTime: string; value: number }> = [];
@@ -144,15 +140,12 @@ const getChartData = (
       const sensorValue = observations[sensorVariableSet];
       if (Array.isArray(sensorValue)) {
         chartData.push({
-          dateTime: format(
-            new Date(parseInt(value) * 1000),
-            "yyyy-MM-dd hh-mm",
-          ),
+          dateTime: format(new Date(parseInt(value) * 1000), "HH:mm"),
           value: sensorValue[index] as number,
         });
       }
     });
   }
 
-  return chartData;
+  return { chartData, sets: variableSets };
 };

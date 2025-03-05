@@ -7,7 +7,7 @@ import { stationRoute } from "@/router/routes";
 import { LatestStationResponse, SensorVariables } from "@/types/station";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { MinmaxBoxChart } from "./features/minmax-box-chart";
 import { StationMap } from "./features/station-map";
 import { LatestStnDataTable } from "./features/station-table";
@@ -58,24 +58,18 @@ export const StationDetailsPage = () => {
         <MinmaxBoxChart data={latest.data} />
       </div>
       <section>
-        <VariableTimeseries data={latest.data} />
+        <VariableTimeseries />
       </section>
     </div>
   );
 };
 
-export const VariableTimeseries = ({
-  data,
-}: {
-  data: LatestStationResponse;
-}) => {
-  const variables = useMemo(() => getVariables(data), [data]);
+export const VariableTimeseries = () => {
+  const { variable } = stationRoute.useSearch();
 
   return (
-    <div>
-      {variables.map((variable) => (
-        <VariableTimeseriesChart key={variable} variable={variable}/>
-      ))}
+    <div className="space-y-2">
+      <VariableTimeseriesChart variable={variable as keyof SensorVariables} />
     </div>
   );
 };
@@ -84,5 +78,5 @@ const getVariables = (data: LatestStationResponse) => {
   if (!data || data.STATION.length === 0) return [];
   return Object.keys(data.STATION?.[0]?.SENSOR_VARIABLES ?? {}).filter(
     (variable) => ignoreVariables.includes(variable) === false,
-  ) as Array<keyof SensorVariables>
+  ) as Array<keyof SensorVariables>;
 };
