@@ -38,7 +38,7 @@ export const LatestStnDataTable = ({
     <DataTable
       table={table}
       columns={columns}
-      className="max-h-96 overflow-scroll"
+      showStripes={true}
     />
   );
 };
@@ -208,7 +208,7 @@ const RenderVariableLabel = ({ variable }: { variable: string }) => {
 
   return (
     <Button
-      variant={selectedVariable === variable ? "outline-solid" : "ghost"}
+      variant={selectedVariable === variable ? "outline" : "ghost"}
       size="sm"
       onClick={handle}
     >

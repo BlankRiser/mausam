@@ -15,23 +15,25 @@ interface DataTableProps<TData, TValue> {
   table: ReturnType<typeof useReactTable<TData>>;
   columns: ColumnDef<TData, TValue>[];
   className?: string;
+  showStripes?: boolean; // Optional prop to control row striping
 }
 
 export const DataTable = <TData, TValue>({
   table,
   columns,
   className = "",
+  showStripes = false,
 }: DataTableProps<TData, TValue>) => {
   return (
     <div className="rounded-md border border-neutral-200 dark:border-neutral-800">
-      <div className={cn(["relative ", className])}>
-        <Table className="w-full relative h-[200px]">
-          <TableHeader className=" bg-neutral-100 dark:bg-neutral-900 z-10 border-b border-b-neutral-800 dark:border-b-neutral-600 sticky top-0">
+      <div className={cn(["[&>div]:max-h-96", className])}>
+        <Table className="[&_td]:border-neutral-200 [&_th]:border-neutral-200 dark:[&_td]:border-neutral-800 dark:[&_th]:border-neutral-800 border-separate border-spacing-0 [&_tfoot_td]:border-t [&_th]:border-b [&_tr]:border-none [&_tr:not(:last-child)_td]:border-b">
+          <TableHeader className="bg-background/90 sticky top-0 z-10 backdrop-blur-xs">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="">
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="sticky top-0">
+                    <TableHead key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -50,6 +52,10 @@ export const DataTable = <TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className={cn([
+                    showStripes &&
+                      "odd:bg-zinc-200/50 odd:hover:bg-zinc-200/50 dark:odd:bg-zinc-800/50 dark:odd:hover:bg-zinc-800/50",
+                  ])}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
