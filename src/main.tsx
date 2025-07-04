@@ -1,7 +1,7 @@
 import { scan } from "react-scan"; // must be imported before React and React DOM
 
-import "mapbox-gl/dist/mapbox-gl.css";
 import "./index.css";
+import "mapbox-gl/dist/mapbox-gl.css";
 import "./map.css";
 
 import React from "react";
