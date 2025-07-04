@@ -8,9 +8,11 @@ import Map, { NavigationControl } from "react-map-gl";
 import { StationMarker } from "./station-marker";
 import VariableSelector from "./variable-selector";
 
-export default function MapContainer() {
+export const MapContainer = () => {
   const { theme } = useTheme();
+
   const mapboxToken = useKeysStore((state) => state.mapboxToken);
+
   const { isLoading, data, refetch, isFetching, isFetched } =
     useStationMetadata();
 
@@ -63,4 +65,4 @@ export default function MapContainer() {
       </div>
     </GlobalErrorBoundary>
   );
-}
+};

@@ -7,24 +7,12 @@ import { useMemo } from "react";
 export const LeftPanel = () => {
   return (
     <section className="w-full overflow-y-auto h-full px-2 space-y-2">
-      <Header />
       <StationSummary />
     </section>
   );
 };
 
-const Header = () => {
-  return (
-    <div className="">
-      <a
-        className="text-sm text-blue-600 dark:text-blue-400 underline underline-offset-4"
-        href="https://docs.synopticdata.com/services/weather-data-api"
-      >
-        Built using Synoptic Weather Data API
-      </a>
-    </div>
-  );
-};
+
 
 const StationSummary = () => {
   const { currentStation, currentVariable } = useCurrentState();
@@ -36,7 +24,7 @@ const StationSummary = () => {
   }, [currentVariable, variableLabels]);
 
   if (!currentStation) {
-    return <>Select a station</>;
+    return <div className="h-full grid place-items-center">Select a station</div>;
   }
 
   return (

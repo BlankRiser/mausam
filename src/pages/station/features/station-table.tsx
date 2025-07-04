@@ -4,7 +4,6 @@ import { rootRoute } from "@/router/root-route";
 import { stationRoute } from "@/router/routes";
 import { LatestStationResponse } from "@/types/station";
 import { useNavigate } from "@tanstack/react-router";
-
 import {
   ColumnDef,
   getCoreRowModel,
