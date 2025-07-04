@@ -78,7 +78,7 @@ export const StnMetaDetails = ({ data }: { data: StationMetadata }) => {
         <div
           key={index}
           className={cn([
-            "px-4 py-2 rounded bg-neutral-100 dark:bg-neutral-800",
+            "px-4 py-2 rounded-sm bg-neutral-100 dark:bg-neutral-800",
             card.className,
           ])}
         >

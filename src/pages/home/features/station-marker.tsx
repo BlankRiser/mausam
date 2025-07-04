@@ -56,7 +56,7 @@ const StationMarkerItem = memo(
           "z-50 min-w-6 min-h-6 p-1 rounded-full grid place-items-center",
           "bg-neutral-50/90 dark:bg-neutral-800/90 dark:hover:bg-neutral-800 border dark:border-neutral-800 border-neutral-900 hover:bg-neutral-100 transition-colors",
           isSelected
-            ? "relative after:absolute after:ring after:content-[''] after:ring-blue-500 after:animate-ping after:w-5 after:h-5 after:grid after:place-items-center after:rounded-full"
+            ? "relative after:absolute after:ring-3 after:content-[''] after:ring-blue-500 after:animate-ping after:w-5 after:h-5 after:grid after:place-items-center after:rounded-full"
             : "",
         ]),
       [isSelected],

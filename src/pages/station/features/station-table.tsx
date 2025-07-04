@@ -209,7 +209,7 @@ const RenderVariableLabel = ({ variable }: { variable: string }) => {
 
   return (
     <Button
-      variant={selectedVariable === variable ? "outline" : "ghost"}
+      variant={selectedVariable === variable ? "outline-solid" : "ghost"}
       size="sm"
       onClick={handle}
     >
