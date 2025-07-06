@@ -23,15 +23,25 @@ export const rootRoute = createRootRouteWithContext<{
       });
     }
   },
-  loader: async ({ context }) => {
+  loader: async ({ context, location,  }) => {
+    
+    const isTokenRoute = location.pathname === "/token";
+
+    if (isTokenRoute) {
+      return {
+        variableLabels: new Map(),
+        networkLabels: new Map()
+      };
+    }
+   
     const variables = context.queryClient.ensureQueryData(
       variablesQueryOptions(),
     );
-    const networks = context.queryClient.ensureQueryData(
-      networksQueryOptions(),
-    ).catch((e: Error)=>{
-      throw e
-    })
+    const networks = context.queryClient
+      .ensureQueryData(networksQueryOptions())
+      .catch((e: Error) => {
+        throw e;
+      });
     const resolvedData = await Promise.all([variables, networks]);
 
     return extractMetaDetails({
@@ -39,7 +49,7 @@ export const rootRoute = createRootRouteWithContext<{
       networksArr: resolvedData[1]?.["MNET"] ?? [],
     });
   },
-  head: ()=>({
+  head: () => ({
     meta: [
       {
         name: "description",
@@ -54,6 +64,6 @@ export const rootRoute = createRootRouteWithContext<{
         name: "author",
         content: "Ram Shankar Choudhary",
       },
-    ]
-  })
+    ],
+  }),
 });

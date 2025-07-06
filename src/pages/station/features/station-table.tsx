@@ -50,7 +50,7 @@ export const LatestStnDataTable = ({
     onRowSelectionChange: (value) => {
       setRowSelection(value);
     },
-    getRowId: (row) => row.variable,
+    getRowId: (row) => row.sensorKey,
     getCoreRowModel: getCoreRowModel(),
     data: rows,
     columns,
@@ -68,6 +68,7 @@ export const LatestStnDataTable = ({
 
 interface TransformedData {
   variable: string;
+  sensorKey: string;
   hasMultipleSensors: boolean;
   position: {
     value: string;
@@ -191,6 +192,7 @@ const transformData = (data: LatestStationResponse) => {
       if (station["OBSERVATIONS"]?.[sensorKey]) {
         sensorRows.push({
           variable: key,
+          sensorKey: sensorKey,
           hasMultipleSensors,
           position: {
             value: sensorValue["position"]!,
@@ -240,6 +242,7 @@ const RenderVariableLabel = ({ variable }: { variable: string }) => {
   };
 
   const variableLabel = variableLabels
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     ? (variableLabels.get(variable)?.long_name ?? variable)
     : variable;
 

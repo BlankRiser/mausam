@@ -1,8 +1,6 @@
 import { InfoCard } from "@/components/common/info-card";
 import { useCurrentState } from "@/store/station.store";
-import { rootRoute } from "@/router/root-route";
 import { Link } from "@tanstack/react-router";
-import { useMemo } from "react";
 
 export const LeftPanel = () => {
   return (
@@ -16,12 +14,6 @@ export const LeftPanel = () => {
 
 const StationSummary = () => {
   const { currentStation, currentVariable } = useCurrentState();
-  const { variableLabels } = rootRoute.useLoaderData();
-
-  const selectedVariable = useMemo(() => {
-    const variable = variableLabels.get(currentVariable);
-    return variable ? variable.long_name : "Unknown Variable";
-  }, [currentVariable, variableLabels]);
 
   if (!currentStation) {
     return <div className="h-full grid place-items-center">Select a station</div>;

@@ -53,10 +53,9 @@ export const DataTable = <TData, TValue>({
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                   className={cn([
-                    showStripes &&
-                    "max-h-10",
-                      "odd:bg-zinc-200/50 dark:odd:bg-zinc-800/50 hover:bg-transparent hover:odd:bg-zinc-200/50 dark:hover:odd:bg-zinc-800/50",
-                      "cursor-pointer data-[state=selected]:bg-blue-100 data-[state=selected]:dark:bg-blue-900/20"
+                    showStripes && "max-h-10",
+                    "odd:bg-zinc-200/50 dark:odd:bg-zinc-800/50 hover:bg-transparent hover:odd:bg-zinc-200/50 dark:hover:odd:bg-zinc-800/50",
+                    "cursor-pointer data-[state=selected]:bg-blue-100 data-[state=selected]:dark:bg-blue-900/20",
                   ])}
                   onClick={row.getToggleSelectedHandler()}
                 >
