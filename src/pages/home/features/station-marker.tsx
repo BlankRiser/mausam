@@ -10,26 +10,36 @@ export const StationMarker: React.FC<{
   stations: Array<Station>;
   units: Record<string, string>;
 }> = ({ stations, units }) => {
+  const currentStation = useCurrentState((state) => state.currentStation);
+  
   if (!stations) return null;
 
   return (
-    <div>
+    <>
       {stations?.map((station) => {
         return (
           <StationMarkerItem
             key={station.STID}
             station={station}
             units={units}
+            isSelected={currentStation?.STID === station.STID}
           />
         );
       })}
-    </div>
+    </>
   );
 };
 
 const StationMarkerItem = memo(
-  ({ station, units }: { station: Station; units: Record<string, string> }) => {
-    const currentStation = useCurrentState((state) => state.currentStation);
+  ({ 
+    station, 
+    units, 
+    isSelected 
+  }: { 
+    station: Station; 
+    units: Record<string, string>;
+    isSelected: boolean;
+  }) => {
     const setCurrentStation = useCurrentState(
       (state) => state.setCurrentStation,
     );
@@ -42,14 +52,14 @@ const StationMarkerItem = memo(
 
     const markerStyles = useMemo(
       () =>
-        cn(
+        cn([
           "z-50 min-w-6 min-h-6 p-1 rounded-full grid place-items-center",
           "bg-neutral-50/90 dark:bg-neutral-800/90 dark:hover:bg-neutral-800 border dark:border-neutral-800 border-neutral-900 hover:bg-neutral-100 transition-colors",
-          currentStation?.STID === station.STID
-            ? "relative after:absolute after:ring after:content-[''] after:ring-blue-500 after:animate-ping after:w-5 after:h-5 after:grid after:place-items-center after:rounded-full"
+          isSelected
+            ? "relative after:absolute after:ring-3 after:content-[''] after:ring-blue-500 after:animate-ping after:w-5 after:h-5 after:grid after:place-items-center after:rounded-full"
             : "",
-        ),
-      [currentStation?.STID, station.STID],
+        ]),
+      [isSelected],
     );
 
     return (
@@ -68,18 +78,13 @@ const StationMarkerItem = memo(
             </span>
           </div>
         </Marker>
-        {currentStation?.STID === station.STID && (
+        {isSelected && (
           <Popup
-           
-            
             latitude={+station.LATITUDE}
             longitude={+station.LONGITUDE}
-            // onClose={() => setCurrentStation(null)}
             className="bg-transparent"
           >
-          
-              <MarkerTooltipContents station={station} units={units} />
-           
+            <MarkerTooltipContents station={station} units={units} />
           </Popup>
         )}
       </>

@@ -8,9 +8,11 @@ import Map, { NavigationControl } from "react-map-gl";
 import { StationMarker } from "./station-marker";
 import VariableSelector from "./variable-selector";
 
-export default function MapContainer() {
+export const MapContainer = () => {
   const { theme } = useTheme();
+
   const mapboxToken = useKeysStore((state) => state.mapboxToken);
+
   const { isLoading, data, refetch, isFetching, isFetched } =
     useStationMetadata();
 
@@ -53,7 +55,7 @@ export default function MapContainer() {
           )}
         </Map>
         {isLoading || isFetching ? (
-          <div className="w-fit h-fit z-[100] absolute top-1/2 translate-y-[-50%] left-1/2 translate-x-[-50%] bg-transparent flex justify-center items-center">
+          <div className="w-fit h-fit z-100 absolute top-1/2 translate-y-[-50%] left-1/2 translate-x-[-50%] bg-transparent flex justify-center items-center">
             <Loader />
           </div>
         ) : null}
@@ -63,4 +65,4 @@ export default function MapContainer() {
       </div>
     </GlobalErrorBoundary>
   );
-}
+};

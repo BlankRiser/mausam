@@ -28,9 +28,9 @@ export const VariableSelector = () => {
                   size="icon"
                   onClick={() => handleVariableClick(variable)}
                   className={cn([
-                    "grid place-items-center hover:shadow-sm",
+                    "grid place-items-center hover:shadow-xs",
                     variable.value === currentVariable &&
-                      "bg-neutral-100 shadow-sm dark:bg-neutral-900",
+                      "bg-neutral-100 shadow-xs dark:bg-neutral-900",
                   ])}
                 >
                   {variable.icon}

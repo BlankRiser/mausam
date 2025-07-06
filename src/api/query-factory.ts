@@ -1,23 +1,11 @@
-import { API } from "@/api/constants";
-import { useKeysStore } from "@/store/env-keys.store";
-import { Networks } from "@/types/networks";
-import { LatestStationResponse } from "@/types/station";
-import { StationMetadata } from "@/types/station-metadata";
-import { Variables } from "@/types/variables";
 import { queryOptions } from "@tanstack/react-query";
-import ky from "ky";
+import { api } from "./api";
 
 export const variablesQueryOptions = () => {
   return queryOptions({
     queryKey: ["variables"],
     queryFn: async () => {
-      return ky
-        .get(`${API.BaseUrl}/variables`, {
-          searchParams: {
-            token: useKeysStore.getState().synopticToken,
-          },
-        })
-        .json<Variables>();
+      return api.variables.getAllVariables();
     },
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
   });
@@ -27,13 +15,7 @@ export const networksQueryOptions = () => {
   return queryOptions({
     queryKey: ["networks"],
     queryFn: async () => {
-      return ky
-        .get(`${API.BaseUrl}/networks`, {
-          searchParams: {
-            token: useKeysStore.getState().synopticToken,
-          },
-        })
-        .json<Networks>();
+      return api.networks.getAllNetworks();
     },
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
   });
@@ -43,17 +25,14 @@ export const stationMetadataQueryOptions = ({ stid }: { stid: string }) => {
   return queryOptions({
     queryKey: ["stations", "metadata", stid],
     queryFn: async () => {
-      return ky
-        .get(`${API.BaseUrl}/stations/metadata`, {
-          searchParams: {
-            stid,
-            complete: 1,
-            sensorvars: 1,
-            stationhistory: 1,
-            token: useKeysStore.getState().synopticToken,
-          },
-        })
-        .json<StationMetadata>();
+      return api.stations.getMetadata({
+        searchParams: {
+          stid: stid,
+          complete: 1,
+          sensorvars: 1,
+          stationhistory: 1,
+        },
+      });
     },
   });
 };
@@ -62,24 +41,21 @@ export const stationLatestQueryOptions = ({ stid }: { stid: string }) => {
   return queryOptions({
     queryKey: ["stations", "latest", stid],
     queryFn: async () => {
-      return ky
-        .get(`${API.BaseUrl}/stations/latest`, {
-          searchParams: {
-            stid,
-            complete: 1,
-            sensorvars: 1,
-            minmax: 7,
-            status: "active",
-            obtimezone: "utc",
-            minmaxtype: "utc",
-            minmaxtimezone: "utc",
-            units: "temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa",
-            within: 1 * 24 * 60, // 1 day
-            // vars: "air_temp,relative_humidity,wind_speed,wind_gust,wind_direction,solar_radiation,precip_accum",
-            token: useKeysStore.getState().synopticToken,
-          },
-        })
-        .json<LatestStationResponse>();
+      return api.stations.getLatest({
+        searchParams: {
+          stid,
+          complete: 1,
+          sensorvars: 1,
+          minmax: 7,
+          status: "active",
+          obtimezone: "utc",
+          minmaxtype: "utc",
+          minmaxtimezone: "utc",
+          units: "temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa",
+          within: 1 * 24 * 60, // 1 day
+          // vars: "air_temp,relative_humidity,wind_speed,wind_gust,wind_direction,solar_radiation,precip_accum",
+        },
+      });
     },
   });
 };
@@ -93,19 +69,16 @@ export const variableTimeseriesQueryOptions = ({
 }) => {
   return queryOptions({
     queryKey: ["stations", "timeseries", stid, vars],
-    queryFn: () => {
-      return ky
-        .get(`${API.BaseUrl}/stations/timeseries`, {
-          searchParams: {
-            stid,
-            vars: vars.join(","),
-            units: "temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa",
-            timeformat: "%s",
-            recent: 25 * 60, // 25 hours to account for values close to the hour
-            token: useKeysStore.getState().synopticToken,
-          },
-        })
-        .json<LatestStationResponse>();
+    queryFn: async () => {
+      return api.stations.getTimeSeries({
+        searchParams: {
+          stid,
+          vars: vars.join(","),
+          units: "temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa",
+          timeformat: "%s",
+          recent: 25 * 60, // 25 hours to account for values close to the hour
+        },
+      });
     },
   });
 };

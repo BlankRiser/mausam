@@ -11,6 +11,7 @@ import {
   stationMetadataQueryOptions,
 } from "@/api/query-factory";
 import { z } from "zod";
+import { SensorVariables } from "@/types/station";
 
 export const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -46,7 +47,10 @@ export const stationIndexRoute = createRoute({
 });
 
 const stationRouteSchema = z.object({
-  variable: z.string().default(""),
+  variable: z.union([
+    z.string(),
+    z.custom<keyof SensorVariables>()
+  ])
 });
 
 export const stationRoute = createRoute({

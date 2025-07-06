@@ -30,3 +30,17 @@ export const fetcher = async <T>(url: string) => {
       throw err;
     });
 };
+
+export const formatLargeNumber = (value: number): string => {
+  if (Math.abs(value) >= 1000000000) {
+    return (value / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B'
+  }
+  if (Math.abs(value) >= 1000000) {
+    return (value / 1000000).toFixed(1).replace(/\.0$/, '') + 'M'
+  }
+  if (Math.abs(value) >= 1000) {
+    return (value / 1000).toFixed(1).replace(/\.0$/, '') + 'k'
+  }
+  return value.toString()
+}
+
