@@ -13,7 +13,7 @@ export const MapContainer = () => {
 
   const mapboxToken = useKeysStore((state) => state.mapboxToken);
 
-  const { isLoading, data, refetch, isFetching, isFetched } =
+  const { isLoading, data, refetch, isPending, isFetched } =
     useStationMetadata();
 
   return (
@@ -41,7 +41,6 @@ export const MapContainer = () => {
           style={{
             width: "100%",
             height: "100%",
-            cursor: "default",
           }}
           mapStyle={
             theme === "dark"
@@ -50,11 +49,11 @@ export const MapContainer = () => {
           }
         >
           <NavigationControl position="top-left" />
-          {isFetched && (
-            <StationMarker stations={data!.STATION} units={data!.UNITS} />
+          {isFetched && !isPending && !!data && (
+            <StationMarker stations={data.STATION} units={data.UNITS} />
           )}
         </Map>
-        {isLoading || isFetching ? (
+        {isLoading || isPending ? (
           <div className="w-fit h-fit z-100 absolute top-1/2 translate-y-[-50%] left-1/2 translate-x-[-50%] bg-transparent flex justify-center items-center">
             <Loader />
           </div>

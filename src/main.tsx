@@ -10,7 +10,7 @@ import App from "./App.tsx";
 
 
 scan({
-  enabled: import.meta.env.DEV, // Enable scanning in development mode
+  enabled: import.meta.env.MODE === "development",
 });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

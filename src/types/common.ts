@@ -29,3 +29,14 @@ export interface SUMMARY {
   METADATA_DB_QUERY_TIME?: string;
   VERSION?: string;
 }
+
+export interface ApiErrorResponse {
+  SUMMARY: {
+    NUMBER_OF_OBJECTS: number;
+    RESPONSE_CODE: number;
+    VERSION: string;
+    RESPONSE_MESSAGE: string;
+    RESPONSE_TIME: number;
+  };
+}
+
