@@ -44,32 +44,32 @@ const StationSummary = () => {
           Get more details
         </Link>
       </div>
+      <InfoCard name="Status" value={currentStation.STATUS} />
+      <InfoCard name="Station Name" value={currentStation.NAME} />
       <InfoCard
+        name="Synoptic ID"
+        value={currentStation.STID}
         linkValue={{
           to: "/station/$stationId",
           params: {
             stationId: currentStation.STID,
           },
         }}
-        name="STID"
-        value={currentStation.STID}
       />
-      <InfoCard name="Station Name" value={currentStation.NAME} />
       <InfoCard
+        name="Network"
+        value={currentStation?.SHORTNAME ?? "N/A"}
         linkValue={{
           to: "/networks/$networkId",
           params: {
             networkId: currentStation.MNET_ID.toString(),
           },
         }}
-        name="Network"
-        value={currentStation?.SHORTNAME ?? "N/A"}
       />
-      <InfoCard name="Station Variable" value={selectedVariable} />
-      <InfoCard name="Station Name" value={currentStation.NAME} />
-      <InfoCard name="Timezone" value={currentStation.TIMEZONE} />
+      <InfoCard name="NWS Zone" value={currentStation.NWSZONE} />
       <InfoCard name="Latitude" value={currentStation.LATITUDE} />
       <InfoCard name="Longitude" value={currentStation.LONGITUDE} />
+      <InfoCard name="Timezone" value={currentStation.TIMEZONE} />
     </div>
   );
 };
