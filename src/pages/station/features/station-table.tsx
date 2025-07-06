@@ -84,7 +84,9 @@ const getLatestStnDataTableColumns = ((): ColumnDef<TransformedData>[] => {
   return [
     {
       id: "variable",
-      header: "Variable",
+      header: () => {
+        return <p className="px-2">Variable</p>;
+      },
       cell: ({ row }) => {
         return <RenderVariableLabel variable={row.original.variable} />;
       },
@@ -136,14 +138,14 @@ const getLatestStnDataTableColumns = ((): ColumnDef<TransformedData>[] => {
     {
       id: "sensor-value",
       header: () => {
-        return <p className="text-right">Current Value</p>;
+        return <p className="text-right px-2">Current Value</p>;
       },
       cell: ({ row }) => {
         const { value, unit } = row.original.observation;
 
         if (!value) {
           return (
-            <p className="text-right text-neutral-400 dark:text-neutral-600">
+            <p className="text-right text-neutral-400 dark:text-neutral-600 px-2">
               -
             </p>
           );
@@ -152,7 +154,7 @@ const getLatestStnDataTableColumns = ((): ColumnDef<TransformedData>[] => {
         if (typeof value === "object") {
           // If this value is an object, it probably is cloud layer with `sky_condition` and `height_agl` keys
           return (
-            <p className="text-right text-nowrap">
+            <p className="text-right text-nowrap px-2">
               {value["sky_condition"]} at {value["height_agl"]}{" "}
               <span className="text-neutral-400 dark:text-neutral-600">
                 {unit}{" "}
@@ -162,7 +164,7 @@ const getLatestStnDataTableColumns = ((): ColumnDef<TransformedData>[] => {
         }
 
         return (
-          <p className="text-right text-nowrap">
+          <p className="text-right text-nowrap px-2">
             {value}{" "}
             <span className="text-neutral-400 dark:text-neutral-600">
               {["text", "code", undefined].includes(unit) ? "" : unit}

@@ -27,7 +27,7 @@ export const createAPI = ({
         prefixUrl: baseUrl,
         hooks: {
             beforeRequest: [
-                (request) => {
+                () => {
                     if (!apiToken) {
                         toast.error("API token is not set")
                     }
