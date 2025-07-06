@@ -47,13 +47,15 @@ export const StationDetailsPage = () => {
   return (
     <div className="p-2 space-y-2 ">
       <div className="grid md:grid-cols-2 gap-2">
-        <div className="flex flex-col gap-2">
-          <StnMetaDetails data={metadata.data} />
-          <LatestStnDataTable data={latest.data} />
-        </div>
         <div className="w-full h-48 md:h-full">
           <StationMap data={metadata.data} />
         </div>
+        <div className="flex flex-col gap-2">
+          <StnMetaDetails data={metadata.data} />
+        </div>
+      </div>
+      <LatestStnDataTable data={latest.data} />
+      <div className="grid md:grid-cols-2 gap-2">
         <MinmaxBoxChart data={latest.data} />
         <VariableTimeseries />
       </div>

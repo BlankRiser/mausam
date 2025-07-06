@@ -21,6 +21,7 @@ export const LatestStnDataTable = ({
   const rows = useMemo(() => transformData(data), [data]);
 
   const table = useReactTable({
+    getRowId: row => row.variable,
     getCoreRowModel: getCoreRowModel(),
     data: rows,
     columns,
@@ -50,6 +51,13 @@ const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
       header: "Variable",
       cell: ({ row }) => {
         return <RenderVariableLabel variable={row.original.variable} />;
+      },
+    },
+    {
+      id: "identifier",
+      header: "Synoptic Identifier",
+      cell: ({ row }) => {
+        return row.original.variable
       },
     },
     {
@@ -147,6 +155,7 @@ const transformData = (data: LatestStationResponse) => {
             value: sensorValue["position"]!,
             unit: station["UNITS"]["position"],
           },
+          
           observation: {
             dateTime: station["OBSERVATIONS"][sensorKey]["date_time"] ?? "N/A",
             value: station["OBSERVATIONS"][sensorKey]["value"] ?? -Infinity,

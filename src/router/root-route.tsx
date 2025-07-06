@@ -12,7 +12,6 @@ export const rootRoute = createRootRouteWithContext<{
   queryClient: QueryClient;
 }>()({
   component: RootComponent,
-  // errorComponent: () => <div>Something went wrong</div>,
   beforeLoad: ({ location }) => {
     if (
       (!useKeysStore.getState().mapboxToken ||
@@ -40,4 +39,21 @@ export const rootRoute = createRootRouteWithContext<{
       networksArr: resolvedData[1]?.["MNET"] ?? [],
     });
   },
+  head: ()=>({
+    meta: [
+      {
+        name: "description",
+        content: "Mausam is a weather data visualization tool.",
+      },
+      {
+        name: "keywords",
+        content:
+          "weather, data, visualization, synoptic, mausam, meteorology, climate",
+      },
+      {
+        name: "author",
+        content: "Ram Shankar Choudhary",
+      },
+    ]
+  })
 });
