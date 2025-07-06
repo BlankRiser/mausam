@@ -38,7 +38,7 @@ export const VariableTimeseriesChart = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{formattedVariable} </CardTitle>
+        <CardTitle>{formattedVariable} {isFetched && data?.UNITS?.[variable] ? `(${data.UNITS[variable]})` : ""} </CardTitle>
         <CardDescription>
           You can select a different sensor variable from the dropdown to the
           right.
@@ -125,7 +125,7 @@ const getChartData = ({
   data: LatestStationResponse;
   variable: keyof SensorVariables;
 }) => {
-  if (!data || data.STATION?.length === 0 || variable.length === 0) {
+  if (!data || data?.STATION?.length === 0 || variable?.length === 0) {
     return { chartData: [], sets: [] };
   }
 

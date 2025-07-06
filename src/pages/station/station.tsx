@@ -46,11 +46,11 @@ export const StationDetailsPage = () => {
 
   return (
     <div className="p-2 space-y-2 ">
-      <div className="grid md:grid-cols-2 gap-2">
-        <div className="w-full h-48 md:h-full">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+        <div className="col-span-2 md:col-span-1 w-full h-48 md:h-full">
           <StationMap data={metadata.data} />
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="col-span-2 flex flex-col gap-2">
           <StnMetaDetails data={metadata.data} />
         </div>
       </div>

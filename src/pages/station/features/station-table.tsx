@@ -10,22 +10,50 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export const LatestStnDataTable = ({
   data,
 }: {
   data: LatestStationResponse;
 }) => {
+  const { stationId } = stationRoute.useParams();
+  const navigate = useNavigate({ from: "/station/$stationId" });
+  const { variable: selectedVariable } = stationRoute.useSearch();
+
+  const [rowSelection, setRowSelection] = useState({
+    [selectedVariable ?? ""]: true
+  });
+
   const columns = useMemo(() => getLatestStnDataTableColumns(), []);
   const rows = useMemo(() => transformData(data), [data]);
 
+  useEffect(() => {
+    const variable = Object.keys(rowSelection)[0];
+    void navigate({
+      to: "/station/$stationId",
+      params: {
+        stationId: stationId,
+      },
+      search: {
+        variable: variable,
+      },
+    });
+  }, [navigate, rowSelection, stationId]);
+
   const table = useReactTable({
-    getRowId: row => row.variable,
+    state: {
+      rowSelection,
+    },
+    enableRowSelection: true,
+    enableMultiRowSelection: false,
+    onRowSelectionChange: (value) => {
+      setRowSelection(value);
+    },
+    getRowId: (row) => row.variable,
     getCoreRowModel: getCoreRowModel(),
     data: rows,
     columns,
-    enableRowSelection: true,
   });
 
   if (
@@ -35,16 +63,24 @@ export const LatestStnDataTable = ({
     return <LatestStnDataTableFallback />;
   }
 
-  return (
-    <DataTable
-      table={table}
-      columns={columns}
-      showStripes={true}
-    />
-  );
+  return <DataTable table={table} columns={columns} showStripes={true} />;
 };
 
-const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
+interface TransformedData {
+  variable: string;
+  hasMultipleSensors: boolean;
+  position: {
+    value: string;
+    unit: string;
+  };
+  observation: {
+    dateTime: string;
+    value: number;
+    unit: string;
+  };
+}
+
+const getLatestStnDataTableColumns = ((): ColumnDef<TransformedData>[] => {
   return [
     {
       id: "variable",
@@ -57,7 +93,7 @@ const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
       id: "identifier",
       header: "Synoptic Identifier",
       cell: ({ row }) => {
-        return row.original.variable
+        return row.original.variable;
       },
     },
     {
@@ -87,9 +123,13 @@ const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
           );
         }
 
-        return format(
-          new Date(row.original.observation.dateTime),
-          "MMM d, yyyy h:mm a",
+        return (
+          <span className="text-nowrap">
+            {format(
+              new Date(row.original.observation.dateTime),
+              "MMM d, yyyy h:mm a",
+            )}
+          </span>
         );
       },
     },
@@ -98,7 +138,6 @@ const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
       header: () => {
         return <p className="text-right">Current Value</p>;
       },
-
       cell: ({ row }) => {
         const { value, unit } = row.original.observation;
 
@@ -113,7 +152,7 @@ const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
         if (typeof value === "object") {
           // If this value is an object, it probably is cloud layer with `sky_condition` and `height_agl` keys
           return (
-            <p className="text-right">
+            <p className="text-right text-nowrap">
               {value["sky_condition"]} at {value["height_agl"]}{" "}
               <span className="text-neutral-400 dark:text-neutral-600">
                 {unit}{" "}
@@ -123,7 +162,7 @@ const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
         }
 
         return (
-          <p className="text-right">
+          <p className="text-right text-nowrap">
             {value}{" "}
             <span className="text-neutral-400 dark:text-neutral-600">
               {["text", "code", undefined].includes(unit) ? "" : unit}
@@ -133,7 +172,7 @@ const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
       },
     },
   ];
-};
+});
 
 const transformData = (data: LatestStationResponse) => {
   const station = data.STATION?.[0];
@@ -155,7 +194,7 @@ const transformData = (data: LatestStationResponse) => {
             value: sensorValue["position"]!,
             unit: station["UNITS"]["position"],
           },
-          
+
           observation: {
             dateTime: station["OBSERVATIONS"][sensorKey]["date_time"] ?? "N/A",
             value: station["OBSERVATIONS"][sensorKey]["value"] ?? -Infinity,
@@ -169,19 +208,7 @@ const transformData = (data: LatestStationResponse) => {
   return sensorRows;
 };
 
-interface TransformedData {
-  variable: string;
-  hasMultipleSensors: boolean;
-  position: {
-    value: string;
-    unit: string;
-  };
-  observation: {
-    dateTime: string;
-    value: number;
-    unit: string;
-  };
-}
+
 
 const LatestStnDataTableFallback = () => {
   return (
@@ -196,7 +223,6 @@ const LatestStnDataTableFallback = () => {
 const RenderVariableLabel = ({ variable }: { variable: string }) => {
   const { variableLabels } = rootRoute.useLoaderData();
   const { stationId } = stationRoute.useParams();
-  const { variable: selectedVariable } = stationRoute.useSearch();
   const navigate = useNavigate({ from: "/station/$stationId" });
 
   const handle = () => {
@@ -216,11 +242,7 @@ const RenderVariableLabel = ({ variable }: { variable: string }) => {
     : variable;
 
   return (
-    <Button
-      variant={selectedVariable === variable ? "outline" : "ghost"}
-      size="sm"
-      onClick={handle}
-    >
+    <Button variant={"ghost"} size="sm" onClick={handle}>
       {variableLabel}
     </Button>
   );

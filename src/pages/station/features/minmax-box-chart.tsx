@@ -1,10 +1,12 @@
 import { BarChart } from "@/components/charts/bar-chart";
 import {
   Card,
+  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { formatLargeNumber } from "@/lib/utils";
 import { rootRoute } from "@/router/root-route";
 import { stationRoute } from "@/router/routes";
 import {
@@ -30,7 +32,7 @@ export const MinmaxBoxChart = ({ data }: { data: LatestStationResponse }) => {
   }, [data.STATION, variable]);
 
   return (
-    <Card>
+    <Card className="relative">
       <CardHeader>
         <CardTitle>{formattedVariable} Min/Max</CardTitle>
         <CardDescription>
@@ -38,8 +40,10 @@ export const MinmaxBoxChart = ({ data }: { data: LatestStationResponse }) => {
           right.
         </CardDescription>
       </CardHeader>
+      <CardContent>
+
       {minmaxData.length === 0 ? (
-        <div className="aspect-video grid place-items-center">
+        <div className="absolute top-1/2 translate-y-[-50%] w-full grid place-items-center">
           <p className="text-center">No data available</p>
         </div>
       ) : (
@@ -49,9 +53,14 @@ export const MinmaxBoxChart = ({ data }: { data: LatestStationResponse }) => {
             index="date"
             categories={["min", "max"]}
             yAxisWidth={48}
+            valueFormatter={
+              (value) => formatLargeNumber(value)
+
+            }
           />
         </>
       )}
+      </CardContent>
     </Card>
   );
 };
