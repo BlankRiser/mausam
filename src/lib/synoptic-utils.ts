@@ -1,6 +1,6 @@
-import { MNETLabelItems } from "@/types/networks";
+import { MNETLabelItems, Networks } from "@/types/networks";
 import { Station } from "@/types/station";
-import { VariableLabelItems } from "@/types/variables";
+import { VariableLabelItems, Variables } from "@/types/variables";
 
 type VariableData = {
   sensor: string;
@@ -13,11 +13,6 @@ export const getVariableData = (station: Station, currentVariable: string) => {
   Object.entries(station?.SENSOR_VARIABLES ?? {}).forEach(([key, value]) => {
     if (key === currentVariable) {
       Object.entries(value).forEach(([sensor_key, _value]) => {
-        // regex re remove _value and any other string after in sensor_key and also replace all _ with " "
-        // const formattedSensorKey = sensor_key.includes("_value_")
-        //   ? sensor_key.replace(/_value_.*/g, "").replace(/_/g, " ")
-        //   : sensor_key;
-
         variableData.push({
           sensor: key,
           dateTime: station?.OBSERVATIONS?.[sensor_key]?.["date_time"] ?? "",
@@ -33,8 +28,8 @@ export const extractMetaDetails = ({
   variableArr,
   networksArr,
 }: {
-  variableArr: any[];
-  networksArr: any[];
+  variableArr: Variables['VARIABLES'];
+  networksArr: Networks['MNET'];
 }) => {
   const variableLabels = new Map<string, VariableLabelItems>();
   const networkLabels = new Map<string, MNETLabelItems>();
@@ -48,6 +43,34 @@ export const extractMetaDetails = ({
     networkLabels.set(key, value as MNETLabelItems);
   }
   return { variableLabels, networkLabels };
+};
+export const extractNetworkDetails = ({
+  networksArr,
+}: {
+  networksArr: Networks['MNET'];
+}) => {
+  const networkLabels = new Map<string, MNETLabelItems>();
+
+  for (const network of networksArr) {
+    const [key, value] = Object.entries(network)[0];
+    networkLabels.set(key, value as MNETLabelItems);
+  }
+  return Object.fromEntries(networkLabels)
+};
+
+export const extractVariableDetails = ({
+  variableArr,
+}: {
+  variableArr: Variables['VARIABLES'];
+}) => {
+  const variableLabels = new Map<string, VariableLabelItems>();
+  
+  for (const variable of variableArr) {
+    const [key, value] = Object.entries(variable)[0];
+    variableLabels.set(key, value as VariableLabelItems);
+  }
+
+  return Object.fromEntries(variableLabels);
 };
 
 export const parseSensorString = (input: string) => {

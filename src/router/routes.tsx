@@ -1,17 +1,18 @@
-import { Home } from "@/pages/home/home";
-import { StationDetailsPage } from "@/pages/station/station";
-import { createRoute, redirect } from "@tanstack/react-router";
-import { rootRoute } from "./root-route";
-import { TokensPage } from "@/pages/add-token/add-tokens-form";
-import { StationIndexPage } from "@/pages/station/features/choose-station";
-import { NetworksPage } from "@/pages/networks/networks";
-import { NetworkDetailsPage } from "@/pages/networks/network-details";
 import {
+  networkQueryOptions,
   stationLatestQueryOptions,
   stationMetadataQueryOptions,
 } from "@/api/query-factory";
-import { z } from "zod";
+import { TokensPage } from "@/pages/add-token/add-tokens-form";
+import { Home } from "@/pages/home/home";
+import { NetworkDetailsPage } from "@/pages/networks/network-details";
+import { NetworksPage } from "@/pages/networks/networks";
+import { StationIndexPage } from "@/pages/station/features/choose-station";
+import { StationDetailsPage } from "@/pages/station/station";
 import { SensorVariables } from "@/types/station";
+import { createRoute, redirect } from "@tanstack/react-router";
+import { z } from "zod";
+import { rootRoute } from "./root-route";
 
 export const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -47,10 +48,7 @@ export const stationIndexRoute = createRoute({
 });
 
 const stationRouteSchema = z.object({
-  variable: z.union([
-    z.string(),
-    z.custom<keyof SensorVariables>()
-  ])
+  variable: z.union([z.string(), z.custom<keyof SensorVariables>()]),
 });
 
 export const stationRoute = createRoute({
@@ -98,7 +96,7 @@ export const networkRoute = createRoute({
   getParentRoute: () => networksRoute,
   path: "/$networkId",
   component: NetworkDetailsPage,
-  loader: ({ params }) => {
+  loader: ({ params, context }) => {
     const networkId = params.networkId;
     if (!networkId) {
       console.error(`Network ID: ${networkId ?? "N/A"} does not exist`);
@@ -106,5 +104,11 @@ export const networkRoute = createRoute({
         to: "/",
       });
     }
+
+    void context.queryClient.ensureQueryData(
+      networkQueryOptions({
+        networkId: networkId,
+      }),
+    );
   },
 });

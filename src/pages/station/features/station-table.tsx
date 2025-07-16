@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
-import { rootRoute } from "@/router/root-route";
 import { stationRoute } from "@/router/routes";
+import { useGlobalDataStore } from "@/store/global-data.store";
 import { LatestStationResponse } from "@/types/station";
 import { useNavigate } from "@tanstack/react-router";
 import {
@@ -22,7 +22,7 @@ export const LatestStnDataTable = ({
   const { variable: selectedVariable } = stationRoute.useSearch();
 
   const [rowSelection, setRowSelection] = useState({
-    [selectedVariable ?? ""]: true
+    [selectedVariable ?? ""]: true,
   });
 
   const columns = useMemo(() => getLatestStnDataTableColumns(), []);
@@ -81,7 +81,7 @@ interface TransformedData {
   };
 }
 
-const getLatestStnDataTableColumns = ((): ColumnDef<TransformedData>[] => {
+const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
   return [
     {
       id: "variable",
@@ -175,7 +175,7 @@ const getLatestStnDataTableColumns = ((): ColumnDef<TransformedData>[] => {
       },
     },
   ];
-});
+};
 
 const transformData = (data: LatestStationResponse) => {
   const station = data.STATION?.[0];
@@ -212,8 +212,6 @@ const transformData = (data: LatestStationResponse) => {
   return sensorRows;
 };
 
-
-
 const LatestStnDataTableFallback = () => {
   return (
     <div className="aspect-video rounded-md grid place-items-center border border-neutral-200 dark:border-neutral-800">
@@ -225,7 +223,7 @@ const LatestStnDataTableFallback = () => {
 };
 
 const RenderVariableLabel = ({ variable }: { variable: string }) => {
-  const { variableLabels } = rootRoute.useLoaderData();
+  const variableLabels = useGlobalDataStore((s) => s.variableLabels);
   const { stationId } = stationRoute.useParams();
   const navigate = useNavigate({ from: "/station/$stationId" });
 
@@ -242,8 +240,8 @@ const RenderVariableLabel = ({ variable }: { variable: string }) => {
   };
 
   const variableLabel = variableLabels
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    ? (variableLabels.get(variable)?.long_name ?? variable)
+    ? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      (variableLabels?.variable?.long_name ?? variable)
     : variable;
 
   return (

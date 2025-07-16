@@ -1,10 +1,10 @@
 import { useKeysStore } from "@/store/env-keys.store";
-import { ApiErrorResponse } from "@/types/common";
-import { Networks } from "@/types/networks";
-import { LatestStationResponse } from "@/types/station";
-import { StationMetadata } from "@/types/station-metadata";
-import { Variables } from "@/types/variables";
-import ky, { Options } from "ky";
+import type { ApiErrorResponse } from "@/types/common";
+import type { Networks } from "@/types/networks";
+import type { LatestStationResponse } from "@/types/station";
+import type { StationMetadata } from "@/types/station-metadata";
+import type { Variables } from "@/types/variables";
+import ky, { type Options } from "ky";
 import { toast } from "sonner";
 import { API } from "./constants";
 
@@ -62,6 +62,16 @@ export const createAPI = ({ base }: { base: string }) => {
         return fetcher
           .get("networks", {
             searchParams: {
+              ...defaultSearchParams,
+            },
+          })
+          .json<Networks>();
+      },
+      getNetwork: ({ searchParams }: { searchParams: SearchParamsType }) => {
+        return fetcher
+          .get("networks", {
+            searchParams: {
+              ...searchParams,
               ...defaultSearchParams,
             },
           })

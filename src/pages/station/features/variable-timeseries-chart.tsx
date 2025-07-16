@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { rootRoute } from "@/router/root-route";
 import { stationRoute } from "@/router/routes";
+import { useGlobalDataStore } from "@/store/global-data.store";
 import { LatestStationResponse, SensorVariables } from "@/types/station";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
@@ -23,8 +24,9 @@ export const VariableTimeseriesChart = ({
   variable: keyof SensorVariables;
 }) => {
   const { stationId } = stationRoute.useParams();
-  const { variableLabels } = rootRoute.useLoaderData();
-  const formattedVariable = variableLabels.get(variable)?.long_name ?? variable;
+  const variableLabels = useGlobalDataStore((s) => s.variableLabels);
+
+  const formattedVariable = variableLabels?.variable?.long_name ?? variable;
 
   const { data, isFetched } = useQuery(
     variableTimeseriesQueryOptions({ stid: stationId, vars: [variable] }),
@@ -38,7 +40,12 @@ export const VariableTimeseriesChart = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{formattedVariable} {isFetched && data?.UNITS?.[variable] ? `(${data.UNITS[variable]})` : ""} </CardTitle>
+        <CardTitle>
+          {formattedVariable}{" "}
+          {isFetched && data?.UNITS?.[variable]
+            ? `(${data.UNITS[variable]})`
+            : ""}{" "}
+        </CardTitle>
         <CardDescription>
           You can select a different sensor variable from the dropdown to the
           right.
@@ -74,10 +81,10 @@ interface TooltipData {
 }
 
 const CustomTooltip = ({ payload, active, label }: TooltipProps) => {
-  const { variableLabels } = rootRoute.useLoaderData();
+  const variableLabels = useGlobalDataStore((s) => s.variableLabels);
   const { variable } = stationRoute.useSearch();
   const formattedVariable: string =
-    variableLabels.get(variable)?.long_name ?? variable;
+    variableLabels?.variable?.long_name ?? variable;
 
   if (!active || !payload || payload.length === 0) return null;
 

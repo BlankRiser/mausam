@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { StationMetadata } from "@/types/station-metadata";
+import type { StationMetadata } from "@/types/station-metadata";
 import { useNavigate } from "@tanstack/react-router";
 import { useMemo } from "react";
 
@@ -88,7 +88,7 @@ export const StnMetaDetails = ({ data }: { data: StationMetadata }) => {
     <div className="grid grid-cols-2 md:grid-cols-3 gap-2 h-fit">
       {CardData.map((card, index) => (
         <Card
-          key={index}
+          key={card.value.toString() + index.toString()}
           className={cn([
             "px-4 py-2 rounded-sm bg-neutral-100 dark:bg-neutral-800",
             card.onClick

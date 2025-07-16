@@ -44,7 +44,7 @@ module.exports = {
     "@typescript-eslint/no-unsafe-assignment": "off",
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": "warn",
-    "func-style": ["warn", "expression"],
+    "func-style": ["info", "expression"],
     "@tanstack/query/exhaustive-deps": "warn",
     "@tanstack/query/prefer-query-object-syntax": "off",
     "@tanstack/query/stable-query-client": "warn",
