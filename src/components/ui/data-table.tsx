@@ -30,7 +30,7 @@ export const DataTable = <TData, TValue>({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.3 }}
-      className="rounded-md border border-neutral-200 dark:border-neutral-800"
+      className="rounded-md border overflow-hidden border-neutral-200 dark:border-neutral-800"
     >
       <div className={cn(["[&>div]:max-h-96", className])}>
         <Table className="[&_td]:border-neutral-200 [&_th]:border-neutral-200 dark:[&_td]:border-neutral-800 dark:[&_th]:border-neutral-800 border-separate border-spacing-0 [&_tfoot_td]:border-t [&_th]:border-b [&_tr]:border-none [&_tr:not(:last-child)_td]:border-b">
