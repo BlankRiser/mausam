@@ -77,9 +77,13 @@ const getNetworkDataTableColumns = (): ColumnDef<MNETLabelItems>[] => {
           return "N/A";
         }
 
-        return format(
-          new Date(row.original.PERIOD_OF_RECORD.start),
-          "MMM dd yyyy",
+        return (
+          <span className="text-nowrap">
+            {format(
+              new Date(row.original.PERIOD_OF_RECORD.start),
+              "MMM dd yyyy",
+            )}
+          </span>
         );
       },
     },
@@ -91,9 +95,10 @@ const getNetworkDataTableColumns = (): ColumnDef<MNETLabelItems>[] => {
           return "N/A";
         }
 
-        return format(
-          new Date(row.original.PERIOD_OF_RECORD.end),
-          "MMM dd yyyy",
+        return (
+          <span className="text-nowrap">
+            {format(new Date(row.original.PERIOD_OF_RECORD.end), "MMM dd yyyy")}
+          </span>
         );
       },
     },
