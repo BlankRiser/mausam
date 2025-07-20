@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { ColumnDef, flexRender, useReactTable } from "@tanstack/react-table";
-
+import { motion } from "motion/react";
 interface DataTableProps<TData, TValue> {
   table: ReturnType<typeof useReactTable<TData>>;
   columns: ColumnDef<TData, TValue>[];
@@ -25,7 +25,13 @@ export const DataTable = <TData, TValue>({
   showStripes = false,
 }: DataTableProps<TData, TValue>) => {
   return (
-    <div className="rounded-md border border-neutral-200 dark:border-neutral-800">
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.3 }}
+      className="rounded-md border border-neutral-200 dark:border-neutral-800"
+    >
       <div className={cn(["[&>div]:max-h-96", className])}>
         <Table className="[&_td]:border-neutral-200 [&_th]:border-neutral-200 dark:[&_td]:border-neutral-800 dark:[&_th]:border-neutral-800 border-separate border-spacing-0 [&_tfoot_td]:border-t [&_th]:border-b [&_tr]:border-none [&_tr:not(:last-child)_td]:border-b">
           <TableHeader className="bg-background/90 sticky top-0 z-10 backdrop-blur-xs">
@@ -82,6 +88,6 @@ export const DataTable = <TData, TValue>({
           </TableBody>
         </Table>
       </div>
-    </div>
+    </motion.div>
   );
 };

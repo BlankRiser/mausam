@@ -225,20 +225,6 @@ const LatestStnDataTableFallback = () => {
 
 const RenderVariableLabel = ({ variable }: { variable: string }) => {
   const variableLabels = useGlobalDataStore((s) => s.variableLabels);
-  const { stationId } = stationRoute.useParams();
-  const navigate = useNavigate({ from: "/station/$stationId" });
-
-  const handle = () => {
-    void navigate({
-      to: "/station/$stationId",
-      params: {
-        stationId: stationId,
-      },
-      search: {
-        variable: variable,
-      },
-    });
-  };
 
   const variableLabel = variableLabels
     ? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

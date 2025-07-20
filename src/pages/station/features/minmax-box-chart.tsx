@@ -27,12 +27,13 @@ export const MinmaxBoxChart = ({ data }: { data: LatestStationResponse }) => {
 
   return (
     <Card className="relative">
-      <CardHeader>
-        <CardTitle>{formattedVariable} Min/Max</CardTitle>
-      </CardHeader>
+      <CardTitle>
+        {formattedVariable}{" "}
+        {!!data && data?.UNITS?.[variable] ? `(${data.UNITS[variable]})` : ""}
+      </CardTitle>
 
       {minmaxData.length === 0 ? (
-        <div className="absolute top-1/2 translate-y-[-50%] w-full grid place-items-center">
+        <div className="h-full min-h-80 grid place-items-center">
           <p className="text-center">No data available</p>
         </div>
       ) : (

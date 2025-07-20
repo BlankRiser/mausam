@@ -30,7 +30,6 @@ export const VariableTimeseriesChart = ({
     () => getChartData({ data: data!, variable }),
     [data, variable],
   );
-
   return (
     <Card>
       <CardHeader>
@@ -41,8 +40,8 @@ export const VariableTimeseriesChart = ({
             : ""}
         </CardTitle>
       </CardHeader>
-      {isFetched && data?.STATION?.length === 0 ? (
-        <div className="h-full grid place-items-center">
+      {(isFetched && data?.STATION?.length === 0) || chartData.length === 0 ? (
+        <div className="h-full min-h-80 grid place-items-center">
           <p className="text-center">No data available</p>
         </div>
       ) : (

@@ -25,8 +25,12 @@ export const NetworksTable = () => {
   });
 
   return (
-    <div className="overflow-auto max-h-[calc(100svh-var(--nav-height)-var(--footer-height))]">
-      <DataTable table={table} columns={columns} />
+    <div className="overflow-auto ">
+      <DataTable
+        table={table}
+        columns={columns}
+        className="[&>div]:max-h-[calc(100dvh-var(--nav-height))]"
+      />
     </div>
   );
 };
