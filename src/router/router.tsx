@@ -1,4 +1,3 @@
-import { Loader } from "@/components/ui/loader";
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter, ErrorComponent } from "@tanstack/react-router";
 import { rootRoute } from "./root-route";
@@ -30,11 +29,11 @@ export const router = createRouter({
   context: {
     queryClient,
   },
-  defaultPendingComponent: () => (
-    <div className="w-screen h-screen grid place-items-center">
-      <Loader />
-    </div>
-  ),
+  // defaultPendingComponent: () => (
+  //   <div className="w-screen h-screen grid place-items-center">
+  //     <Loader />
+  //   </div>
+  // ),
   defaultErrorComponent: ErrorComponent,
   defaultPreload: "intent",
   // Since we're using React Query, we don't want loader calls to ever be stale

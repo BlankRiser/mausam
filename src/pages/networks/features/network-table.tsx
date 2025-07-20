@@ -25,8 +25,12 @@ export const NetworksTable = () => {
   });
 
   return (
-    <div className="overflow-auto max-h-[calc(100svh-var(--nav-height)-var(--footer-height))]">
-      <DataTable table={table} columns={columns} />
+    <div className="overflow-auto ">
+      <DataTable
+        table={table}
+        columns={columns}
+        className="[&>div]:max-h-[calc(100dvh-var(--nav-height))]"
+      />
     </div>
   );
 };
@@ -73,9 +77,13 @@ const getNetworkDataTableColumns = (): ColumnDef<MNETLabelItems>[] => {
           return "N/A";
         }
 
-        return format(
-          new Date(row.original.PERIOD_OF_RECORD.start),
-          "MMM dd yyyy",
+        return (
+          <span className="text-nowrap">
+            {format(
+              new Date(row.original.PERIOD_OF_RECORD.start),
+              "MMM dd yyyy",
+            )}
+          </span>
         );
       },
     },
@@ -87,9 +95,10 @@ const getNetworkDataTableColumns = (): ColumnDef<MNETLabelItems>[] => {
           return "N/A";
         }
 
-        return format(
-          new Date(row.original.PERIOD_OF_RECORD.end),
-          "MMM dd yyyy",
+        return (
+          <span className="text-nowrap">
+            {format(new Date(row.original.PERIOD_OF_RECORD.end), "MMM dd yyyy")}
+          </span>
         );
       },
     },

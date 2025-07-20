@@ -1,13 +1,7 @@
 import { variableTimeseriesQueryOptions } from "@/api/query-factory";
 import { LineChart, TooltipProps } from "@/components/charts/line-chart";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { rootRoute } from "@/router/root-route";
-import { stationRoute } from "@/router/routes";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { useGlobalDataStore } from "@/store/global-data.store";
 import { LatestStationResponse, SensorVariables } from "@/types/station";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
@@ -18,13 +12,15 @@ const numberFormatter = new Intl.NumberFormat("en-US", {
 });
 
 export const VariableTimeseriesChart = ({
+  stationId,
   variable,
 }: {
+  stationId: string;
   variable: keyof SensorVariables;
 }) => {
-  const { stationId } = stationRoute.useParams();
-  const { variableLabels } = rootRoute.useLoaderData();
-  const formattedVariable = variableLabels.get(variable)?.long_name ?? variable;
+  const variableLabels = useGlobalDataStore((s) => s.variableLabels);
+
+  const formattedVariable = variableLabels?.[variable]?.long_name ?? variable;
 
   const { data, isFetched } = useQuery(
     variableTimeseriesQueryOptions({ stid: stationId, vars: [variable] }),
@@ -34,25 +30,24 @@ export const VariableTimeseriesChart = ({
     () => getChartData({ data: data!, variable }),
     [data, variable],
   );
-
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{formattedVariable} {isFetched && data?.UNITS?.[variable] ? `(${data.UNITS[variable]})` : ""} </CardTitle>
-        <CardDescription>
-          You can select a different sensor variable from the dropdown to the
-          right.
-        </CardDescription>
+        <CardTitle>
+          {formattedVariable}{" "}
+          {isFetched && data?.UNITS?.[variable]
+            ? `(${data.UNITS[variable]})`
+            : ""}
+        </CardTitle>
       </CardHeader>
-      {isFetched && data?.STATION?.length === 0 ? (
-        <div className="aspect-video grid place-items-center">
+      {(isFetched && data?.STATION?.length === 0) || chartData.length === 0 ? (
+        <div className="h-full min-h-80 grid place-items-center">
           <p className="text-center">No data available</p>
         </div>
       ) : (
         <>
           {isFetched && (
             <LineChart
-              className="h-80"
               data={chartData}
               index="dateTime"
               categories={["value"]}
@@ -74,12 +69,12 @@ interface TooltipData {
 }
 
 const CustomTooltip = ({ payload, active, label }: TooltipProps) => {
-  const { variableLabels } = rootRoute.useLoaderData();
-  const { variable } = stationRoute.useSearch();
-  const formattedVariable: string =
-    variableLabels.get(variable)?.long_name ?? variable;
+  const variableLabels = useGlobalDataStore((s) => s.variableLabels);
 
   if (!active || !payload || payload.length === 0) return null;
+  const variable = payload[0].payload.variable as keyof SensorVariables;
+  const formattedVariable: string =
+    variableLabels?.[variable]?.long_name ?? variable;
 
   const data = [
     {
@@ -140,13 +135,18 @@ const getChartData = ({
     return { chartData: [], sets: [] };
   }
 
-  const chartData: Array<{ dateTime: string; value: number }> = [];
+  const chartData: Array<{
+    dateTime: string;
+    value: number;
+    variable: keyof SensorVariables;
+  }> = [];
 
   if (Array.isArray(observations["date_time"])) {
     (observations["date_time"] as string[]).forEach((value, index) => {
       const sensorValue = observations[sensorVariableSet];
       if (Array.isArray(sensorValue)) {
         chartData.push({
+          variable: variable,
           dateTime: format(new Date(parseInt(value) * 1000), "HH:mm"),
           value: sensorValue[index] as number,
         });

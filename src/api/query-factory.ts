@@ -21,6 +21,35 @@ export const networksQueryOptions = () => {
   });
 };
 
+export const networkQueryOptions = ({networkId}:  {networkId:string}) => {
+  return queryOptions({
+    queryKey: ["networks", networkId],
+    queryFn: async () => {
+      return api.networks.getNetwork({
+        searchParams: {
+          id: networkId,
+        }
+      });
+    },
+    staleTime: 1000 * 60 * 60 * 24, // 24 hours
+  });
+};
+
+export const networksMetadataQueryOptions = ({ network }: { network: string }) => {
+  return queryOptions({
+    queryKey: ["networks", "metadata", network],
+    queryFn: async () => {
+      return api.stations.getMetadata({
+        searchParams: {
+          network: network,
+          complete: 1,
+          sensorvars: 1,
+          stationhistory: 1,
+        },
+      });
+    },
+  });
+};
 export const stationMetadataQueryOptions = ({ stid }: { stid: string }) => {
   return queryOptions({
     queryKey: ["stations", "metadata", stid],

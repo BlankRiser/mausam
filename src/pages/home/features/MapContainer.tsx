@@ -4,12 +4,14 @@ import { GlobalErrorBoundary } from "@/components/common/GlobalErrorBoundary";
 import { Loader } from "@/components/ui/loader";
 import { useTheme } from "@/hooks/use-theme";
 import { useKeysStore } from "@/store/env-keys.store";
+import { useMediaQuery } from "@uidotdev/usehooks";
 import Map, { NavigationControl } from "react-map-gl";
 import { StationMarker } from "./station-marker";
 import VariableSelector from "./variable-selector";
 
 export const MapContainer = () => {
   const { theme } = useTheme();
+  const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
 
   const mapboxToken = useKeysStore((state) => state.mapboxToken);
 
@@ -48,7 +50,7 @@ export const MapContainer = () => {
               : MAP_STYLES["mapbox-streets"]
           }
         >
-          <NavigationControl position="top-left" />
+          {!isSmallDevice && <NavigationControl position="bottom-left" />}
           {isFetched && !isPending && !!data && (
             <StationMarker stations={data.STATION} units={data.UNITS} />
           )}
@@ -58,7 +60,7 @@ export const MapContainer = () => {
             <Loader />
           </div>
         ) : null}
-        <div className="absolute right-4 inset-y-0 grid place-items-center ">
+        <div className="absolute bottom-8 inset-x-0 grid place-items-center ">
           <VariableSelector />
         </div>
       </div>

@@ -1,14 +1,8 @@
 import { BarChart } from "@/components/charts/bar-chart";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 import { formatLargeNumber } from "@/lib/utils";
-import { rootRoute } from "@/router/root-route";
 import { stationRoute } from "@/router/routes";
+import { useGlobalDataStore } from "@/store/global-data.store";
 import {
   LatestStationResponse,
   MinMax,
@@ -17,10 +11,10 @@ import {
 import { useMemo } from "react";
 
 export const MinmaxBoxChart = ({ data }: { data: LatestStationResponse }) => {
-  const { variableLabels } = rootRoute.useLoaderData();
+  const variableLabels = useGlobalDataStore((s) => s.variableLabels);
   const { variable } = stationRoute.useSearch();
 
-  const formattedVariable = variableLabels.get(variable)?.long_name ?? variable;
+  const formattedVariable = variableLabels?.[variable]?.long_name ?? variable;
 
   const minmaxData = useMemo(() => {
     if (data?.STATION?.length === 0) return [];
@@ -33,17 +27,13 @@ export const MinmaxBoxChart = ({ data }: { data: LatestStationResponse }) => {
 
   return (
     <Card className="relative">
-      <CardHeader>
-        <CardTitle>{formattedVariable} Min/Max</CardTitle>
-        <CardDescription>
-          You can select a different sensor variable from the dropdown to the
-          right.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
+      <CardTitle>
+        {formattedVariable}{" "}
+        {!!data && data?.UNITS?.[variable] ? `(${data.UNITS[variable]})` : ""}
+      </CardTitle>
 
       {minmaxData.length === 0 ? (
-        <div className="absolute top-1/2 translate-y-[-50%] w-full grid place-items-center">
+        <div className="h-full min-h-80 grid place-items-center">
           <p className="text-center">No data available</p>
         </div>
       ) : (
@@ -53,14 +43,10 @@ export const MinmaxBoxChart = ({ data }: { data: LatestStationResponse }) => {
             index="date"
             categories={["min", "max"]}
             yAxisWidth={48}
-            valueFormatter={
-              (value) => formatLargeNumber(value)
-
-            }
+            valueFormatter={(value) => formatLargeNumber(value)}
           />
         </>
       )}
-      </CardContent>
     </Card>
   );
 };
