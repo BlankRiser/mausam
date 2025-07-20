@@ -11,7 +11,7 @@ export const StationMarker: React.FC<{
   units: Record<string, string>;
 }> = ({ stations, units }) => {
   const currentStation = useCurrentState((state) => state.currentStation);
-  
+
   if (!stations) return null;
 
   return (
@@ -31,12 +31,12 @@ export const StationMarker: React.FC<{
 };
 
 const StationMarkerItem = memo(
-  ({ 
-    station, 
-    units, 
-    isSelected 
-  }: { 
-    station: Station; 
+  ({
+    station,
+    units,
+    isSelected,
+  }: {
+    station: Station;
     units: Record<string, string>;
     isSelected: boolean;
   }) => {
@@ -83,6 +83,12 @@ const StationMarkerItem = memo(
             latitude={+station.LATITUDE}
             longitude={+station.LONGITUDE}
             className="bg-transparent"
+            closeButton={false}
+            closeOnClick={false}
+            onClose={() => setCurrentStation(null)}
+            offset={{
+              bottom: [0, -5],
+            }}
           >
             <MarkerTooltipContents station={station} units={units} />
           </Popup>
@@ -106,19 +112,11 @@ const MarkerTooltipContents: React.FC<{
   );
 
   return (
-    <div className="px-3 py-1.5 text-black bg-neutral-50/70 dark:bg-neutral-900/70 shadow-md dark:text-white">
-      <div className="flex flex-col justify-center items-center">
-        <p className="text-lg font-semibold text-neutral-800 dark:text-neutral-50">
-          {station.STID}
-        </p>
-        <p className="text-sm text-neutral-700 dark:text-neutral-200">
-          {station.NAME}
-        </p>
-        <p className="text-xs text-neutral-700 dark:text-neutral-200">
-          {station.MNET_SHORTNAME}
-        </p>
-      </div>
-      <div className="text-xs">
+    <div className="px-3 py-1.5 text-black bg-neutral-200/70 dark:bg-neutral-900/70 backdrop-blur-sm shadow-md dark:text-white rounded-md">
+      <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-50">
+        {station.STID}
+      </span>
+      <div>
         {variables?.map((variable) => {
           const formattedDate = getFormattedTimezone({
             dateString: variable.dateTime,
@@ -131,13 +129,13 @@ const MarkerTooltipContents: React.FC<{
             : "N/A";
 
           return (
-            <div key={variable.sensor} className="flex gap-2">
-              <p className=" text-neutral-700 dark:text-neutral-200">
+            <div key={variable.sensor} className="flex flex-col">
+              <span className="font-mono text-neutral-700 dark:text-neutral-200 text-sm">
                 {formattedValue}
-              </p>
-              <p className=" text-neutral-700 dark:text-neutral-200">
+              </span>
+              <span className="text-neutral-700 dark:text-neutral-200">
                 {formattedDate}
-              </p>
+              </span>
             </div>
           );
         })}

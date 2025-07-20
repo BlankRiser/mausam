@@ -67,10 +67,11 @@
 
   "typescript.updateImportsOnFileMove.enabled": "always",
   "github.copilot.enable": {
-    "*": true,
+    "*": false,
     "plaintext": false,
     "markdown": true,
     "scminput": false,
+    "yaml": false,
     "typescriptreact": true
   },
   "git.openRepositoryInParentFolders": "never",

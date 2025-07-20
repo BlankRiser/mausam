@@ -1,11 +1,5 @@
 import { BarChart } from "@/components/charts/bar-chart";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatLargeNumber } from "@/lib/utils";
 import { stationRoute } from "@/router/routes";
 import { useGlobalDataStore } from "@/store/global-data.store";
@@ -20,7 +14,7 @@ export const MinmaxBoxChart = ({ data }: { data: LatestStationResponse }) => {
   const variableLabels = useGlobalDataStore((s) => s.variableLabels);
   const { variable } = stationRoute.useSearch();
 
-  const formattedVariable = variableLabels?.variable?.long_name ?? variable;
+  const formattedVariable = variableLabels?.[variable]?.long_name ?? variable;
 
   const minmaxData = useMemo(() => {
     if (data?.STATION?.length === 0) return [];
@@ -35,28 +29,23 @@ export const MinmaxBoxChart = ({ data }: { data: LatestStationResponse }) => {
     <Card className="relative">
       <CardHeader>
         <CardTitle>{formattedVariable} Min/Max</CardTitle>
-        <CardDescription>
-          You can select a different sensor variable from the dropdown to the
-          right.
-        </CardDescription>
       </CardHeader>
-      <CardContent>
-        {minmaxData.length === 0 ? (
-          <div className="absolute top-1/2 translate-y-[-50%] w-full grid place-items-center">
-            <p className="text-center">No data available</p>
-          </div>
-        ) : (
-          <>
-            <BarChart
-              data={minmaxData}
-              index="date"
-              categories={["min", "max"]}
-              yAxisWidth={48}
-              valueFormatter={(value) => formatLargeNumber(value)}
-            />
-          </>
-        )}
-      </CardContent>
+
+      {minmaxData.length === 0 ? (
+        <div className="absolute top-1/2 translate-y-[-50%] w-full grid place-items-center">
+          <p className="text-center">No data available</p>
+        </div>
+      ) : (
+        <>
+          <BarChart
+            data={minmaxData}
+            index="date"
+            categories={["min", "max"]}
+            yAxisWidth={48}
+            valueFormatter={(value) => formatLargeNumber(value)}
+          />
+        </>
+      )}
     </Card>
   );
 };

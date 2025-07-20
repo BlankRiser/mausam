@@ -17,8 +17,8 @@ export const StationMap = ({ data }: { data: StationMetadata }) => {
         reuseMaps={true}
         mapboxAccessToken={mapboxToken}
         initialViewState={{
-          longitude: +data.STATION[0].LONGITUDE,
-          latitude: +data.STATION[0].LATITUDE,
+          longitude: +data?.STATION?.[0]?.LONGITUDE,
+          latitude: +data?.STATION?.[0]?.LATITUDE,
           zoom: 12,
         }}
         style={{
@@ -33,8 +33,8 @@ export const StationMap = ({ data }: { data: StationMetadata }) => {
         }
       >
         <Marker
-          longitude={+data.STATION[0].LONGITUDE}
-          latitude={+data.STATION[0].LATITUDE}
+          longitude={+data?.STATION?.[0]?.LONGITUDE}
+          latitude={+data?.STATION?.[0]?.LATITUDE}
         >
           <LocationMarker className="size-8 text-blue-600 dark:text-blue-400" />
         </Marker>

@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { stationRoute } from "@/router/routes";
 import { useGlobalDataStore } from "@/store/global-data.store";
@@ -29,7 +28,9 @@ export const LatestStnDataTable = ({
   const rows = useMemo(() => transformData(data), [data]);
 
   useEffect(() => {
-    const variable = Object.keys(rowSelection)[0];
+    const variable =
+      Object.keys(rowSelection)[0]?.split("|")[0] ?? selectedVariable;
+
     void navigate({
       to: "/station/$stationId",
       params: {
@@ -192,7 +193,7 @@ const transformData = (data: LatestStationResponse) => {
       if (station["OBSERVATIONS"]?.[sensorKey]) {
         sensorRows.push({
           variable: key,
-          sensorKey: sensorKey,
+          sensorKey: key + "|" + sensorKey,
           hasMultipleSensors,
           position: {
             value: sensorValue["position"]!,
@@ -244,9 +245,5 @@ const RenderVariableLabel = ({ variable }: { variable: string }) => {
       (variableLabels?.variable?.long_name ?? variable)
     : variable;
 
-  return (
-    <Button variant={"ghost"} size="sm" onClick={handle}>
-      {variableLabel}
-    </Button>
-  );
+  return <span className="px-2">{variableLabel}</span>;
 };
