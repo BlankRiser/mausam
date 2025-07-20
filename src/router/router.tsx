@@ -1,4 +1,3 @@
-import { Loader } from "@/components/ui/loader";
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter, ErrorComponent } from "@tanstack/react-router";
 import { rootRoute } from "./root-route";

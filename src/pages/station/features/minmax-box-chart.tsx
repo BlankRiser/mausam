@@ -1,5 +1,5 @@
 import { BarChart } from "@/components/charts/bar-chart";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 import { formatLargeNumber } from "@/lib/utils";
 import { stationRoute } from "@/router/routes";
 import { useGlobalDataStore } from "@/store/global-data.store";
