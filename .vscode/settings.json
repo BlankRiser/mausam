@@ -72,7 +72,8 @@
     "markdown": true,
     "scminput": false,
     "yaml": false,
-    "typescriptreact": true
+    "typescriptreact": true,
+    "typescript": true
   },
   "git.openRepositoryInParentFolders": "never",
 }

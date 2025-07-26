@@ -25,11 +25,11 @@ export const NetworksTable = () => {
   });
 
   return (
-    <div className="overflow-auto ">
+    <div className="overflow-auto p-2">
       <DataTable
         table={table}
         columns={columns}
-        className="[&>div]:max-h-[calc(100dvh-var(--nav-height))]"
+        className="[&>div]:max-h-[calc(100dvh-var(--nav-height)-2rem)]"
       />
     </div>
   );

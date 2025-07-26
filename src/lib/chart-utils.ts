@@ -2,6 +2,16 @@
 
 export type ColorUtility = "bg" | "stroke" | "fill" | "text"
 
+export const debounce = (func: (...args: any[]) => void, wait: number) => {
+  let timeout: NodeJS.Timeout;
+  return (...args: any[]) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      func(...args);
+    }, wait);
+  };
+};
+
 export const chartColors = {
   blue: {
     bg: "bg-blue-500",

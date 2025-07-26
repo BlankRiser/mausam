@@ -1,5 +1,5 @@
 import { BarChart } from "@/components/charts/bar-chart";
-import { Card, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatLargeNumber } from "@/lib/utils";
 import { stationRoute } from "@/router/routes";
 import { useGlobalDataStore } from "@/store/global-data.store";
@@ -27,10 +27,12 @@ export const MinmaxBoxChart = ({ data }: { data: LatestStationResponse }) => {
 
   return (
     <Card className="relative">
-      <CardTitle>
-        {formattedVariable}{" "}
-        {!!data && data?.UNITS?.[variable] ? `(${data.UNITS[variable]})` : ""}
-      </CardTitle>
+      <CardHeader>
+        <CardTitle>
+          {formattedVariable}{" "}
+          {!!data && data?.UNITS?.[variable] ? `(${data.UNITS[variable]})` : ""}
+        </CardTitle>
+      </CardHeader>
 
       {minmaxData.length === 0 ? (
         <div className="h-full min-h-80 grid place-items-center">
