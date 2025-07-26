@@ -64,7 +64,9 @@ export const StationIndexPage = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit">Search</Button>
+            <Button variant={"primary"} type="submit">
+              Search
+            </Button>
           </form>
         </Form>
       </div>

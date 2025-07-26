@@ -46,6 +46,7 @@
     "react-map-gl": "^7.1.9",
     "react-markdown": "10.1.0",
     "react-resizable-panels": "^0.0.55",
+    "react-virtuoso": "4.13.0",
     "recharts": "^2.15.4",
     "remark-gfm": "4.0.1",
     "shiki": "3.7.0",

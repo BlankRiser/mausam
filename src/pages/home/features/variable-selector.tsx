@@ -48,5 +48,3 @@ export const VariableSelector = () => {
     </div>
   );
 };
-
-export default VariableSelector;

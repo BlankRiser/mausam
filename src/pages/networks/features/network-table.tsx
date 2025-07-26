@@ -107,7 +107,7 @@ const getNetworkDataTableColumns = (): ColumnDef<MNETLabelItems>[] => {
       header: "",
       cell: ({ row }) => {
         return (
-          <Button asChild variant="link">
+          <Button asChild variant="primary" mode="link" underline="solid">
             <Link
               to={`/networks/$networkId`}
               params={{

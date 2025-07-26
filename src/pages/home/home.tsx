@@ -37,14 +37,22 @@ export const Home = () => {
 const Banner = () => {
   return (
     <div className="w-full bg-blue-500 grid place-items-center p-2">
-      <a
-        className="text-sm text-white hover:underline underline-offset-4"
-        href="https://docs.synopticdata.com/services/weather-data-api"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Built using Synoptic Weather API
-      </a>
+      <div className="max-w-7xl mx-auto text-center">
+        <a
+          className="text-sm text-white hover:underline underline-offset-4"
+          href="https://docs.synopticdata.com/services/weather-data-api"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Built using Synoptic Weather API.
+        </a>{" "}
+        <a
+          href="https://viewer.synopticdata.com/"
+          className="text-sm text-white hover:underline underline-offset-4"
+        >
+          Visit Synoptic Viewer for a more detailed view.
+        </a>
+      </div>
     </div>
   );
 };

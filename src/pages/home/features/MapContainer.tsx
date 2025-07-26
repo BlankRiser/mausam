@@ -7,7 +7,7 @@ import { useKeysStore } from "@/store/env-keys.store";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import Map, { NavigationControl } from "react-map-gl";
 import { StationMarker } from "./station-marker";
-import VariableSelector from "./variable-selector";
+import { VariableSelector } from "./variable-selector";
 
 export const MapContainer = () => {
   const { theme } = useTheme();
