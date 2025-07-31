@@ -40,7 +40,7 @@ export const NetworkStationsTable = () => {
   }
 
   return (
-    <div className="overflow-auto p-2">
+    <div className="overflow-auto">
       <DataTable
         table={table}
         columns={columns}

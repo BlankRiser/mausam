@@ -28,6 +28,7 @@
     "@uidotdev/usehooks": "^2.4.1",
     "class-variance-authority": "^0.6.1",
     "clsx": "^2.1.1",
+    "cobe": "0.6.4",
     "culori": "4.0.2",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.1",
