@@ -14,12 +14,14 @@ export const NetworkStationsGlobe = () => {
   );
 
   const globeConfig = useMemo(() => {
-    const markers: Array<Marker> = data.STATION.map((stn) => {
-      return {
-        location: [+stn.LATITUDE, +stn.LONGITUDE],
-        size: 0.05,
-      };
-    });
+    const markers: Array<Marker> = data.STATION
+      ? data.STATION.map((stn) => {
+          return {
+            location: [+stn.LATITUDE, +stn.LONGITUDE],
+            size: 0.05,
+          };
+        })
+      : [];
 
     return {
       width: 800,
