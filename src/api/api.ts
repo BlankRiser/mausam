@@ -10,7 +10,7 @@ import { API } from "./constants";
 
 type SearchParamsType = Record<string, string | number>;
 
-export const createAPI = ({ base }: { base: string }) => {
+const createAPI = ({ base }: { base: string }) => {
   const baseUrl = base ?? API.BaseUrl;
 
   const apiToken = useKeysStore.getState().synopticToken;

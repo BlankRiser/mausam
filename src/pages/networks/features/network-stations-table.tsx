@@ -96,9 +96,10 @@ const getNetworkStationsDataTableColumns = (): ColumnDef<MetadataStation>[] => {
     {
       id: "elevation",
       accessorKey: "ELEVATION",
-      header: "Elevation",
+      header: ({ table }) =>
+        `Elevation (${table.getRowModel().rows[0].original.UNITS.elevation})`,
       cell: ({ row }) => {
-        return `${parseInt(row.original.ELEVATION ?? "0").toFixed(0)}${row.original.UNITS.elevation}`;
+        return `${parseInt(row.original.ELEVATION ?? "0").toFixed(0)}`;
       },
     },
     {

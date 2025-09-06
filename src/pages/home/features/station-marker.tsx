@@ -11,7 +11,6 @@ export const StationMarker: React.FC<{
   units: Record<string, string>;
 }> = ({ stations, units }) => {
   const currentStation = useCurrentState((state) => state.currentStation);
-
   if (!stations) return null;
 
   return (

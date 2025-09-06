@@ -36,6 +36,7 @@ export const VariableTimeseriesChart = ({
     () => getChartData({ data: data!, variable }),
     [data, variable],
   );
+
   return (
     <Card>
       <CardHeader>
