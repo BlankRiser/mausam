@@ -47,7 +47,7 @@ export const StnMetaDetails = ({ data }: { data: StationMetadata }) => {
       },
       {
         label: "National Weather Service Zone",
-        value: data.STATION?.[0]?.NWSZONE ?? "N/A" ?? "N/A",
+        value: data.STATION?.[0]?.NWSZONE ?? "N/A",
         className: cn([""]),
       },
       {
