@@ -90,6 +90,9 @@ export const networksIndexRoute = createRoute({
   getParentRoute: () => networksRoute,
   path: "/",
   component: NetworksPage,
+  validateSearch: z.object({
+    q: z.string().optional(),
+  }),
 });
 
 export const networkRoute = createRoute({

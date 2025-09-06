@@ -58,6 +58,7 @@
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.81.2",
+    "@tanstack/eslint-plugin-router": "1.131.2",
     "@types/culori": "4.0.0",
     "@types/mapbox-gl": "^2.7.21",
     "@types/node": "24.3.0",
