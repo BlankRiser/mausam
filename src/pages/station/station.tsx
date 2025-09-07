@@ -14,6 +14,7 @@ import { StationMap } from "./features/station-map";
 import { LatestStnDataTable } from "./features/station-table";
 import { StnMetaDetails } from "./features/stn-meta-details";
 import { VariableTimeseriesChart } from "./features/variable-timeseries-chart";
+import ExpandingLatestTable from "@/pages/station/features/expanding-latest-table";
 
 export const StationDetailsPage = () => {
   return (
@@ -21,6 +22,9 @@ export const StationDetailsPage = () => {
       <Suspense fallback={<MetadataDetailsFallback />}>
         <MetadataDetails />
       </Suspense>
+      {/* <Suspense fallback={<ReportingDetailsFallback />}>
+        <StationCards />
+      </Suspense> */}
       <Suspense fallback={<ReportingDetailsFallback />}>
         <ReportingDetails />
       </Suspense>
@@ -98,7 +102,8 @@ const ReportingDetails = () => {
 
   return (
     <>
-      <LatestStnDataTable data={data} />
+      {/* <LatestStnDataTable data={data} /> */}
+      <ExpandingLatestTable data={data} />
       <div className="grid md:grid-cols-2 gap-2">
         <MinmaxBoxChart data={data} />
         <VariableTimeseries />
