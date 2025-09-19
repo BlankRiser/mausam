@@ -1,16 +1,11 @@
+import { useNavigate } from "@tanstack/react-router";
+import { useMemo } from "react";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { StationMetadata } from "@/types/station-metadata";
-import { useNavigate } from "@tanstack/react-router";
-import { useMemo } from "react";
-
-const formatter = {
-  format: (arr: string[]) => arr?.join(", ")?.replace(/, ([^,]*)$/, " and $1"),
-};
 
 export const StnMetaDetails = ({ data }: { data: StationMetadata }) => {
   const navigate = useNavigate({ from: "/station/$stationId" });
-
   const CardData = useMemo(
     () => [
       {
@@ -28,14 +23,14 @@ export const StnMetaDetails = ({ data }: { data: StationMetadata }) => {
         value: data.STATION?.[0]?.STATUS ?? "N/A",
         className: cn([
           data.STATION?.[0]?.STATUS === "ACTIVE"
-            ? "text-green-600 dark:text-green-500"
-            : "text-red-600 dark:text-red-500",
+            ? "text-green-600 dark:text-green-400"
+            : "text-red-600 dark:text-red-400",
         ]),
       },
       {
         label: "Network",
         value: data.STATION?.[0]?.SHORTNAME ?? "N/A",
-        className: cn(["text-blue-600 dark:text-blue-500"]),
+        className: cn(["text-blue-600 dark:text-blue-400"]),
         onClick: () => {
           void navigate({
             to: "/networks/$networkId",
@@ -47,18 +42,27 @@ export const StnMetaDetails = ({ data }: { data: StationMetadata }) => {
       },
       {
         label: "National Weather Service Zone",
-        value: data.STATION?.[0]?.NWSZONE ?? "N/A" ?? "N/A",
+        value: data.STATION?.[0]?.NWSZONE ?? "N/A",
         className: cn([""]),
       },
       {
-        label: "Longitude",
-        value: data.STATION?.[0]?.LONGITUDE ?? "N/A",
-        className: cn([""]),
-      },
-      {
-        label: "Latitude",
-        value: data.STATION?.[0]?.LATITUDE ?? "N/A",
-        className: cn([""]),
+        label: "Coordinates",
+        value: `${data.STATION?.[0]?.LONGITUDE ?? "N/A"}, ${
+          data.STATION?.[0]?.LATITUDE ?? "N/A"
+        }`,
+        onClick: () => {
+          const lat = data.STATION?.[0]?.LATITUDE;
+          const lon = data.STATION?.[0]?.LONGITUDE;
+          if (lat && lon) {
+            const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
+            window.open(url, "_blank");
+          }
+        },
+        className: cn([
+          !!data.STATION?.[0]?.LATITUDE &&
+            !!data.STATION?.[0]?.LONGITUDE &&
+            "text-blue-600 dark:text-blue-400",
+        ]),
       },
       {
         label: "Timezone",
@@ -81,9 +85,23 @@ export const StnMetaDetails = ({ data }: { data: StationMetadata }) => {
       },
       {
         label: "Data Providers",
-        value:
-          formatter.format(data.STATION?.[0]?.PROVIDERS.map((p) => p.name)) ??
-          "N/A",
+        value: (
+          <div className="flex gap-1">
+            {(data.STATION?.[0]?.PROVIDERS ?? []).map((p, index) => {
+              return (
+                <a
+                  key={p?.url + index.toString()}
+                  href={p?.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 dark:text-blue-400"
+                >
+                  {p?.name}
+                </a>
+              );
+            }) ?? "N/A"}
+          </div>
+        ),
         className: cn([""]),
       },
     ],

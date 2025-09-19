@@ -1,26 +1,28 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
+import { motion } from "motion/react";
+import { Suspense, useEffect, useState } from "react";
 import {
   stationLatestQueryOptions,
   stationMetadataQueryOptions,
 } from "@/api/query-factory";
 import { Skeleton } from "@/components/ui/skeleton";
+import ExpandingLatestTable from "@/pages/station/features/expanding-latest-table";
 import { stationRoute } from "@/router/routes";
 import { SensorVariables } from "@/types/station";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
-import { motion } from "motion/react";
-import { Suspense, useEffect, useState } from "react";
 import { MinmaxBoxChart } from "./features/minmax-box-chart";
 import { StationMap } from "./features/station-map";
-import { LatestStnDataTable } from "./features/station-table";
-import { StnMetaDetails } from "./features/stn-meta-details";
-import { VariableTimeseriesChart } from "./features/variable-timeseries-chart";
-
+import { StnMetaDetails } from "@/pages/station/features/stn-meta-details";
+import { VariableTimeseriesChart } from "@/pages/station/features/variable-timeseries-chart";
 export const StationDetailsPage = () => {
   return (
     <div className="p-2 space-y-2 ">
       <Suspense fallback={<MetadataDetailsFallback />}>
         <MetadataDetails />
       </Suspense>
+      {/* <Suspense fallback={<ReportingDetailsFallback />}>
+        <StationCards />
+      </Suspense> */}
       <Suspense fallback={<ReportingDetailsFallback />}>
         <ReportingDetails />
       </Suspense>
@@ -98,7 +100,8 @@ const ReportingDetails = () => {
 
   return (
     <>
-      <LatestStnDataTable data={data} />
+      {/* <LatestStnDataTable data={data} /> */}
+      <ExpandingLatestTable data={data} />
       <div className="grid md:grid-cols-2 gap-2">
         <MinmaxBoxChart data={data} />
         <VariableTimeseries />

@@ -1,6 +1,16 @@
 // Tremor chartColors [v0.1.0]
 
-export type ColorUtility = "bg" | "stroke" | "fill" | "text"
+export type ColorUtility = "bg" | "stroke" | "fill" | "text";
+
+export const debounce = (func: (...args: any[]) => void, wait: number) => {
+  let timeout: NodeJS.Timeout;
+  return (...args: any[]) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      func(...args);
+    }, wait);
+  };
+};
 
 export const chartColors = {
   blue: {
@@ -46,39 +56,39 @@ export const chartColors = {
     text: "text-pink-500",
   },
   lime: {
-     bg: "bg-lime-500",
-     stroke: "stroke-lime-500",
-     fill: "fill-lime-500",
-     text: "text-lime-500",
+    bg: "bg-lime-500",
+    stroke: "stroke-lime-500",
+    fill: "fill-lime-500",
+    text: "text-lime-500",
   },
   fuchsia: {
-     bg: "bg-fuchsia-500",
-     stroke: "stroke-fuchsia-500",
-     fill: "fill-fuchsia-500",
-     text: "text-fuchsia-500",
+    bg: "bg-fuchsia-500",
+    stroke: "stroke-fuchsia-500",
+    fill: "fill-fuchsia-500",
+    text: "text-fuchsia-500",
   },
 } as const satisfies {
   [color: string]: {
-    [key in ColorUtility]: string
-  }
-}
+    [key in ColorUtility]: string;
+  };
+};
 
-export type AvailableChartColorsKeys = keyof typeof chartColors
+export type AvailableChartColorsKeys = keyof typeof chartColors;
 
 export const AvailableChartColors: AvailableChartColorsKeys[] = Object.keys(
   chartColors,
-) as Array<AvailableChartColorsKeys>
+) as Array<AvailableChartColorsKeys>;
 
 export const constructCategoryColors = (
   categories: string[],
   colors: AvailableChartColorsKeys[],
 ): Map<string, AvailableChartColorsKeys> => {
-  const categoryColors = new Map<string, AvailableChartColorsKeys>()
+  const categoryColors = new Map<string, AvailableChartColorsKeys>();
   categories.forEach((category, index) => {
-    categoryColors.set(category, colors[index % colors.length])
-  })
-  return categoryColors
-}
+    categoryColors.set(category, colors[index % colors.length]);
+  });
+  return categoryColors;
+};
 
 export const getColorClassName = (
   color: AvailableChartColorsKeys,
@@ -89,36 +99,35 @@ export const getColorClassName = (
     stroke: "stroke-gray-500",
     fill: "fill-gray-500",
     text: "text-gray-500",
-  }
-  return chartColors[color]?.[type] ?? fallbackColor[type]
-}
+  };
+  return chartColors[color]?.[type] ?? fallbackColor[type];
+};
 
 export const getYAxisDomain = (
   autoMinValue: boolean,
   minValue: number | undefined,
   maxValue: number | undefined,
 ) => {
-  const minDomain = autoMinValue ? "auto" : minValue ?? 0
-  const maxDomain = maxValue ?? "auto"
-  return [minDomain, maxDomain]
-}
-
+  const minDomain = autoMinValue ? "auto" : (minValue ?? 0);
+  const maxDomain = maxValue ?? "auto";
+  return [minDomain, maxDomain];
+};
 
 export const hasOnlyOneValueForKey = (
   array: any[],
   keyToCheck: string,
 ): boolean => {
-  const val: any[] = []
+  const val: any[] = [];
 
   for (const obj of array) {
-    if (Object.prototype.hasOwnProperty.call(obj, keyToCheck)) {
+    if (Object.hasOwn(obj, keyToCheck)) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      val.push(obj[keyToCheck])
+      val.push(obj[keyToCheck]);
       if (val.length > 1) {
-        return false
+        return false;
       }
     }
   }
 
-  return true
-}
+  return true;
+};

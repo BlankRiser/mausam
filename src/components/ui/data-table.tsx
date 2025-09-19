@@ -1,5 +1,5 @@
-"use client";
-
+import { ColumnDef, flexRender, useReactTable } from "@tanstack/react-table";
+import { motion } from "motion/react";
 import {
   Table,
   TableBody,
@@ -9,8 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-import { ColumnDef, flexRender, useReactTable } from "@tanstack/react-table";
-import { motion } from "motion/react";
+
 interface DataTableProps<TData, TValue> {
   table: ReturnType<typeof useReactTable<TData>>;
   columns: ColumnDef<TData, TValue>[];
@@ -60,8 +59,7 @@ export const DataTable = <TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                   className={cn([
                     showStripes && "max-h-10",
-                    "odd:bg-zinc-200/50 dark:odd:bg-zinc-800/50 hover:bg-transparent hover:odd:bg-zinc-200/50 dark:hover:odd:bg-zinc-800/50",
-                    "cursor-pointer data-[state=selected]:bg-blue-100 data-[state=selected]:dark:bg-blue-900/20",
+                    "cursor-pointer data-[state=selected]:bg-blue-300 data-[state=selected]:dark:bg-blue-700",
                   ])}
                   onClick={row.getToggleSelectedHandler()}
                 >

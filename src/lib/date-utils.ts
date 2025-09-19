@@ -1,4 +1,4 @@
-import { toDate, getTimezoneOffset, format, utcToZonedTime } from "date-fns-tz";
+import { format, getTimezoneOffset, toDate, utcToZonedTime } from "date-fns-tz";
 
 type GetFormattedTimezone = {
   dateString: string;

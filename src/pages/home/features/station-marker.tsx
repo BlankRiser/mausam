@@ -1,17 +1,16 @@
+import { memo, useMemo } from "react";
+import { Marker, Popup } from "react-map-gl";
 import { getFormattedTimezone } from "@/lib/date-utils";
 import { getVariableData } from "@/lib/synoptic-utils";
 import { cn } from "@/lib/utils";
 import { useCurrentState } from "@/store/station.store";
 import { Station } from "@/types/station";
-import { memo, useMemo } from "react";
-import { Marker, Popup } from "react-map-gl";
 
 export const StationMarker: React.FC<{
   stations: Array<Station>;
   units: Record<string, string>;
 }> = ({ stations, units }) => {
   const currentStation = useCurrentState((state) => state.currentStation);
-
   if (!stations) return null;
 
   return (
@@ -53,7 +52,7 @@ const StationMarkerItem = memo(
     const markerStyles = useMemo(
       () =>
         cn([
-          "z-50 min-w-6 min-h-6 p-1 rounded-full grid place-items-center",
+          "z-50 w-6 h-6 p-1 rounded-full grid place-items-center",
           "bg-neutral-50/90 dark:bg-neutral-800/90 dark:hover:bg-neutral-800 border dark:border-neutral-800 border-neutral-900 hover:bg-neutral-100 transition-colors",
           isSelected
             ? "relative after:absolute after:ring-3 after:content-[''] after:ring-blue-500 after:animate-ping after:w-5 after:h-5 after:grid after:place-items-center after:rounded-full"
@@ -61,6 +60,9 @@ const StationMarkerItem = memo(
         ]),
       [isSelected],
     );
+
+    if (Object.keys(data ?? {}).length === 0 || !data?.latest.value)
+      return null;
 
     return (
       <>
@@ -73,8 +75,8 @@ const StationMarkerItem = memo(
           }}
         >
           <div className={markerStyles}>
-            <span className="font-mono text-xs text-neutral-600 dark:text-neutral-400">
-              {data?.latest.value?.toFixed(0)}
+            <span className="font-mono text-xs text-neutral-600 dark:text-neutral-400 ">
+              {data.latest.value.toFixed(0)}
             </span>
           </div>
         </Marker>

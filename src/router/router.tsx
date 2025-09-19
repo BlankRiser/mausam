@@ -11,6 +11,7 @@ import {
   stationsRoute,
   tokenIndexRoute,
   tokenRoute,
+  wallpaperRoute,
 } from "./routes";
 
 const queryClient = new QueryClient();
@@ -20,6 +21,7 @@ const routeTree = rootRoute.addChildren([
     stationsRoute.addChildren([stationIndexRoute, stationRoute]),
     tokenRoute.addChildren([tokenIndexRoute]),
     networksRoute.addChildren([networksIndexRoute, networkRoute]),
+    wallpaperRoute,
   ]),
 ]);
 

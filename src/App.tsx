@@ -1,7 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MapProvider } from "react-map-gl";
-
 import { RouterProvider } from "@tanstack/react-router";
+import { MapProvider } from "react-map-gl";
 import { Toaster } from "sonner";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { router } from "./router/router";

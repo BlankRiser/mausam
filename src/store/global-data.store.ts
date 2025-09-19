@@ -1,3 +1,5 @@
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 import { api } from "@/api/api";
 import {
   extractNetworkDetails,
@@ -5,8 +7,6 @@ import {
 } from "@/lib/synoptic-utils";
 import type { MNETLabelItems } from "@/types/networks";
 import type { VariableLabelItems } from "@/types/variables";
-import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
 
 type State = {
   variableLabels: Record<string, VariableLabelItems>;

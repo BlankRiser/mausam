@@ -1,13 +1,14 @@
+import { useMediaQuery } from "@uidotdev/usehooks";
+// biome-ignore lint/suspicious/noShadowRestrictedNames: this is map from react-map-gl
+import Map, { NavigationControl } from "react-map-gl";
 import { useStationMetadata } from "@/api/use-station-data";
 import { MAP_STYLES } from "@/assets/data/mapbox";
 import { GlobalErrorBoundary } from "@/components/common/GlobalErrorBoundary";
 import { Loader } from "@/components/ui/loader";
 import { useTheme } from "@/hooks/use-theme";
 import { useKeysStore } from "@/store/env-keys.store";
-import { useMediaQuery } from "@uidotdev/usehooks";
-import Map, { NavigationControl } from "react-map-gl";
 import { StationMarker } from "./station-marker";
-import VariableSelector from "./variable-selector";
+import { VariableSelector } from "./variable-selector";
 
 export const MapContainer = () => {
   const { theme } = useTheme();
@@ -15,8 +16,7 @@ export const MapContainer = () => {
 
   const mapboxToken = useKeysStore((state) => state.mapboxToken);
 
-  const { isLoading, data, refetch, isPending, isFetched } =
-    useStationMetadata();
+  const { data, refetch, isFetching } = useStationMetadata();
 
   return (
     <GlobalErrorBoundary>
@@ -51,11 +51,11 @@ export const MapContainer = () => {
           }
         >
           {!isSmallDevice && <NavigationControl position="bottom-left" />}
-          {isFetched && !isPending && !!data && (
+          {!!data && (
             <StationMarker stations={data.STATION} units={data.UNITS} />
           )}
         </Map>
-        {isLoading || isPending ? (
+        {isFetching ? (
           <div className="w-fit h-fit z-100 absolute top-1/2 translate-y-[-50%] left-1/2 translate-x-[-50%] bg-transparent flex justify-center items-center">
             <Loader />
           </div>

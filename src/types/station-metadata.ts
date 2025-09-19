@@ -1,11 +1,11 @@
 import { SUMMARY } from "./common";
 
 export interface StationMetadata {
-  STATION: STATION[];
+  STATION: MetadataStation[];
   SUMMARY: SUMMARY;
 }
 
-interface STATION {
+export interface MetadataStation {
   ID: string;
   STID: string;
   NAME: string;

@@ -5,7 +5,7 @@ export const variablesQueryOptions = () => {
   return queryOptions({
     queryKey: ["variables"],
     queryFn: async () => {
-      return api.variables.getAllVariables();
+      return await api.variables.getAllVariables();
     },
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
   });
@@ -15,31 +15,35 @@ export const networksQueryOptions = () => {
   return queryOptions({
     queryKey: ["networks"],
     queryFn: async () => {
-      return api.networks.getAllNetworks();
+      return await api.networks.getAllNetworks();
     },
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
   });
 };
 
-export const networkQueryOptions = ({networkId}:  {networkId:string}) => {
+export const networkQueryOptions = ({ networkId }: { networkId: string }) => {
   return queryOptions({
     queryKey: ["networks", networkId],
     queryFn: async () => {
-      return api.networks.getNetwork({
+      return await api.networks.getNetwork({
         searchParams: {
           id: networkId,
-        }
+        },
       });
     },
     staleTime: 1000 * 60 * 60 * 24, // 24 hours
   });
 };
 
-export const networksMetadataQueryOptions = ({ network }: { network: string }) => {
+export const networksMetadataQueryOptions = ({
+  network,
+}: {
+  network: string;
+}) => {
   return queryOptions({
     queryKey: ["networks", "metadata", network],
     queryFn: async () => {
-      return api.stations.getMetadata({
+      return await api.stations.getMetadata({
         searchParams: {
           network: network,
           complete: 1,
@@ -54,7 +58,7 @@ export const stationMetadataQueryOptions = ({ stid }: { stid: string }) => {
   return queryOptions({
     queryKey: ["stations", "metadata", stid],
     queryFn: async () => {
-      return api.stations.getMetadata({
+      return await api.stations.getMetadata({
         searchParams: {
           stid: stid,
           complete: 1,
@@ -70,7 +74,7 @@ export const stationLatestQueryOptions = ({ stid }: { stid: string }) => {
   return queryOptions({
     queryKey: ["stations", "latest", stid],
     queryFn: async () => {
-      return api.stations.getLatest({
+      return await api.stations.getLatest({
         searchParams: {
           stid,
           complete: 1,
@@ -99,7 +103,7 @@ export const variableTimeseriesQueryOptions = ({
   return queryOptions({
     queryKey: ["stations", "timeseries", stid, vars],
     queryFn: async () => {
-      return api.stations.getTimeSeries({
+      return await api.stations.getTimeSeries({
         searchParams: {
           stid,
           vars: vars.join(","),

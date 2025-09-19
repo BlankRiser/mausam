@@ -1,16 +1,16 @@
+import ky, { type Options } from "ky";
+import { toast } from "sonner";
 import { useKeysStore } from "@/store/env-keys.store";
 import type { ApiErrorResponse } from "@/types/common";
 import type { Networks } from "@/types/networks";
 import type { LatestStationResponse } from "@/types/station";
 import type { StationMetadata } from "@/types/station-metadata";
 import type { Variables } from "@/types/variables";
-import ky, { type Options } from "ky";
-import { toast } from "sonner";
 import { API } from "./constants";
 
 type SearchParamsType = Record<string, string | number>;
 
-export const createAPI = ({ base }: { base: string }) => {
+const createAPI = ({ base }: { base: string }) => {
   const baseUrl = base ?? API.BaseUrl;
 
   const apiToken = useKeysStore.getState().synopticToken;
@@ -30,14 +30,15 @@ export const createAPI = ({ base }: { base: string }) => {
         },
       ],
       afterResponse: [
-       async (_request, _options, response) => {
-          if(!response.ok) {
-            const data: ApiErrorResponse = await response.json() 
-            toast.error(`Error: ${data.SUMMARY.RESPONSE_MESSAGE} (Code: ${data.SUMMARY.RESPONSE_CODE})`);
-            
+        async (_request, _options, response) => {
+          if (!response.ok) {
+            const data: ApiErrorResponse = await response.json();
+            toast.error(
+              `Error: ${data.SUMMARY.RESPONSE_MESSAGE} (Code: ${data.SUMMARY.RESPONSE_CODE})`,
+            );
+
             // window.location.href = "/token";
           }
-       
         },
       ],
     },

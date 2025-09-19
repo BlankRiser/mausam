@@ -1,7 +1,7 @@
+import { Link } from "@tanstack/react-router";
 import { Moon, Sun } from "@/assets/icons";
 import { useTheme } from "@/hooks/use-theme";
 import { Button } from "../ui/button";
-import { Link } from "@tanstack/react-router";
 
 export const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
@@ -19,7 +19,7 @@ export const Navbar = () => {
         <div className="flex items-center gap-2">
           <Link
             to="/networks"
-            className="px-2 text-sm text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-50 "
+            className="px-2 text-sm text-neutral-700 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400"
             activeProps={{
               className:
                 "underline underline-offset-4 data-[status=active]:text-blue-600 data-[status=active]:dark:text-blue-400",
@@ -30,7 +30,7 @@ export const Navbar = () => {
           </Link>
           <Link
             to="/station"
-            className="px-2 text-sm text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-neutral-50 "
+            className="px-2 text-sm text-neutral-700 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400"
             activeProps={{
               className:
                 "underline underline-offset-4 data-[status=active]:text-blue-600 data-[status=active]:dark:text-blue-400",

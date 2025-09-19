@@ -28,8 +28,8 @@ export const extractMetaDetails = ({
   variableArr,
   networksArr,
 }: {
-  variableArr: Variables['VARIABLES'];
-  networksArr: Networks['MNET'];
+  variableArr: Variables["VARIABLES"];
+  networksArr: Networks["MNET"];
 }) => {
   const variableLabels = new Map<string, VariableLabelItems>();
   const networkLabels = new Map<string, MNETLabelItems>();
@@ -47,7 +47,7 @@ export const extractMetaDetails = ({
 export const extractNetworkDetails = ({
   networksArr,
 }: {
-  networksArr: Networks['MNET'];
+  networksArr: Networks["MNET"];
 }) => {
   const networkLabels = new Map<string, MNETLabelItems>();
 
@@ -55,16 +55,16 @@ export const extractNetworkDetails = ({
     const [key, value] = Object.entries(network)[0];
     networkLabels.set(key, value as MNETLabelItems);
   }
-  return Object.fromEntries(networkLabels)
+  return Object.fromEntries(networkLabels);
 };
 
 export const extractVariableDetails = ({
   variableArr,
 }: {
-  variableArr: Variables['VARIABLES'];
+  variableArr: Variables["VARIABLES"];
 }) => {
   const variableLabels = new Map<string, VariableLabelItems>();
-  
+
   for (const variable of variableArr) {
     const [key, value] = Object.entries(variable)[0];
     variableLabels.set(key, value as VariableLabelItems);

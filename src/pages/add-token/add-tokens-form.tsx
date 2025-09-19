@@ -1,4 +1,9 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "@tanstack/react-router";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,10 +17,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { router } from "@/router/router";
 import { useKeysStore } from "@/store/env-keys.store";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "@tanstack/react-router";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 export const TokensPage = () => {
   const navigate = useNavigate({ from: "/token" });

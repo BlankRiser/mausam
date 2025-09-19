@@ -1,11 +1,21 @@
 {
+ // Project
+  "files.readonlyInclude": {
+    "**/routeTree.gen.ts": true
+  },
+  "files.watcherExclude": {
+    "**/routeTree.gen.ts": true
+  },
+
   //Visuals
   "workbench.colorTheme": "Catppuccin Mocha",
+
   // Git
   "git.confirmSync": false,
   "git.autofetch": true,
   "git.enableSmartCommit": true,
   "git.untrackedChanges": "separate",
+  
   // Editor
   "window.nativeTabs": true, // mac only
   "workbench.editor.highlightModifiedTabs": true,
@@ -33,6 +43,7 @@
   "terminal.integrated.env.osx": {},
   "diffEditor.ignoreTrimWhitespace": true,
   "search.exclude": {
+    "**/routeTree.gen.ts": true,
     "**/.git": true,
     "**/.github": true,
     "**/.nuxt": true,
@@ -61,6 +72,7 @@
   "typescript.inlayHints.parameterTypes.enabled": true,
   "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
   "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
   // "typescript.inlayHints.variableTypes.enabled": true,
 
   "workbench.productIconTheme": "icons-carbon",
@@ -72,7 +84,8 @@
     "markdown": true,
     "scminput": false,
     "yaml": false,
-    "typescriptreact": true
+    "typescriptreact": true,
+    "typescript": true
   },
   "git.openRepositoryInParentFolders": "never",
 }

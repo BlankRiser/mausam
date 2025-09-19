@@ -1,11 +1,17 @@
+import { useQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
+import { Info } from "lucide-react";
+import { useMemo } from "react";
 import { variableTimeseriesQueryOptions } from "@/api/query-factory";
 import { LineChart, TooltipProps } from "@/components/charts/line-chart";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useGlobalDataStore } from "@/store/global-data.store";
 import { LatestStationResponse, SensorVariables } from "@/types/station";
-import { useQuery } from "@tanstack/react-query";
-import { format } from "date-fns";
-import { useMemo } from "react";
 
 const numberFormatter = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 2,
@@ -30,14 +36,28 @@ export const VariableTimeseriesChart = ({
     () => getChartData({ data: data!, variable }),
     [data, variable],
   );
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>
-          {formattedVariable}{" "}
-          {isFetched && data?.UNITS?.[variable]
-            ? `(${data.UNITS[variable]})`
-            : ""}
+          <div className="flex gap-2 justify-between items-center">
+            <span className="text-nowrap">
+              {formattedVariable}{" "}
+              {isFetched && data?.UNITS?.[variable]
+                ? `(${data.UNITS[variable]})`
+                : ""}
+            </span>
+            <Tooltip delayDuration={0}>
+              <TooltipTrigger>
+                <Info className="w-4 h-4 text-gray-500" />
+              </TooltipTrigger>
+              <TooltipContent className="text-sm font-normal max-w-sm">
+                Shows the timeseries data for the last 24 hours for the selected
+                variable.
+              </TooltipContent>
+            </Tooltip>
+          </div>
         </CardTitle>
       </CardHeader>
       {(isFetched && data?.STATION?.length === 0) || chartData.length === 0 ? (
