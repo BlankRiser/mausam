@@ -99,7 +99,7 @@ export const variableTimeseriesQueryOptions = ({
   return queryOptions({
     queryKey: ["stations", "timeseries", stid, vars],
     queryFn: async () => {
-      return api.stations.getTimeSeries({
+      return await api.stations.getTimeSeries({
         searchParams: {
           stid,
           vars: vars.join(","),

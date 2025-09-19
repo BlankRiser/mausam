@@ -10,6 +10,8 @@
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
+    "check": "bunx biome check",
+    "check:fix": "bunx biome check --write",
     "scan": "vite && npx react-scan@latest localhost:5173",
     "knip": "knip"
   },
@@ -58,6 +60,7 @@
     "zustand": "^4.5.7"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.2.4",
     "@tanstack/eslint-plugin-query": "^5.81.2",
     "@tanstack/eslint-plugin-router": "1.131.2",
     "@types/culori": "4.0.0",
