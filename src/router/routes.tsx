@@ -5,7 +5,7 @@ import {
 } from "@/api/query-factory";
 import { TokensPage } from "@/pages/add-token/add-tokens-form";
 import { Home } from "@/pages/home/home";
-import { NetworkDetailsPage } from "@/pages/networks/network-details";
+import { NetworkDetailsPage } from "@/pages/networks/features/network-details";
 import { NetworksPage } from "@/pages/networks/networks";
 import { StationIndexPage } from "@/pages/station/features/choose-station";
 import { StationDetailsPage } from "@/pages/station/station";
