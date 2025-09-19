@@ -17,6 +17,7 @@
     "@devhaven/unit-conversion": "0.0.7",
     "@hookform/resolvers": "^3.10.0",
     "@icons-pack/react-simple-icons": "13.4.0",
+    "@number-flow/react": "0.5.10",
     "@remixicon/react": "^4.6.0",
     "@shikijs/transformers": "3.7.0",
     "@tailwindcss/vite": "4.1.13",

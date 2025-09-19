@@ -59,6 +59,7 @@ export const useStationMetadata = () => {
         })
         .json<LatestStationResponse>();
     },
+    refetchInterval: 1000 * 60 * 1, // 1 minute
   });
 
   return reactQuery;

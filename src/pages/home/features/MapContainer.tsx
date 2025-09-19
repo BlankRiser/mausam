@@ -50,7 +50,7 @@ export const MapContainer = () => {
           }
         >
           {!isSmallDevice && <NavigationControl position="bottom-left" />}
-          {isFetched && !isFetching && !!data && (
+          {!!data && (
             <StationMarker stations={data.STATION} units={data.UNITS} />
           )}
         </Map>

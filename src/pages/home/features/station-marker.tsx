@@ -3,6 +3,7 @@ import { getVariableData } from "@/lib/synoptic-utils";
 import { cn } from "@/lib/utils";
 import { useCurrentState } from "@/store/station.store";
 import { Station } from "@/types/station";
+import NumberFlow, { Value } from "@number-flow/react";
 import { memo, useMemo } from "react";
 import { Marker, Popup } from "react-map-gl";
 
@@ -73,7 +74,9 @@ const StationMarkerItem = memo(
         >
           <div className={markerStyles}>
             <span className="font-mono text-xs text-neutral-600 dark:text-neutral-400">
-              {data?.latest.value?.toFixed(0)}
+              <NumberFlow
+                value={Number(data!.latest.value.toFixed(0) ?? -Infinity)}
+              />
             </span>
           </div>
         </Marker>
