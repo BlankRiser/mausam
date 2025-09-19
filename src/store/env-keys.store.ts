@@ -1,6 +1,6 @@
-import env from "@/env";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import env from "@/env";
 
 type State = {
   mapboxToken: string;

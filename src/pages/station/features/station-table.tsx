@@ -1,7 +1,3 @@
-import { DataTable } from "@/components/ui/data-table";
-import { stationRoute } from "@/router/routes";
-import { useGlobalDataStore } from "@/store/global-data.store";
-import { LatestStationResponse } from "@/types/station";
 import { useNavigate } from "@tanstack/react-router";
 import {
   ColumnDef,
@@ -10,6 +6,10 @@ import {
 } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { useEffect, useMemo, useState } from "react";
+import { DataTable } from "@/components/ui/data-table";
+import { stationRoute } from "@/router/routes";
+import { useGlobalDataStore } from "@/store/global-data.store";
+import { LatestStationResponse } from "@/types/station";
 
 export const LatestStnDataTable = ({
   data,

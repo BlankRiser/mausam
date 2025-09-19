@@ -10,8 +10,8 @@ export const summarySchema = z.object({
   RESPONSE_TIME: z.string().optional(),
   METADATA_PARSE_TIME: z.string().optional(),
   METADATA_DB_QUERY_TIME: z.string().optional(),
-  VERSION: z.string().optional()
-})
+  VERSION: z.string().optional(),
+});
 
 export interface SUMMARY {
   RESPONSE_CODE: number;
@@ -39,4 +39,3 @@ export interface ApiErrorResponse {
     RESPONSE_TIME: number;
   };
 }
-

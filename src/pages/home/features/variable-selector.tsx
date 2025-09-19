@@ -1,3 +1,4 @@
+import { Tooltip as RadixTooltip } from "radix-ui";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
@@ -7,7 +8,6 @@ import {
 import { variables } from "@/data/variables";
 import { cn } from "@/lib/utils";
 import { useCurrentState } from "@/store/station.store";
-import { Tooltip as RadixTooltip } from "radix-ui";
 
 export const VariableSelector = () => {
   const { currentVariable, setCurrentVariable } = useCurrentState();

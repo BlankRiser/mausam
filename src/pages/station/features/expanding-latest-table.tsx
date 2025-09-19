@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { useNavigate } from "@tanstack/react-router";
 import {
   ColumnDef,
   flexRender,
@@ -8,9 +8,11 @@ import {
   getExpandedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { format } from "date-fns";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { motion } from "motion/react";
 import { Fragment, useMemo } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -23,8 +25,6 @@ import { VariableTimeseriesChart } from "@/pages/station/features/variable-times
 import { stationRoute } from "@/router/routes";
 import { useGlobalDataStore } from "@/store/global-data.store";
 import { LatestStationResponse, SensorVariables } from "@/types/station";
-import { format } from "date-fns";
-import { useNavigate } from "@tanstack/react-router";
 
 export default function ExpandingLatestTable({
   data,

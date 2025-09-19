@@ -1,20 +1,20 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
+import { motion } from "motion/react";
+import { Suspense, useEffect, useState } from "react";
 import {
   stationLatestQueryOptions,
   stationMetadataQueryOptions,
 } from "@/api/query-factory";
 import { Skeleton } from "@/components/ui/skeleton";
+import ExpandingLatestTable from "@/pages/station/features/expanding-latest-table";
 import { stationRoute } from "@/router/routes";
 import { SensorVariables } from "@/types/station";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
-import { motion } from "motion/react";
-import { Suspense, useEffect, useState } from "react";
 import { MinmaxBoxChart } from "./features/minmax-box-chart";
 import { StationMap } from "./features/station-map";
 import { LatestStnDataTable } from "./features/station-table";
 import { StnMetaDetails } from "./features/stn-meta-details";
 import { VariableTimeseriesChart } from "./features/variable-timeseries-chart";
-import ExpandingLatestTable from "@/pages/station/features/expanding-latest-table";
 
 export const StationDetailsPage = () => {
   return (

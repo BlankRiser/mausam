@@ -8,8 +8,8 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
-import React from "react";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react";
+import React from "react";
 import {
   CartesianGrid,
   Dot,
@@ -23,6 +23,7 @@ import {
   YAxis,
 } from "recharts";
 import { AxisDomain } from "recharts/types/util/types";
+import { useOnWindowResize } from "@/hooks/use-on-window-resize";
 import {
   AvailableChartColors,
   AvailableChartColorsKeys,
@@ -32,7 +33,6 @@ import {
   hasOnlyOneValueForKey,
 } from "@/lib/chart-utils";
 import { cn, formatLargeNumber } from "@/lib/utils";
-import { useOnWindowResize } from "@/hooks/use-on-window-resize";
 
 interface LegendItemProps {
   name: string;
@@ -49,9 +49,9 @@ const LegendItem = ({
 }: LegendItemProps) => {
   const hasOnValueChange = !!onClick;
   return (
+    // biome-ignore lint/a11y/useKeyWithClickEvents: only clickable if onClick is passed
     <li
       className={cn(
-        // base
         "group inline-flex flex-nowrap items-center gap-1.5 whitespace-nowrap rounded-sm px-2 py-1 transition",
         hasOnValueChange
           ? "cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -239,6 +239,7 @@ const Legend = React.forwardRef<HTMLOListElement, LegendProps>((props, ref) => {
     setIsKeyDowned(null);
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ???
   React.useEffect(() => {
     const scrollable = scrollableRef?.current;
     if (enableLegendSlider) {

@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { BarChart } from "@/components/charts/bar-chart";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatLargeNumber } from "@/lib/utils";
@@ -8,7 +9,6 @@ import {
   MinMax,
   SensorVariables,
 } from "@/types/station";
-import { useMemo } from "react";
 
 export const MinmaxBoxChart = ({ data }: { data: LatestStationResponse }) => {
   const variableLabels = useGlobalDataStore((s) => s.variableLabels);

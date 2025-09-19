@@ -1,9 +1,9 @@
-import { networksMetadataQueryOptions } from "@/api/query-factory";
-import { Globe } from "@/components/ui/globe";
-import { networkRoute } from "@/router/routes";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { COBEOptions, Marker } from "cobe";
 import { useMemo } from "react";
+import { networksMetadataQueryOptions } from "@/api/query-factory";
+import { Globe } from "@/components/ui/globe";
+import { networkRoute } from "@/router/routes";
 
 export const NetworkStationsGlobe = () => {
   const { networkId } = networkRoute.useParams();
@@ -26,7 +26,7 @@ export const NetworkStationsGlobe = () => {
     return {
       width: 800,
       height: 800,
-      onRender: () => {},
+      onRender: () => void 0,
       devicePixelRatio: 2,
       phi: 0,
       theta: 0.3,

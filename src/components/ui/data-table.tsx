@@ -1,3 +1,5 @@
+import { ColumnDef, flexRender, useReactTable } from "@tanstack/react-table";
+import { motion } from "motion/react";
 import {
   Table,
   TableBody,
@@ -7,8 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-import { ColumnDef, flexRender, useReactTable } from "@tanstack/react-table";
-import { motion } from "motion/react";
+
 interface DataTableProps<TData, TValue> {
   table: ReturnType<typeof useReactTable<TData>>;
   columns: ColumnDef<TData, TValue>[];

@@ -1,9 +1,3 @@
-import { networksQueryOptions } from "@/api/query-factory";
-import { Button } from "@/components/ui/button";
-import { DataTable } from "@/components/ui/data-table";
-import { Input } from "@/components/ui/input";
-import { networksIndexRoute } from "@/router/routes";
-import { MNETLabelItems } from "@/types/networks";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 import {
@@ -14,6 +8,12 @@ import {
 } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { useMemo } from "react";
+import { networksQueryOptions } from "@/api/query-factory";
+import { Button } from "@/components/ui/button";
+import { DataTable } from "@/components/ui/data-table";
+import { Input } from "@/components/ui/input";
+import { networksIndexRoute } from "@/router/routes";
+import { MNETLabelItems } from "@/types/networks";
 
 export const NetworkTableSearch = () => {
   const navigate = useNavigate({ from: "/networks/" });

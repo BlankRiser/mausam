@@ -1,5 +1,5 @@
-import { SensorVariables, Station } from "@/types/station";
 import { create } from "zustand";
+import { SensorVariables, Station } from "@/types/station";
 
 type State = {
   fetchedStations: Array<Station>;

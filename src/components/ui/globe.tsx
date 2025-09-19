@@ -1,14 +1,14 @@
-import { cn } from "@/lib/utils";
 import createGlobe, { COBEOptions } from "cobe";
 import { useMotionValue, useSpring } from "motion/react";
 import { useEffect, useRef } from "react";
+import { cn } from "@/lib/utils";
 
 const MOVEMENT_DAMPING = 1400;
 
 const GLOBE_CONFIG: COBEOptions = {
   width: 800,
   height: 800,
-  onRender: () => {},
+  onRender: () => void 0,
   devicePixelRatio: 2,
   phi: 0,
   theta: 0.3,
@@ -68,6 +68,7 @@ export function Globe({
     }
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: want to run only on a few deps
   useEffect(() => {
     const onResize = () => {
       if (canvasRef.current) {

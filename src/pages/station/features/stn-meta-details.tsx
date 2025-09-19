@@ -1,12 +1,8 @@
+import { useNavigate } from "@tanstack/react-router";
+import { useMemo } from "react";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { StationMetadata } from "@/types/station-metadata";
-import { useNavigate } from "@tanstack/react-router";
-import { useMemo } from "react";
-
-const formatter = {
-  format: (arr: string[]) => arr?.join(", ")?.replace(/, ([^,]*)$/, " and $1"),
-};
 
 export const StnMetaDetails = ({ data }: { data: StationMetadata }) => {
   const navigate = useNavigate({ from: "/station/$stationId" });
@@ -51,7 +47,9 @@ export const StnMetaDetails = ({ data }: { data: StationMetadata }) => {
       },
       {
         label: "Coordinates",
-        value: `${data.STATION?.[0]?.LONGITUDE ?? "N/A"}, ${data.STATION?.[0]?.LATITUDE ?? "N/A"}`,
+        value: `${data.STATION?.[0]?.LONGITUDE ?? "N/A"}, ${
+          data.STATION?.[0]?.LATITUDE ?? "N/A"
+        }`,
         onClick: () => {
           const lat = data.STATION?.[0]?.LATITUDE;
           const lon = data.STATION?.[0]?.LONGITUDE;
@@ -89,9 +87,10 @@ export const StnMetaDetails = ({ data }: { data: StationMetadata }) => {
         label: "Data Providers",
         value: (
           <div className="flex gap-1">
-            {(data.STATION?.[0]?.PROVIDERS ?? []).map((p) => {
+            {(data.STATION?.[0]?.PROVIDERS ?? []).map((p, index) => {
               return (
                 <a
+                  key={p?.url + index.toString()}
                   href={p?.url}
                   target="_blank"
                   rel="noopener noreferrer"

@@ -8,8 +8,8 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
-import React from "react";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react";
+import React from "react";
 import {
   Bar,
   CartesianGrid,
@@ -22,7 +22,7 @@ import {
   YAxis,
 } from "recharts";
 import { AxisDomain } from "recharts/types/util/types";
-
+import { useOnWindowResize } from "@/hooks/use-on-window-resize";
 import {
   AvailableChartColors,
   AvailableChartColorsKeys,
@@ -30,7 +30,6 @@ import {
   getColorClassName,
   getYAxisDomain,
 } from "@/lib/chart-utils";
-import { useOnWindowResize } from "@/hooks/use-on-window-resize";
 import { cn } from "@/lib/utils";
 
 //#region Shape
@@ -110,9 +109,9 @@ const LegendItem = ({
 }: LegendItemProps) => {
   const hasOnValueChange = !!onClick;
   return (
+    // biome-ignore lint/a11y/useKeyWithClickEvents: legend items are not clickable if onClick is not passed
     <li
       className={cn(
-        // base
         "group inline-flex flex-nowrap items-center gap-1.5 whitespace-nowrap rounded-sm px-2 py-1 transition",
         hasOnValueChange
           ? "cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -322,6 +321,7 @@ const Legend = React.forwardRef<HTMLOListElement, LegendProps>((props, ref) => {
     >
       <div
         ref={scrollableRef}
+        // biome-ignore lint/a11y/noNoninteractiveTabindex: this needs to be able to receive focus
         tabIndex={0}
         className={cn(
           "flex h-full",

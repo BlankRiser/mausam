@@ -1,11 +1,11 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 import { stationLatestQueryOptions } from "@/api/query-factory";
 import { GenericCard } from "@/components/weather-cards/generic.card";
 import { windCardDetails } from "@/components/weather-cards/wind.card";
 import { cn } from "@/lib/utils";
 import { stationRoute } from "@/router/routes";
 import type { SensorVariables } from "@/types/station";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { useMemo } from "react";
 
 const CardVariableMapper = {
   altimeter: {

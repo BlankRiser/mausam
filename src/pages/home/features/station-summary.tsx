@@ -1,11 +1,11 @@
+import { useMediaQuery } from "@uidotdev/usehooks";
+import { motion } from "motion/react";
 import { InfoCard } from "@/components/common/info-card";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
 import { cn } from "@/lib/utils";
 import { VariableTimeseriesChart } from "@/pages/station/features/variable-timeseries-chart";
 import { useCurrentState } from "@/store/station.store";
 import { SensorVariables } from "@/types/station";
-import { useMediaQuery } from "@uidotdev/usehooks";
-import { motion } from "motion/react";
 
 export const StationSummary = () => {
   const currentStation = useCurrentState((s) => s.currentStation);

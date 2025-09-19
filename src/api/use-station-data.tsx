@@ -1,10 +1,10 @@
+import { useQuery } from "@tanstack/react-query";
+import { useCallback } from "react";
+import { useMap } from "react-map-gl";
 import { useKy } from "@/providers/ky-provider";
 import { useKeysStore } from "@/store/env-keys.store";
 import { useCurrentState } from "@/store/station.store";
 import { LatestStationResponse } from "@/types/station";
-import { useQuery } from "@tanstack/react-query";
-import { useCallback } from "react";
-import { useMap } from "react-map-gl";
 import { API } from "./constants";
 
 const NETWORK_IMPORTANCE = [1, 2, 28, 153, 185, 206, 210, 239, 240];
@@ -36,7 +36,7 @@ export const useStationMetadata = () => {
       const width = map?.getContainer().clientWidth;
       const zoom = map?.getZoom();
 
-      return query
+      return await query
         .get(`${API.BaseUrl}/stations/latest`, {
           signal: controller.signal,
           searchParams: {

@@ -1,6 +1,6 @@
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { useCurrentState } from "@/store/station.store";
-import { motion } from "motion/react";
 import { MapContainer } from "./features/MapContainer";
 import { StationSummary } from "./features/station-summary";
 

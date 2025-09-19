@@ -1,10 +1,9 @@
 "use client";
 
-import * as React from "react";
 import { ScrollArea as ScrollAreaPrimitive } from "radix-ui";
-
-import { cn } from "@/lib/utils";
+import * as React from "react";
 import { useTouchPrimary } from "@/hooks/use-has-primary-touch";
+import { cn } from "@/lib/utils";
 
 const ScrollAreaContext = React.createContext<boolean>(false);
 type Mask = {
@@ -111,6 +110,7 @@ const ScrollArea = React.forwardRef<
                 "size-full overflow-auto rounded-[inherit]",
                 viewportClassName,
               )}
+              // biome-ignore lint/a11y/noNoninteractiveTabindex: necessary for scrolling
               tabIndex={0}
             >
               {children}

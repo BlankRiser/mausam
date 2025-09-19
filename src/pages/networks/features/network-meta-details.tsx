@@ -1,9 +1,9 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 import { networkQueryOptions } from "@/api/query-factory";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { networkRoute } from "@/router/routes";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { useMemo } from "react";
 
 export const NetworkMetaDetails = () => {
   const { networkId } = networkRoute.useParams();

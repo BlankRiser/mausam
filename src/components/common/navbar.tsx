@@ -1,7 +1,7 @@
+import { Link } from "@tanstack/react-router";
 import { Moon, Sun } from "@/assets/icons";
 import { useTheme } from "@/hooks/use-theme";
 import { Button } from "../ui/button";
-import { Link } from "@tanstack/react-router";
 
 export const Navbar = () => {
   const { theme, toggleTheme } = useTheme();

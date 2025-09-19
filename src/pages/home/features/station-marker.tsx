@@ -1,10 +1,10 @@
+import { memo, useMemo } from "react";
+import { Marker, Popup } from "react-map-gl";
 import { getFormattedTimezone } from "@/lib/date-utils";
 import { getVariableData } from "@/lib/synoptic-utils";
 import { cn } from "@/lib/utils";
 import { useCurrentState } from "@/store/station.store";
 import { Station } from "@/types/station";
-import { memo, useMemo } from "react";
-import { Marker, Popup } from "react-map-gl";
 
 export const StationMarker: React.FC<{
   stations: Array<Station>;

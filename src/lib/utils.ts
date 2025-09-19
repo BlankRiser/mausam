@@ -1,6 +1,6 @@
-import { useKeysStore } from "@/store/env-keys.store";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { useKeysStore } from "@/store/env-keys.store";
 
 export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
@@ -24,7 +24,7 @@ export const urlSerializer = ({ url, params }: UrlSerializerParams) => {
 };
 
 export const fetcher = async <T>(url: string) => {
-  return fetch(url)
+  return await fetch(url)
     .then((res) => res.json() as Promise<T>)
     .catch((err) => {
       throw err;
@@ -33,14 +33,13 @@ export const fetcher = async <T>(url: string) => {
 
 export const formatLargeNumber = (value: number): string => {
   if (Math.abs(value) >= 1000000000) {
-    return (value / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B'
+    return (value / 1000000000).toFixed(1).replace(/\.0$/, "") + "B";
   }
   if (Math.abs(value) >= 1000000) {
-    return (value / 1000000).toFixed(1).replace(/\.0$/, '') + 'M'
+    return (value / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
   }
   if (Math.abs(value) >= 1000) {
-    return (value / 1000).toFixed(1).replace(/\.0$/, '') + 'k'
+    return (value / 1000).toFixed(1).replace(/\.0$/, "") + "k";
   }
-  return value.toString()
-}
-
+  return value.toString();
+};

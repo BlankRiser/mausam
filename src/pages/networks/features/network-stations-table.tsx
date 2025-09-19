@@ -1,3 +1,10 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
+import {
+  ColumnDef,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import { useMemo } from "react";
 import { networksMetadataQueryOptions } from "@/api/query-factory";
 import { DeniedAccess } from "@/components/common/denied-access";
 import { Badge, BadgeDot } from "@/components/ui/badge";
@@ -10,13 +17,6 @@ import {
 } from "@/components/ui/tooltip";
 import { networkRoute } from "@/router/routes";
 import type { MetadataStation } from "@/types/station-metadata";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import {
-  ColumnDef,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-import { useMemo } from "react";
 
 export const NetworkStationsTable = () => {
   const { networkId } = networkRoute.useParams();

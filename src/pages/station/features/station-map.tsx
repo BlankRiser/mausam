@@ -1,9 +1,10 @@
+// biome-ignore lint/suspicious/noShadowRestrictedNames: this is map from react-map-gl
+import Map, { Marker } from "react-map-gl";
 import { MAP_STYLES } from "@/assets/data/mapbox";
 import { LocationMarker } from "@/assets/icons";
 import { useTheme } from "@/hooks/use-theme";
 import { useKeysStore } from "@/store/env-keys.store";
 import { StationMetadata } from "@/types/station-metadata";
-import Map, { Marker } from "react-map-gl";
 
 export const StationMap = ({ data }: { data: StationMetadata }) => {
   const { theme } = useTheme();

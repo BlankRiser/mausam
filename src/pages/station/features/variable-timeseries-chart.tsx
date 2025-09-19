@@ -1,3 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
+import { Info } from "lucide-react";
+import { useMemo } from "react";
 import { variableTimeseriesQueryOptions } from "@/api/query-factory";
 import { LineChart, TooltipProps } from "@/components/charts/line-chart";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,10 +12,6 @@ import {
 } from "@/components/ui/tooltip";
 import { useGlobalDataStore } from "@/store/global-data.store";
 import { LatestStationResponse, SensorVariables } from "@/types/station";
-import { useQuery } from "@tanstack/react-query";
-import { format } from "date-fns";
-import { Info } from "lucide-react";
-import { useMemo } from "react";
 
 const numberFormatter = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 2,

@@ -1,11 +1,12 @@
+import { useMediaQuery } from "@uidotdev/usehooks";
+// biome-ignore lint/suspicious/noShadowRestrictedNames: this is map from react-map-gl
+import Map, { NavigationControl } from "react-map-gl";
 import { useStationMetadata } from "@/api/use-station-data";
 import { MAP_STYLES } from "@/assets/data/mapbox";
 import { GlobalErrorBoundary } from "@/components/common/GlobalErrorBoundary";
 import { Loader } from "@/components/ui/loader";
 import { useTheme } from "@/hooks/use-theme";
 import { useKeysStore } from "@/store/env-keys.store";
-import { useMediaQuery } from "@uidotdev/usehooks";
-import Map, { NavigationControl } from "react-map-gl";
 import { StationMarker } from "./station-marker";
 import { VariableSelector } from "./variable-selector";
 
@@ -15,7 +16,7 @@ export const MapContainer = () => {
 
   const mapboxToken = useKeysStore((state) => state.mapboxToken);
 
-  const { data, refetch, isFetched, isFetching } = useStationMetadata();
+  const { data, refetch, isFetching } = useStationMetadata();
 
   return (
     <GlobalErrorBoundary>

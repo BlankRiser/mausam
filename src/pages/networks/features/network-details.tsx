@@ -1,8 +1,8 @@
+import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { NetworkMetaDetails } from "@/pages/networks/features/network-meta-details";
 import { NetworkStationsGlobe } from "@/pages/networks/features/network-stations-globe";
 import { NetworkStationsTable } from "@/pages/networks/features/network-stations-table";
-import { Suspense } from "react";
 
 export const NetworkDetailsPage = () => {
   return (

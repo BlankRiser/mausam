@@ -1,3 +1,5 @@
+import { createRoute, redirect } from "@tanstack/react-router";
+import { z } from "zod";
 import {
   networkQueryOptions,
   stationLatestQueryOptions,
@@ -9,11 +11,9 @@ import { NetworkDetailsPage } from "@/pages/networks/features/network-details";
 import { NetworksPage } from "@/pages/networks/networks";
 import { StationIndexPage } from "@/pages/station/features/choose-station";
 import { StationDetailsPage } from "@/pages/station/station";
-import { SensorVariables } from "@/types/station";
-import { createRoute, redirect } from "@tanstack/react-router";
-import { z } from "zod";
-import { rootRoute } from "./root-route";
 import { WallpaperPage } from "@/pages/wallpaper/wallpaper";
+import { SensorVariables } from "@/types/station";
+import { rootRoute } from "./root-route";
 
 export const indexRoute = createRoute({
   getParentRoute: () => rootRoute,

@@ -1,7 +1,7 @@
+import { useMemo } from "react";
 import { Compass } from "@/components/charts/compass";
 import { cn } from "@/lib/utils";
 import { LatestStationResponse } from "@/types/station";
-import { useMemo } from "react";
 
 export const windCardDetails = {
   id: "wind",

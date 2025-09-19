@@ -1,3 +1,23 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
+import {
+  Column,
+  ColumnDef,
+  ColumnFiltersState,
+  flexRender,
+  getCoreRowModel,
+  getFacetedMinMaxValues,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
+  getFilteredRowModel,
+  getSortedRowModel,
+  RowData,
+  SortingState,
+  useReactTable,
+} from "@tanstack/react-table";
+import { format } from "date-fns";
+import { ChevronDownIcon, ChevronUpIcon, SearchIcon } from "lucide-react";
+import { useId, useMemo, useState } from "react";
 import { networksQueryOptions } from "@/api/query-factory";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,29 +39,10 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { MNETLabelItems } from "@/types/networks";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { Link } from "@tanstack/react-router";
-import {
-  Column,
-  ColumnDef,
-  ColumnFiltersState,
-  flexRender,
-  getCoreRowModel,
-  getFacetedMinMaxValues,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getSortedRowModel,
-  RowData,
-  SortingState,
-  useReactTable,
-} from "@tanstack/react-table";
-import { format } from "date-fns";
-import { ChevronDownIcon, ChevronUpIcon, SearchIcon } from "lucide-react";
-import { useId, useMemo, useState } from "react";
 
 declare module "@tanstack/react-table" {
   // allows us to define custom properties for our columns
+  // biome-ignore lint/correctness/noUnusedVariables: This is a placeholder for when custom properties are added
   interface ColumnMeta<TData extends RowData, TValue> {
     filterVariant?: "text" | "range" | "select";
   }
