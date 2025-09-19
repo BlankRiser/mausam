@@ -13,6 +13,7 @@ import { SensorVariables } from "@/types/station";
 import { createRoute, redirect } from "@tanstack/react-router";
 import { z } from "zod";
 import { rootRoute } from "./root-route";
+import { WallpaperPage } from "@/pages/wallpaper/wallpaper";
 
 export const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -114,4 +115,10 @@ export const networkRoute = createRoute({
       }),
     );
   },
+});
+
+export const wallpaperRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "wallpaper/$stationId",
+  component: WallpaperPage,
 });
