@@ -4,7 +4,11 @@ import { useTheme } from "@/hooks/use-theme";
 import { Button } from "../ui/button";
 
 export const Navbar = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
   return (
     <nav className="w-full border-b border-b-neutral-100 dark:border-b-neutral-900 ">

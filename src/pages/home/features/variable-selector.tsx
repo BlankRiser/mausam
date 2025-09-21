@@ -30,7 +30,7 @@ export const VariableSelector = () => {
                   className={cn([
                     "grid place-items-center hover:shadow-xs",
                     variable.value === currentVariable &&
-                      "bg-neutral-100 shadow-xs dark:bg-neutral-900",
+                      "bg-blue-500 [&_svg]:text-white [&_svg]:hover:text-blue-500 shadow-xs dark:bg-blue-900 [&_svg]:dark:hover:text-white",
                   ])}
                 >
                   {variable.icon}

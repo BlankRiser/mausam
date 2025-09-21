@@ -4,6 +4,7 @@ import { MapProvider } from "react-map-gl";
 import { Toaster } from "sonner";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { router } from "./router/router";
+import { ThemeProvider } from "@/hooks/use-theme";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,14 +26,16 @@ const queryClient = new QueryClient({
 
 const App = () => {
   return (
-    <MapProvider>
-      <TooltipProvider>
-        <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
-          <Toaster />
-        </QueryClientProvider>
-      </TooltipProvider>
-    </MapProvider>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <MapProvider>
+        <TooltipProvider>
+          <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+            <Toaster />
+          </QueryClientProvider>
+        </TooltipProvider>
+      </MapProvider>
+    </ThemeProvider>
   );
 };
 
