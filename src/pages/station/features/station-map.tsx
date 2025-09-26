@@ -1,14 +1,13 @@
-// biome-ignore lint/suspicious/noShadowRestrictedNames: this is map from react-map-gl
-import Map, { Marker } from "react-map-gl";
+/** biome-ignore-all lint/suspicious/noShadowRestrictedNames: Map is a component from maplibre */
+
+import Map, { Marker } from "@vis.gl/react-maplibre";
 import { MAP_STYLES } from "@/assets/data/mapbox";
 import { LocationMarker } from "@/assets/icons";
 import { useTheme } from "@/hooks/use-theme";
-import { useKeysStore } from "@/store/env-keys.store";
 import { StationMetadata } from "@/types/station-metadata";
 
 export const StationMap = ({ data }: { data: StationMetadata }) => {
   const { theme } = useTheme();
-  const mapboxToken = useKeysStore((state) => state.mapboxToken);
 
   return (
     <div className="w-full h-full rounded-md overflow-hidden">
@@ -16,7 +15,6 @@ export const StationMap = ({ data }: { data: StationMetadata }) => {
         id="single-station-map"
         hash="map"
         reuseMaps={true}
-        mapboxAccessToken={mapboxToken}
         initialViewState={{
           longitude: +data?.STATION?.[0]?.LONGITUDE,
           latitude: +data?.STATION?.[0]?.LATITUDE,

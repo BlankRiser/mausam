@@ -10,5 +10,5 @@ export const MAP_STYLES = {
   "mapbox-satellite-streets": "mapbox://styles/mapbox/satellite-streets-v12",
 
   // Free tile service: https://openfreemap.org/quick_start/
-  "openfreemap-liberty":"https://tiles.openfreemap.org/styles/liberty"
+  "openfreemap-liberty": "https://tiles.openfreemap.org/styles/liberty",
 };

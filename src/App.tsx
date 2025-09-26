@@ -1,10 +1,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider } from "@tanstack/react-router";
-import { MapProvider } from "react-map-gl";
+import { MapProvider } from "@vis.gl/react-maplibre";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "@/hooks/use-theme";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { router } from "./router/router";
-import { ThemeProvider } from "@/hooks/use-theme";
 
 const queryClient = new QueryClient({
   defaultOptions: {
