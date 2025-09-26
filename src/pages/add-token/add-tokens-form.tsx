@@ -21,14 +21,12 @@ import { useKeysStore } from "@/store/env-keys.store";
 export const TokensPage = () => {
   const navigate = useNavigate({ from: "/token" });
   const synopticToken = useKeysStore((state) => state.synopticToken);
-  const mapboxToken = useKeysStore((state) => state.mapboxToken);
   const setTokens = useKeysStore((state) => state.setTokens);
 
   const form = useForm<z.infer<typeof AddTokensFormSchema>>({
     resolver: zodResolver(AddTokensFormSchema),
     defaultValues: {
-      synopticToken: synopticToken,
-      mapboxToken: mapboxToken,
+      synopticToken: synopticToken ?? "",
     },
   });
 
@@ -53,36 +51,6 @@ export const TokensPage = () => {
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="mapboxToken"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Mapbox Token</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="********************"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    This token is used to display the map on the dashboard.{" "}
-                    <br />
-                    You can get it from the{" "}
-                    <a
-                      href="https://docs.mapbox.com/help/getting-started/access-tokens/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline underline-offset-2"
-                    >
-                      Mapbox account page
-                    </a>
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <FormField
               control={form.control}
               name="synopticToken"
@@ -125,9 +93,6 @@ export const TokensPage = () => {
 
 const AddTokensFormSchema = z.object({
   synopticToken: z.string().min(2, {
-    message: "Please enter a valid token",
-  }),
-  mapboxToken: z.string().min(2, {
     message: "Please enter a valid token",
   }),
 });
