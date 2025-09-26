@@ -8,12 +8,12 @@ import {
 } from "@/api/query-factory";
 import { Skeleton } from "@/components/ui/skeleton";
 import ExpandingLatestTable from "@/pages/station/features/expanding-latest-table";
+import { StnMetaDetails } from "@/pages/station/features/stn-meta-details";
+import { VariableTimeseriesChart } from "@/pages/station/features/variable-timeseries-chart";
 import { stationRoute } from "@/router/routes";
 import { SensorVariables } from "@/types/station";
 import { MinmaxBoxChart } from "./features/minmax-box-chart";
 import { StationMap } from "./features/station-map";
-import { StnMetaDetails } from "@/pages/station/features/stn-meta-details";
-import { VariableTimeseriesChart } from "@/pages/station/features/variable-timeseries-chart";
 export const StationDetailsPage = () => {
   return (
     <div className="p-2 space-y-2 ">

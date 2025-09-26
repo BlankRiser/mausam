@@ -8,4 +8,7 @@ export const MAP_STYLES = {
   "mapbox-outdoors": "mapbox://styles/mapbox/outdoors-v12",
   "mapbox-satellite": "mapbox://styles/mapbox/satellite-v9",
   "mapbox-satellite-streets": "mapbox://styles/mapbox/satellite-streets-v12",
+
+  // Free tile service: https://openfreemap.org/quick_start/
+  "openfreemap-liberty": "https://tiles.openfreemap.org/styles/liberty",
 };

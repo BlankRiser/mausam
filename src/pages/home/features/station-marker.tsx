@@ -1,5 +1,5 @@
+import { Marker, Popup } from "@vis.gl/react-maplibre";
 import { memo, useMemo } from "react";
-import { Marker, Popup } from "react-map-gl";
 import { getFormattedTimezone } from "@/lib/date-utils";
 import { getVariableData } from "@/lib/synoptic-utils";
 import { cn } from "@/lib/utils";
@@ -88,9 +88,6 @@ const StationMarkerItem = memo(
             closeButton={false}
             closeOnClick={false}
             onClose={() => setCurrentStation(null)}
-            offset={{
-              bottom: [0, -5],
-            }}
           >
             <MarkerTooltipContents station={station} units={units} />
           </Popup>

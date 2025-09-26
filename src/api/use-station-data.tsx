@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
+import { useMap } from "@vis.gl/react-maplibre";
 import { useCallback } from "react";
-import { useMap } from "react-map-gl";
 import { useKy } from "@/providers/ky-provider";
 import { useKeysStore } from "@/store/env-keys.store";
 import { useCurrentState } from "@/store/station.store";
@@ -35,6 +35,8 @@ export const useStationMetadata = () => {
       const height = map?.getContainer().clientHeight;
       const width = map?.getContainer().clientWidth;
       const zoom = map?.getZoom();
+
+      console.log("queries");
 
       return await query
         .get(`${API.BaseUrl}/stations/latest`, {

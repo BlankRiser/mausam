@@ -10,8 +10,7 @@ export const rootRoute = createRootRouteWithContext<{
   component: RootComponent,
   beforeLoad: ({ location }) => {
     if (
-      (!useKeysStore.getState().mapboxToken ||
-        !useKeysStore.getState().synopticToken) &&
+      !useKeysStore.getState().synopticToken &&
       location.pathname !== "/token"
     ) {
       throw redirect({

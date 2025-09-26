@@ -1,7 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider } from "@tanstack/react-router";
-import { MapProvider } from "react-map-gl";
+import { MapProvider } from "@vis.gl/react-maplibre";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "@/hooks/use-theme";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { router } from "./router/router";
 
@@ -25,14 +26,16 @@ const queryClient = new QueryClient({
 
 const App = () => {
   return (
-    <MapProvider>
-      <TooltipProvider>
-        <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
-          <Toaster />
-        </QueryClientProvider>
-      </TooltipProvider>
-    </MapProvider>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <MapProvider>
+        <TooltipProvider>
+          <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+            <Toaster />
+          </QueryClientProvider>
+        </TooltipProvider>
+      </MapProvider>
+    </ThemeProvider>
   );
 };
 
