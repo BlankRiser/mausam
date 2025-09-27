@@ -75,6 +75,7 @@ const MetadataDetailsFallback = () => {
 const ReportingDetails = () => {
   const navigate = useNavigate({ from: "/station/$stationId" });
   const { stationId } = stationRoute.useParams();
+  const { variable } = stationRoute.useSearch();
 
   const [displayAll, setDisplayAll] = useState(false);
 
@@ -103,7 +104,7 @@ const ReportingDetails = () => {
       {/* <LatestStnDataTable data={data} /> */}
       <ExpandingLatestTable data={data} />
       <div className="grid md:grid-cols-2 gap-2">
-        <MinmaxBoxChart data={data} />
+        <MinmaxBoxChart stationId={stationId} variable={variable} />
         <VariableTimeseries />
       </div>
       {displayAll && (

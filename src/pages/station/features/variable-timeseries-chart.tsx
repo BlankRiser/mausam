@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { variableTimeseriesQueryOptions } from "@/api/query-factory";
 import { LineChart, TooltipProps } from "@/components/charts/line-chart";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
@@ -28,7 +29,7 @@ export const VariableTimeseriesChart = ({
 
   const formattedVariable = variableLabels?.[variable]?.long_name ?? variable;
 
-  const { data, isFetched } = useQuery(
+  const { data, isFetched, isPending } = useQuery(
     variableTimeseriesQueryOptions({ stid: stationId, vars: [variable] }),
   );
 
@@ -42,12 +43,13 @@ export const VariableTimeseriesChart = ({
       <CardHeader>
         <CardTitle>
           <div className="flex gap-2 justify-between items-center">
-            <span className="text-nowrap">
+            <p className="text-nowrap">
               {formattedVariable}{" "}
               {isFetched && data?.UNITS?.[variable]
                 ? `(${data.UNITS[variable]})`
-                : ""}
-            </span>
+                : ""}{" "}
+              <i className="opacity-60 font-normal">for last 24 hours</i>
+            </p>
             <Tooltip delayDuration={0}>
               <TooltipTrigger>
                 <Info className="w-4 h-4 text-gray-500" />
@@ -60,7 +62,9 @@ export const VariableTimeseriesChart = ({
           </div>
         </CardTitle>
       </CardHeader>
-      {(isFetched && data?.STATION?.length === 0) || chartData.length === 0 ? (
+      {isPending ? (
+        <Skeleton className="h-80 w-full" />
+      ) : !isPending && isFetched && data?.STATION?.length === 0 ? (
         <div className="h-full min-h-80 grid place-items-center">
           <p className="text-center">No data available</p>
         </div>

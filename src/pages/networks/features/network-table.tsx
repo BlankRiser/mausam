@@ -22,6 +22,11 @@ export const NetworkTableSearch = () => {
     <Input
       placeholder="Search network name or id"
       defaultValue={networksIndexSearchParams.q ?? ""}
+      ref={(ref) => {
+        if (ref) {
+          ref.focus();
+        }
+      }}
       onChange={(e) => {
         navigate({
           search: () => ({ q: e.target.value }),

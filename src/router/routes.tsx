@@ -115,6 +115,9 @@ export const networkRoute = createRoute({
       }),
     );
   },
+  validateSearch: z.object({
+    q: z.string().optional(),
+  }),
 });
 
 export const wallpaperRoute = createRoute({

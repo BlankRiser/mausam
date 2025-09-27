@@ -56,10 +56,10 @@ export const DataTable = <TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
+                  // data-state={row.getIsSelected() && "selected"}
                   className={cn([
                     showStripes && "max-h-10",
-                    "cursor-pointer data-[state=selected]:bg-blue-300 data-[state=selected]:dark:bg-blue-700",
+                    "cursor-pointer data-[state=selected]:bg-blue-50 data-[state=selected]:dark:bg-blue-950/20",
                   ])}
                   onClick={row.getToggleSelectedHandler()}
                 >

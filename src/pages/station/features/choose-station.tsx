@@ -58,7 +58,14 @@ export const StationIndexPage = () => {
                     Know the station ID? Enter it here to view its details.
                   </FormDescription>
                   <FormControl>
-                    <Input {...field} />
+                    <Input
+                      {...field}
+                      ref={(ref) => {
+                        if (ref) {
+                          ref.focus();
+                        }
+                      }}
+                    />
                   </FormControl>
                   <div className="flex items-center gap-1">
                     <FormDescription>

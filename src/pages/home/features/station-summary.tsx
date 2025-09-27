@@ -16,9 +16,7 @@ export const StationSummary = () => {
     return (
       <Drawer
         open={!!currentStation}
-        onOpenChange={(open) =>
-          !open && useCurrentState.getState().setCurrentStation(null)
-        }
+        onOpenChange={(open) => !open && useCurrentState.getState().setCurrentStation(null)}
       >
         <DrawerContent className="p-1">
           <Summary />
@@ -48,11 +46,7 @@ const Summary = () => {
   }
 
   return (
-    <div
-      className={cn([
-        "bg-transparent flex flex-col gap-1 rounded-md h-full overflow-y-auto ",
-      ])}
-    >
+    <div className={cn(["bg-transparent flex flex-col gap-1 rounded-md h-full overflow-y-auto "])}>
       <InfoCard name="Status" value={currentStation.STATUS} />
       <InfoCard name="Station Name" value={currentStation.NAME} />
       <InfoCard
@@ -76,13 +70,12 @@ const Summary = () => {
         }}
       />
       <InfoCard name="NWS Zone" value={currentStation.NWSZONE} />
-      <InfoCard name="Latitude" value={currentStation.LATITUDE} />
-      <InfoCard name="Longitude" value={currentStation.LONGITUDE} />
-      <InfoCard name="Timezone" value={currentStation.TIMEZONE} />
-      <VariableTimeseriesChart
-        stationId={currentStation.STID}
-        variable={currentVariable as keyof SensorVariables}
+      <InfoCard
+        name="Lat/Long"
+        value={`${currentStation.LATITUDE}, ${currentStation.LONGITUDE}`}
+        href={`https://www.google.com/maps/search/?api=1&query=${currentStation.LATITUDE},${currentStation.LONGITUDE}`}
       />
+      <InfoCard name="Timezone" value={currentStation.TIMEZONE} />
     </div>
   );
 };

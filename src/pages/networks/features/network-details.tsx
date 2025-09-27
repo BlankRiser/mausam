@@ -2,7 +2,10 @@ import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { NetworkMetaDetails } from "@/pages/networks/features/network-meta-details";
 import { NetworkStationsGlobe } from "@/pages/networks/features/network-stations-globe";
-import { NetworkStationsTable } from "@/pages/networks/features/network-stations-table";
+import {
+  NetworkStationsTable,
+  StationTableSearch,
+} from "@/pages/networks/features/network-stations-table";
 
 export const NetworkDetailsPage = () => {
   return (
@@ -16,7 +19,14 @@ export const NetworkDetailsPage = () => {
           </div>
         }
       >
-        <NetworkMetaDetails />
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-2 bg-neutral-100 dark:bg-neutral-900/60 p-2 rounded-sm">
+          <div className="col-span-1">
+            <NetworkStationsGlobe />
+          </div>
+          <div className="col-span-1 md:col-span-3">
+            <NetworkMetaDetails />
+          </div>
+        </div>
       </Suspense>
       <Suspense
         fallback={
@@ -25,13 +35,9 @@ export const NetworkDetailsPage = () => {
           </div>
         }
       >
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
-          <div className="col-span-1">
-            <NetworkStationsGlobe />
-          </div>
-          <div className="col-span-1 md:col-span-3">
-            <NetworkStationsTable />
-          </div>
+        <StationTableSearch />
+        <div className="min-h-96">
+          <NetworkStationsTable />
         </div>
       </Suspense>
     </div>

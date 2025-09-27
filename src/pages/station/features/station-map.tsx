@@ -1,8 +1,8 @@
 /** biome-ignore-all lint/suspicious/noShadowRestrictedNames: Map is a component from maplibre */
 
-import Map, { Marker } from "@vis.gl/react-maplibre";
-import { MAP_STYLES } from "@/assets/data/mapbox";
+import { Marker } from "@vis.gl/react-maplibre";
 import { LocationMarker } from "@/assets/icons";
+import { MapWrapper } from "@/components/common/map-wrapper";
 import { useTheme } from "@/hooks/use-theme";
 import { StationMetadata } from "@/types/station-metadata";
 
@@ -11,7 +11,7 @@ export const StationMap = ({ data }: { data: StationMetadata }) => {
 
   return (
     <div className="w-full h-full rounded-md overflow-hidden">
-      <Map
+      <MapWrapper
         id="single-station-map"
         hash="map"
         reuseMaps={true}
@@ -25,11 +25,6 @@ export const StationMap = ({ data }: { data: StationMetadata }) => {
           height: "100%",
           cursor: "default",
         }}
-        mapStyle={
-          theme === "dark"
-            ? MAP_STYLES["mapbox-dark"]
-            : MAP_STYLES["mapbox-streets"]
-        }
       >
         <Marker
           longitude={+data?.STATION?.[0]?.LONGITUDE}
@@ -37,7 +32,7 @@ export const StationMap = ({ data }: { data: StationMetadata }) => {
         >
           <LocationMarker className="size-8 text-blue-600 dark:text-blue-400" />
         </Marker>
-      </Map>
+      </MapWrapper>
     </div>
   );
 };

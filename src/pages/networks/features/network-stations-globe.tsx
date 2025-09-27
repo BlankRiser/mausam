@@ -42,7 +42,7 @@ export const NetworkStationsGlobe = () => {
   }, [data]);
 
   return (
-    <div>
+    <div className="w-full h-full grid place-items-center">
       <Globe config={globeConfig} />
     </div>
   );

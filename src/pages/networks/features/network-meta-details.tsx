@@ -48,12 +48,12 @@ export const NetworkMetaDetails = () => {
   );
 
   return (
-    <section className="grid grid-cols-2 md:grid-cols-3 gap-2 h-fit">
+    <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 h-fit">
       {CardData.map((card, index) => (
         <Card
           key={card.value.toString() + index.toString()}
           className={cn([
-            "px-4 py-2 rounded-sm bg-neutral-100 dark:bg-neutral-800",
+            "px-4 py-2 rounded-sm bg-neutral-50 dark:bg-neutral-950",
             card.className,
           ])}
         >

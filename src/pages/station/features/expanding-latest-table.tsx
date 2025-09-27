@@ -25,6 +25,7 @@ import { VariableTimeseriesChart } from "@/pages/station/features/variable-times
 import { stationRoute } from "@/router/routes";
 import { useGlobalDataStore } from "@/store/global-data.store";
 import { LatestStationResponse, SensorVariables } from "@/types/station";
+import { MinmaxBoxChart } from "@/pages/station/features/minmax-box-chart";
 
 export default function ExpandingLatestTable({
   data,
@@ -95,13 +96,17 @@ export default function ExpandingLatestTable({
                   {row.getIsExpanded() && (
                     <TableRow>
                       <TableCell colSpan={row.getVisibleCells().length}>
-                        <div className="w-full py-2">
+                        <div className="w-full py-2 space-y-2 max-w-[calc(100vw-2rem)]">
                           <VariableTimeseriesChart
                             key={row.original.variable}
                             stationId={stationId}
                             variable={
                               row.original.variable as keyof SensorVariables
                             }
+                          />
+                          <MinmaxBoxChart
+                            stationId={stationId}
+                            variable={row.original.variable}
                           />
                         </div>
                       </TableCell>
@@ -312,8 +317,7 @@ const RenderVariableLabel = ({ variable }: { variable: string }) => {
   const variableLabels = useGlobalDataStore((s) => s.variableLabels);
 
   const variableLabel = variableLabels
-    ? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      (variableLabels?.variable?.long_name ?? variable)
+    ? variableLabels[variable]?.long_name
     : variable;
 
   const handleClick = () => {

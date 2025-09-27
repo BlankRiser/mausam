@@ -1,11 +1,15 @@
 {
- // Project
+  // Project
   "files.readonlyInclude": {
     "**/routeTree.gen.ts": true
   },
   "files.watcherExclude": {
     "**/routeTree.gen.ts": true
   },
+
+  // TailwindCSS
+
+  "tailwindCSS.classFunctions": ["cva", "cx", "cn"],
 
   //Visuals
   "workbench.colorTheme": "Catppuccin Mocha",
@@ -15,7 +19,7 @@
   "git.autofetch": true,
   "git.enableSmartCommit": true,
   "git.untrackedChanges": "separate",
-  
+
   // Editor
   "window.nativeTabs": true, // mac only
   "workbench.editor.highlightModifiedTabs": true,
@@ -79,7 +83,7 @@
 
   "typescript.updateImportsOnFileMove.enabled": "always",
   "github.copilot.enable": {
-    "*": false,
+    "*": true,
     "plaintext": false,
     "markdown": true,
     "scminput": false,
@@ -87,5 +91,5 @@
     "typescriptreact": true,
     "typescript": true
   },
-  "git.openRepositoryInParentFolders": "never",
+  "git.openRepositoryInParentFolders": "never"
 }

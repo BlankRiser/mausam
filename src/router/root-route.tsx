@@ -18,8 +18,8 @@ export const rootRoute = createRootRouteWithContext<{
       });
     }
   },
-  loader: () => {
-    useGlobalDataStore.getState().fetchVariables();
+  loader: async () => {
+    await useGlobalDataStore.getState().fetchVariables();
   },
   head: () => ({
     meta: [

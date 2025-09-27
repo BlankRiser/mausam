@@ -1,20 +1,28 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
+import { stationLatestQueryOptions } from "@/api/query-factory";
 import { BarChart } from "@/components/charts/bar-chart";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { formatLargeNumber } from "@/lib/utils";
-import { stationRoute } from "@/router/routes";
 import { useGlobalDataStore } from "@/store/global-data.store";
-import {
-  LatestStationResponse,
-  MinMax,
-  SensorVariables,
-} from "@/types/station";
+import { MinMax, SensorVariables } from "@/types/station";
 
-export const MinmaxBoxChart = ({ data }: { data: LatestStationResponse }) => {
+export const MinmaxBoxChart = ({
+  stationId,
+  variable,
+}: {
+  stationId: string;
+  variable: string;
+}) => {
   const variableLabels = useGlobalDataStore((s) => s.variableLabels);
-  const { variable } = stationRoute.useSearch();
-
   const formattedVariable = variableLabels?.[variable]?.long_name ?? variable;
+
+  const { data, isPending, isFetched } = useSuspenseQuery(
+    stationLatestQueryOptions({
+      stid: stationId,
+    }),
+  );
 
   const minmaxData = useMemo(() => {
     if (data?.STATION?.length === 0) return [];
@@ -29,12 +37,15 @@ export const MinmaxBoxChart = ({ data }: { data: LatestStationResponse }) => {
     <Card className="relative">
       <CardHeader>
         <CardTitle>
-          {formattedVariable}{" "}
-          {!!data && data?.UNITS?.[variable] ? `(${data.UNITS[variable]})` : ""}
+          Min/Max values of {formattedVariable}{" "}
+          {!!data && data?.UNITS?.[variable] ? `(${data.UNITS[variable]})` : ""}{" "}
+          last 7 days
         </CardTitle>
       </CardHeader>
 
-      {minmaxData.length === 0 ? (
+      {isPending ? (
+        <Skeleton className="h-80 w-full" />
+      ) : !isPending && isFetched && minmaxData.length === 0 ? (
         <div className="h-full min-h-80 grid place-items-center">
           <p className="text-center">No data available</p>
         </div>

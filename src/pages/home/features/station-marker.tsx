@@ -39,9 +39,7 @@ const StationMarkerItem = memo(
     units: Record<string, string>;
     isSelected: boolean;
   }) => {
-    const setCurrentStation = useCurrentState(
-      (state) => state.setCurrentStation,
-    );
+    const setCurrentStation = useCurrentState((state) => state.setCurrentStation);
     const currentVariable = useCurrentState((state) => state.currentVariable);
 
     const data = useMemo(
@@ -53,16 +51,16 @@ const StationMarkerItem = memo(
       () =>
         cn([
           "z-50 w-6 h-6 p-1 rounded-full grid place-items-center",
-          "bg-neutral-50/90 dark:bg-neutral-800/90 dark:hover:bg-neutral-800 border dark:border-neutral-800 border-neutral-900 hover:bg-neutral-100 transition-colors",
+          "bg-neutral-50/90 dark:bg-neutral-800/90 dark:hover:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 transition-colors",
           isSelected
-            ? "relative after:absolute after:ring-3 after:content-[''] after:ring-blue-500 after:animate-ping after:w-5 after:h-5 after:grid after:place-items-center after:rounded-full"
+            ? "relative outline-2 outline-blue-500 dark:outline-blue-400 after:absolute after:ring-3 after:content-[''] after:ring-blue-500 after:animate-ping after:w-5 after:h-5 after:grid after:place-items-center after:rounded-full"
             : "",
+          "font-sans text-xs mix-blend-difference",
         ]),
       [isSelected],
     );
 
-    if (Object.keys(data ?? {}).length === 0 || !data?.latest.value)
-      return null;
+    if (Object.keys(data ?? {}).length === 0 || !data?.latest.value) return null;
 
     return (
       <>
@@ -74,11 +72,7 @@ const StationMarkerItem = memo(
             setCurrentStation(station);
           }}
         >
-          <div className={markerStyles}>
-            <span className="font-mono text-xs text-neutral-600 dark:text-neutral-400 ">
-              {data.latest.value.toFixed(0)}
-            </span>
-          </div>
+          <div className={markerStyles}>{data.latest.value.toFixed(0)}</div>
         </Marker>
         {isSelected && (
           <Popup
@@ -88,6 +82,7 @@ const StationMarkerItem = memo(
             closeButton={false}
             closeOnClick={false}
             onClose={() => setCurrentStation(null)}
+            offset={[0, -8]}
           >
             <MarkerTooltipContents station={station} units={units} />
           </Popup>
@@ -132,9 +127,7 @@ const MarkerTooltipContents: React.FC<{
               <span className="font-mono text-neutral-700 dark:text-neutral-200 text-sm">
                 {formattedValue}
               </span>
-              <span className="text-neutral-700 dark:text-neutral-200">
-                {formattedDate}
-              </span>
+              <span className="text-neutral-700 dark:text-neutral-200">{formattedDate}</span>
             </div>
           );
         })}

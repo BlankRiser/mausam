@@ -6,10 +6,11 @@ import { MapWrapper } from "@/components/common/map-wrapper";
 import { Loader } from "@/components/ui/loader";
 import { StationMarker } from "./station-marker";
 import { VariableSelector } from "./variable-selector";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const MapContainer = () => {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
-  const { data, refetch, isFetching } = useStationMetadata();
+  const { data, refetch, isFetching, dataUpdatedAt } = useStationMetadata();
 
   return (
     <GlobalErrorBoundary>
@@ -34,9 +35,7 @@ export const MapContainer = () => {
             zoom: 7,
           }}
         >
-          <div className="z-10 bg-red-400 h-[50vh] w-[40vw]">
-            ljadnlasdlkmlkm
-          </div>
+          <Skeleton className="w-fit h-fit" />
           {!isSmallDevice && <NavigationControl position="bottom-left" />}
           {!!data && (
             <StationMarker stations={data.STATION} units={data.UNITS} />

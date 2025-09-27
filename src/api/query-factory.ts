@@ -109,7 +109,7 @@ export const variableTimeseriesQueryOptions = ({
           vars: vars.join(","),
           units: "temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa",
           timeformat: "%s",
-          recent: 25 * 60, // 25 hours to account for values close to the hour
+          recent: 24 * 60, // last 24 hours
         },
       });
     },

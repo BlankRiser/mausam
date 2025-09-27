@@ -7,7 +7,8 @@ export const InfoCard: React.FC<{
   name: string;
   value: string | number;
   linkValue?: LinkProps;
-}> = ({ name, value, linkValue }) => {
+  href?: string;
+}> = ({ name, value, linkValue, href }) => {
   if (!value) {
     return null;
   }
@@ -32,6 +33,13 @@ export const InfoCard: React.FC<{
           <Link {...linkValue}>
             <MoveUpRight className="w-4 h-4 text-blue-500" />
           </Link>
+        </Button>
+      )}
+      {!!href && (
+        <Button variant={"ghost"} asChild>
+          <a href={href} target="_blank" rel="noopener noreferrer">
+            <MoveUpRight className="w-4 h-4 text-blue-500" />
+          </a>
         </Button>
       )}
     </div>
