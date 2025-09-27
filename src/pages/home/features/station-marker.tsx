@@ -50,12 +50,12 @@ const StationMarkerItem = memo(
     const markerStyles = useMemo(
       () =>
         cn([
-          "z-50 w-6 h-6 p-1 rounded-full grid place-items-center",
+          "w-6 h-6 rounded-full grid place-items-center",
           "bg-neutral-50/90 dark:bg-neutral-800/90 dark:hover:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 transition-colors",
           isSelected
             ? "relative outline-2 outline-blue-500 dark:outline-blue-400 after:absolute after:ring-3 after:content-[''] after:ring-blue-500 after:animate-ping after:w-5 after:h-5 after:grid after:place-items-center after:rounded-full"
             : "",
-          "font-sans text-xs mix-blend-difference",
+          "font-sans text-xs mix-blend-difference text-center",
         ]),
       [isSelected],
     );
@@ -107,7 +107,7 @@ const MarkerTooltipContents: React.FC<{
 
   return (
     <div className="px-3 py-1.5 text-black bg-neutral-200/70 dark:bg-neutral-900/70 backdrop-blur-sm shadow-md dark:text-white rounded-md">
-      <span className="text-lg font-semibold text-neutral-800 dark:text-neutral-50">
+      <span className="text-lg font-medium text-neutral-800 dark:text-neutral-50">
         {station.STID}
       </span>
       <div>
@@ -123,11 +123,17 @@ const MarkerTooltipContents: React.FC<{
             : "N/A";
 
           return (
-            <div key={variable.sensor} className="flex flex-col">
-              <span className="font-mono text-neutral-700 dark:text-neutral-200 text-sm">
+            <div key={variable.sensor} className="flex flex-col gap-1">
+              <span className="text-neutral-700 dark:text-neutral-200 text-sm">
+                {formattedDate}
+              </span>
+              <span
+                className={
+                  "bg-black text-neutral-200 dark:bg-white dark:text-neutral-700 px-2 py-0.5"
+                }
+              >
                 {formattedValue}
               </span>
-              <span className="text-neutral-700 dark:text-neutral-200">{formattedDate}</span>
             </div>
           );
         })}

@@ -1,4 +1,5 @@
-import { format, getTimezoneOffset, toDate, utcToZonedTime } from "date-fns-tz";
+import { TZDate } from "@date-fns/tz";
+import { format } from "date-fns";
 
 type GetFormattedTimezone = {
   dateString: string;
@@ -16,13 +17,14 @@ export const getFormattedTimezone = ({
     return "";
   }
 
-  const parsedDate = utcToZonedTime(toDate(dateString), timezone);
+  const tzDate = TZDate.tz(timezone, dateString);
 
-  return format(parsedDate, formatString, {
-    timeZone: timezone,
-  });
+  return format(tzDate, formatString);
 };
 
 export const getTzOffset = (timezone: string) => {
-  return getTimezoneOffset(timezone) / 1000 / 60 / 60;
+  const tzDate = TZDate.tz(timezone);
+  const utcDate = new Date(tzDate.getTime());
+  
+  return (utcDate.getTimezoneOffset() - tzDate.getTimezoneOffset()) / 60;
 };

@@ -201,6 +201,7 @@ interface VARIABLE {
   cloud_layer_1?: VariableLabelItems;
   cloud_layer_2?: VariableLabelItems;
   cloud_layer_3?: VariableLabelItems;
+  [variable: string]: VariableLabelItems | undefined;
 }
 
 export interface VariableLabelItems {

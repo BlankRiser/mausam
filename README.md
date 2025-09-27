@@ -1,51 +1,19 @@
 # Mausam
 
-Mausam is a weather application that displays weather data on a map. The application uses the [Synoptic Data](https://synopticdata.com/) API to fetch weather data and [Mapbox](https://www.mapbox.com/) for the map.
+Mausam is a lightweight weather visualization tool built using the [Synoptic Data API]((https://synopticdata.com/)). It is designed to provide a quick glance at weather information, making it useful for developers or users who rely on Synoptic Data in their projects and need a simple way to visualize data.
 
-## Getting Started
-
-- Get api keys from [Mapbox](https://www.mapbox.com/) and [Synoptic Data](https://customer.synopticdata.com/credentials/).
-- Rename `.env.example` to `.env` and add the api keys.
-- Run `npm install` to install the dependencies.
-- Run `npm run dev` to start the development server.
+This project is intentionally minimal and serves only as a basic interface for weather data. It should not be viewed as a replacement for the full [Synoptic Data Viewer](https://viewer.synopticdata.com/), which offers far more advanced features and analysis tools. For detailed exploration and comprehensive functionality, please use the [official Synoptic Viewer](https://viewer.synopticdata.com/).
 
 
-## Built With
+### Built With
 
 - React
 - Tailwind
 - React-map-gl
+- Tanstack/react-query
+- Vite
 
+### Acknowledgements
 
-### Implementation Notes
-
-#### When getting a map instance, use the id attribute provided to `<Map/>` component from react-map-gl. Dont forget to wrap the parent with `<MapProvider/>` component.
-
-```tsx
-// map is the "id" attribute of <Map/>
-// https://visgl.github.io/react-map-gl/docs/api-reference/use-map
-const { mapInstanceA, mapInstanceB } = useMap();
-
-//...
-
-return (
-    <Map id="mapInstanceA" />
-    <Map id="mapInstanceB" />
-)
-```
-
-#### All the dates that are not unit timestamp follow [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601).
-
-### Creentials Needed
-
-- [Mapbox](https://www.mapbox.com/)
-- [Synoptic Data](https://customer.synopticdata.com/credentials/)
-
-## Dev Note
-
-- [Use loader in tanstack/react-query to only seed cached data](https://github.com/TanStack/router/discussions/1563) 
-
-
-### Test Stations
-
-- [D7349](http://localhost:5173/station/D7349)
+- [Synoptic Data](https://synopticdata.com/) for providing weather data API.
+- [ColorBrewer](https://colorbrewer2.org/#type=diverging&scheme=Spectral&n=11) for color scheme inspiration.

@@ -43,3 +43,29 @@ export const formatLargeNumber = (value: number): string => {
   }
   return value.toString();
 };
+
+export const throttle = <T extends (...args: any[]) => void>(func: T, limit: number) => {
+  let inThrottle = false;
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+  const throttled = function (this: any, ...args: Parameters<T>) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      timeoutId = setTimeout(() => {
+        inThrottle = false;
+        timeoutId = null;
+      }, limit);
+    }
+  };
+
+  throttled.cancel = () => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      timeoutId = null;
+    }
+    inThrottle = false;
+  };
+
+  return throttled as T & { cancel: () => void };
+};

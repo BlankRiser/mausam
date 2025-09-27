@@ -7,31 +7,46 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { networksQueryOptions } from "@/api/query-factory";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import { Input } from "@/components/ui/input";
+import { throttle } from "@/lib/utils";
 import { networksIndexRoute } from "@/router/routes";
 import { MNETLabelItems } from "@/types/networks";
 
 export const NetworkTableSearch = () => {
   const navigate = useNavigate({ from: "/networks/" });
   const networksIndexSearchParams = networksIndexRoute.useSearch();
+  const [searchValue, setSearchValue] = useState(networksIndexSearchParams.q ?? "");
+
+  const throttledNavigate = useMemo(
+    () =>
+      throttle((q: string) => {
+        navigate({ search: () => ({ q }) });
+      }, 250),
+    [navigate],
+  );
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value.trimStart();
+    const isDeleting = newValue.length < searchValue.length || newValue === "";
+    setSearchValue(newValue);
+    if (isDeleting) {
+      throttledNavigate.cancel();
+      navigate({ search: () => ({ q: newValue }) });
+    } else {
+      throttledNavigate(newValue);
+    }
+  };
+
   return (
     <Input
       placeholder="Search network name or id"
-      defaultValue={networksIndexSearchParams.q ?? ""}
-      ref={(ref) => {
-        if (ref) {
-          ref.focus();
-        }
-      }}
-      onChange={(e) => {
-        navigate({
-          search: () => ({ q: e.target.value }),
-        });
-      }}
+      value={searchValue}
+      ref={(ref) => ref?.focus()}
+      onChange={handleChange}
     />
   );
 };
@@ -53,9 +68,7 @@ export const NetworksTable = () => {
         const networkId = row.original.ID?.toLowerCase() || "";
         const networkName = row.original.SHORTNAME?.toLowerCase() || "";
 
-        return (
-          networkId.includes(searchValue) || networkName.includes(searchValue)
-        );
+        return networkId.includes(searchValue) || networkName.includes(searchValue);
       },
     },
     state: {
@@ -122,10 +135,7 @@ const getNetworkDataTableColumns = (): ColumnDef<MNETLabelItems>[] => {
 
         return (
           <span className="text-nowrap">
-            {format(
-              new Date(row.original.PERIOD_OF_RECORD.start),
-              "MMM dd yyyy",
-            )}
+            {format(new Date(row.original.PERIOD_OF_RECORD.start), "MMM dd yyyy")}
           </span>
         );
       },
