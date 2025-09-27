@@ -2,6 +2,7 @@ import { QueryClient } from "@tanstack/react-query";
 import { createRouter, ErrorComponent } from "@tanstack/react-router";
 import { rootRoute } from "./root-route";
 import {
+  compareStationsRoute,
   indexRoute,
   networkRoute,
   networksIndexRoute,
@@ -22,6 +23,7 @@ const routeTree = rootRoute.addChildren([
     tokenRoute.addChildren([tokenIndexRoute]),
     networksRoute.addChildren([networksIndexRoute, networkRoute]),
     wallpaperRoute,
+    compareStationsRoute,
   ]),
 ]);
 

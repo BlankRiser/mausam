@@ -85,7 +85,7 @@ export const NetworksTable = () => {
       <DataTable
         table={table}
         columns={columns}
-        className="[&>div]:max-h-[calc(100dvh-var(--nav-height)-2rem)]"
+        className="[&>div]:max-h-[calc(100dvh-var(--nav-height)-4rem)]"
       />
     </div>
   );

@@ -14,6 +14,7 @@ import { StationDetailsPage } from "@/pages/station/station";
 import { WallpaperPage } from "@/pages/wallpaper/wallpaper";
 import { SensorVariables } from "@/types/station";
 import { rootRoute } from "./root-route";
+import { CompareStations } from "@/pages/compare-stids/compare-stations";
 
 export const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -21,8 +22,7 @@ export const indexRoute = createRoute({
   component: Home,
   staticData: {
     title: "Mausam",
-    description:
-      "Mausam is a weather app that provides weather information for your location.",
+    description: "Mausam is a weather app that provides weather information for your location.",
   },
 });
 
@@ -124,4 +124,12 @@ export const wallpaperRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "wallpaper/$stationId",
   component: WallpaperPage,
+});
+export const compareStationsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "compare/",
+  component: CompareStations,
+  validateSearch: z.object({
+    stids: z.string().optional(),
+  }),
 });
