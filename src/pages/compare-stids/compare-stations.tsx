@@ -1,3 +1,9 @@
+import { CompareDataGrid } from "@/pages/compare-stids/features/compare-data-grid";
+
 export const CompareStations = () => {
-  return <div>CompareStations</div>;
+  return (
+    <div>
+      <CompareDataGrid />
+    </div>
+  );
 };
