@@ -3,12 +3,9 @@
 import { Marker } from "@vis.gl/react-maplibre";
 import { LocationMarker } from "@/assets/icons";
 import { MapWrapper } from "@/components/common/map-wrapper";
-import { useTheme } from "@/hooks/use-theme";
 import { StationMetadata } from "@/types/station-metadata";
 
 export const StationMap = ({ data }: { data: StationMetadata }) => {
-  const { theme } = useTheme();
-
   return (
     <div className="w-full h-full rounded-md overflow-hidden">
       <MapWrapper

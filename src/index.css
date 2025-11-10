@@ -46,6 +46,9 @@
 
   --nav-height: 44px;
   --footer-height: 42px;
+  --banner-height: 40px;
+
+  --container-mask: url("/assets/masks/container-mask.svg");
 }
 
 .dark {

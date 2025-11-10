@@ -10,21 +10,16 @@ export const Home = () => {
   return (
     <section className="bg-neutral-50 dark:bg-neutral-950 rounded-md h-[calc(100dvh-var(--nav-height)-var(--footer-height))]">
       <Banner />
-      <div className="grid grid-cols-1 md:grid-cols-4 h-full">
-        <div
-          className={cn([
-            !currentStation
-              ? "md:col-span-4"
-              : "col-span-1 md:col-span-2 lg:col-span-3",
-            "col-span-1 h-full",
-          ])}
-        >
+      <div className=" h-full">
+        <div className={cn(["col-span-1 h-full"])}>
           <MapContainer />
         </div>
         <motion.div
           className={cn([
-            "h-full",
-            !currentStation ? "hidden" : "md:col-span-2 lg:col-span-1",
+            "h-full will-change-auto",
+            !currentStation
+              ? "hidden"
+              : "fixed top-[calc(var(--nav-height)+var(--banner-height)-1px)] right-0 max-w-md w-full",
           ])}
         >
           <StationSummary />
@@ -36,7 +31,7 @@ export const Home = () => {
 
 const Banner = () => {
   return (
-    <div className="w-full bg-blue-500 grid place-items-center p-2">
+    <div className="w-full bg-blue-500 grid place-items-center p-2 h-[var(--banner-height)]">
       <div className="max-w-7xl mx-auto text-center">
         <a
           className="text-sm text-white hover:underline underline-offset-4"

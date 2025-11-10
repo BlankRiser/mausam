@@ -1,3 +1,4 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   Column,
   ColumnDef,
@@ -22,6 +23,7 @@ import {
   SearchIcon,
 } from "lucide-react";
 import { Fragment, useId, useMemo, useState } from "react";
+import { stationMetadataQueryOptions } from "@/api/query-factory";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -42,6 +44,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import { compareStationsRoute } from "@/router/routes";
 
 declare module "@tanstack/react-table" {
   //allows us to define custom properties for our columns
@@ -66,6 +69,7 @@ const columns: ColumnDef<Item>[] = [
   {
     id: "expander",
     header: () => null,
+    size: 30,
     cell: ({ row }) => {
       return row.getCanExpand() ? (
         <Button
@@ -290,6 +294,16 @@ const items: Item[] = [
 ];
 
 export function CompareDataGrid() {
+  const { stids } = compareStationsRoute.useSearch();
+
+  const { data } = useSuspenseQuery(
+    stationMetadataQueryOptions({
+      stid: stids!,
+    })
+  );
+
+  console.log(data);
+
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = useState<SortingState>([
     {
@@ -344,7 +358,7 @@ export function CompareDataGrid() {
         </div>
       </div>
 
-      <Table>
+      <Table className="border border-input">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id} className="bg-muted/50">

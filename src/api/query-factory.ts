@@ -54,13 +54,14 @@ export const networksMetadataQueryOptions = ({
     },
   });
 };
-export const stationMetadataQueryOptions = ({ stid }: { stid: string }) => {
+
+export const stationMetadataQueryOptions = ({ stid }: { stid: string | string[] }) => {
   return queryOptions({
     queryKey: ["stations", "metadata", stid],
     queryFn: async () => {
       return await api.stations.getMetadata({
         searchParams: {
-          stid: stid,
+          stid: typeof stid === 'string' ? stid : stid.join(","),
           complete: 1,
           sensorvars: 1,
           stationhistory: 1,

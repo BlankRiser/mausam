@@ -3,9 +3,7 @@ import { motion } from "motion/react";
 import { InfoCard } from "@/components/common/info-card";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
 import { cn } from "@/lib/utils";
-import { VariableTimeseriesChart } from "@/pages/station/features/variable-timeseries-chart";
 import { useCurrentState } from "@/store/station.store";
-import { SensorVariables } from "@/types/station";
 
 export const StationSummary = () => {
   const currentStation = useCurrentState((s) => s.currentStation);
@@ -16,7 +14,9 @@ export const StationSummary = () => {
     return (
       <Drawer
         open={!!currentStation}
-        onOpenChange={(open) => !open && useCurrentState.getState().setCurrentStation(null)}
+        onOpenChange={(open) =>
+          !open && useCurrentState.getState().setCurrentStation(null)
+        }
       >
         <DrawerContent className="p-1">
           <Summary />
@@ -31,7 +31,11 @@ export const StationSummary = () => {
       exit={{ opacity: 0, x: 10 }}
       transition={{ duration: 0.2 }}
       // className="absolute top-1/2 translate-y-[-50%] right-4 bg-red-400"
-      className="p-1"
+      className="h-full p-1 bg-gradient-to-bl from-neutral-50 dark:from-neutral-950 to-transparent backdrop-blur-sm"
+      style={{
+        // clipPath: "polygon(70% 0, 100% 0, 100% 100%, 0 100%, 36% 54%)",
+        mask: "linear-gradient(to top, transparent, var(--background) 60%)",
+      }}
     >
       <Summary />
     </motion.div>
@@ -39,14 +43,18 @@ export const StationSummary = () => {
 };
 
 const Summary = () => {
-  const { currentStation, currentVariable } = useCurrentState();
+  const currentStation = useCurrentState((s) => s.currentStation);
 
   if (!currentStation) {
     return null;
   }
 
   return (
-    <div className={cn(["bg-transparent flex flex-col gap-1 rounded-md h-full overflow-y-auto "])}>
+    <div
+      className={cn([
+        "bg-transparent flex flex-col gap-1 rounded-md h-full overflow-y-auto ",
+      ])}
+    >
       <InfoCard name="Status" value={currentStation.STATUS} />
       <InfoCard name="Station Name" value={currentStation.NAME} />
       <InfoCard
