@@ -37,9 +37,7 @@ export const MapContainer = () => {
         >
           <Skeleton className="w-fit h-fit" />
           {!isSmallDevice && <NavigationControl position="bottom-left" />}
-          {!!data && (
-            <StationMarker stations={data.STATION} units={data.UNITS} />
-          )}
+          {!!data && <StationMarker stations={data.STATION} units={data.UNITS} />}
         </MapWrapper>
         {isFetching ? (
           <div className="w-fit h-fit z-100 absolute top-1/2 translate-y-[-50%] left-1/2 translate-x-[-50%] bg-transparent flex justify-center items-center">

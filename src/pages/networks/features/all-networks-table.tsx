@@ -42,7 +42,6 @@ import { MNETLabelItems } from "@/types/networks";
 
 declare module "@tanstack/react-table" {
   // allows us to define custom properties for our columns
-  // biome-ignore lint/correctness/noUnusedVariables: This is a placeholder for when custom properties are added
   interface ColumnMeta<TData extends RowData, TValue> {
     filterVariant?: "text" | "range" | "select";
   }
@@ -112,11 +111,11 @@ export const AllNetworksTable = () => {
                       }
                     >
                       {header.isPlaceholder ? null : header.column.getCanSort() ? (
-                        // biome-ignore lint/a11y/noStaticElementInteractions: need this to capture keyboard events for sorting
+                        // oxlint-disable-next-line jsx_a11y/no-static-element-interactions: need this to capture keyboard events for sorting
                         <div
                           className={cn(
                             header.column.getCanSort() &&
-                            "flex h-full cursor-pointer items-center justify-between gap-2 select-none",
+                              "flex h-full cursor-pointer items-center justify-between gap-2 select-none",
                           )}
                           onClick={header.column.getToggleSortingHandler()}
                           onKeyDown={(e) => {
@@ -131,10 +130,7 @@ export const AllNetworksTable = () => {
                           }}
                           tabIndex={header.column.getCanSort() ? 0 : undefined}
                         >
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                          {flexRender(header.column.columnDef.header, header.getContext())}
                           {{
                             asc: (
                               <ChevronUpIcon
@@ -151,14 +147,11 @@ export const AllNetworksTable = () => {
                               />
                             ),
                           }[header.column.getIsSorted() as string] ?? (
-                              <span className="size-4" aria-hidden="true" />
-                            )}
+                            <span className="size-4" aria-hidden="true" />
+                          )}
                         </div>
                       ) : (
-                        flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )
+                        flexRender(header.column.columnDef.header, header.getContext())
                       )}
                     </TableHead>
                   );
@@ -169,26 +162,17 @@ export const AllNetworksTable = () => {
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
+                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
+                <TableCell colSpan={columns.length} className="h-24 text-center">
                   No results.
                 </TableCell>
               </TableRow>
@@ -204,10 +188,8 @@ function Filter({ column }: { column: Column<any, unknown> }) {
   const id = useId();
   const columnFilterValue = column.getFilterValue();
   const { filterVariant } = column.columnDef.meta ?? {};
-  const columnHeader =
-    typeof column.columnDef.header === "string" ? column.columnDef.header : "";
+  const columnHeader = typeof column.columnDef.header === "string" ? column.columnDef.header : "";
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: column.getFacetedUniqueValues() is the right dependency here
   const sortedUniqueValues = useMemo(() => {
     if (filterVariant === "range") return [];
 
@@ -224,6 +206,7 @@ function Filter({ column }: { column: Column<any, unknown> }) {
 
     // Get unique values and sort them
     return Array.from(new Set(flattenedValues)).sort();
+    // oxlint-disable-next-line eslint-plugin-react-hooks/exhaustive-depscolumn.getFacetedUniqueValues() is the right dependency here
   }, [column.getFacetedUniqueValues(), filterVariant]);
 
   if (filterVariant === "range") {
@@ -363,10 +346,7 @@ const getNetworkDataTableColumns = (): ColumnDef<MNETLabelItems>[] => {
 
         return (
           <span className="text-nowrap">
-            {format(
-              new Date(row.original.PERIOD_OF_RECORD.start),
-              "MMM dd yyyy",
-            )}
+            {format(new Date(row.original.PERIOD_OF_RECORD.start), "MMM dd yyyy")}
           </span>
         );
       },

@@ -47,9 +47,7 @@ export const StnMetaDetails = ({ data }: { data: StationMetadata }) => {
       },
       {
         label: "Coordinates",
-        value: `${data.STATION?.[0]?.LONGITUDE ?? "N/A"}, ${
-          data.STATION?.[0]?.LATITUDE ?? "N/A"
-        }`,
+        value: `${data.STATION?.[0]?.LONGITUDE ?? "N/A"}, ${data.STATION?.[0]?.LATITUDE ?? "N/A"}`,
         onClick: () => {
           const lat = data.STATION?.[0]?.LATITUDE;
           const lon = data.STATION?.[0]?.LONGITUDE;
@@ -78,9 +76,7 @@ export const StnMetaDetails = ({ data }: { data: StationMetadata }) => {
       },
       {
         label: "Sensor Variables",
-        value:
-          Object.keys(data.STATION?.[0]?.SENSOR_VARIABLES ?? {}).length ??
-          "N/A",
+        value: Object.keys(data.STATION?.[0]?.SENSOR_VARIABLES ?? {}).length ?? "N/A",
         className: cn([""]),
       },
       {
@@ -115,16 +111,12 @@ export const StnMetaDetails = ({ data }: { data: StationMetadata }) => {
           key={card.value.toString() + index.toString()}
           className={cn([
             "px-4 py-2 rounded-sm bg-neutral-100 dark:bg-neutral-800",
-            card.onClick
-              ? "cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-700"
-              : "",
+            card.onClick ? "cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-700" : "",
             card.className,
           ])}
           onClick={card.onClick}
         >
-          <p className="text-xs text-neutral-500 dark:text-neutral-300">
-            {card.label}
-          </p>
+          <p className="text-xs text-neutral-500 dark:text-neutral-300">{card.label}</p>
           <span>{card.value}</span>
         </Card>
       ))}

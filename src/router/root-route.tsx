@@ -9,10 +9,7 @@ export const rootRoute = createRootRouteWithContext<{
 }>()({
   component: RootComponent,
   beforeLoad: ({ location }) => {
-    if (
-      !useKeysStore.getState().synopticToken &&
-      location.pathname !== "/token"
-    ) {
+    if (!useKeysStore.getState().synopticToken && location.pathname !== "/token") {
       throw redirect({
         to: "/token",
       });
@@ -29,8 +26,7 @@ export const rootRoute = createRootRouteWithContext<{
       },
       {
         name: "keywords",
-        content:
-          "weather, data, visualization, synoptic, mausam, meteorology, climate",
+        content: "weather, data, visualization, synoptic, mausam, meteorology, climate",
       },
       {
         name: "author",

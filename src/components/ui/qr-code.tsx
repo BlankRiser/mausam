@@ -33,14 +33,9 @@ export const QRCode = ({
     const generateQR = async () => {
       try {
         const styles = getComputedStyle(document.documentElement);
-        const foregroundColor =
-          foreground ?? styles.getPropertyValue("--foreground");
-        const backgroundColor =
-          background ?? styles.getPropertyValue("--background");
-        const foregroundOklch = getOklch(
-          foregroundColor,
-          [0.21, 0.006, 285.885],
-        );
+        const foregroundColor = foreground ?? styles.getPropertyValue("--foreground");
+        const backgroundColor = background ?? styles.getPropertyValue("--background");
+        const foregroundOklch = getOklch(foregroundColor, [0.21, 0.006, 285.885]);
         const backgroundOklch = getOklch(backgroundColor, [0.985, 0, 0]);
         const newSvg = await QR.toString(data, {
           type: "svg",

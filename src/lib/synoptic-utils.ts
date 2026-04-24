@@ -44,11 +44,7 @@ export const extractMetaDetails = ({
   }
   return { variableLabels, networkLabels };
 };
-export const extractNetworkDetails = ({
-  networksArr,
-}: {
-  networksArr: Networks["MNET"];
-}) => {
+export const extractNetworkDetails = ({ networksArr }: { networksArr: Networks["MNET"] }) => {
   const networkLabels = new Map<string, MNETLabelItems>();
 
   for (const network of networksArr) {

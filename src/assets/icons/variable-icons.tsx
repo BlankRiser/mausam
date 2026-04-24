@@ -4,9 +4,7 @@
 
 import { SVGProps } from "react";
 
-export const AirTemperature = (
-  props: SVGProps<SVGSVGElement>,
-): React.ReactNode => {
+export const AirTemperature = (props: SVGProps<SVGSVGElement>): React.ReactNode => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -63,11 +61,7 @@ export const AirTemperature = (
             href="#meteoconsThermometerRaindrop1"
             transform="translate(23 87)"
           ></use>
-          <use
-            width="118"
-            height="278"
-            href="#meteoconsThermometerRaindrop2"
-          ></use>
+          <use width="118" height="278" href="#meteoconsThermometerRaindrop2"></use>
         </symbol>
         <clipPath id="meteoconsThermometerRaindrop4">
           <path
@@ -234,12 +228,7 @@ export const Wind = (props: SVGProps<SVGSVGElement>) => {
           </path>
         </symbol>
       </defs>
-      <use
-        width="342"
-        height="234"
-        href="#meteoconsWind0"
-        transform="translate(85 139)"
-      ></use>
+      <use width="342" height="234" href="#meteoconsWind0" transform="translate(85 139)"></use>
     </svg>
   );
 };
@@ -279,13 +268,7 @@ export const Voltage = (props: SVGProps<SVGSVGElement>) => {
 
 export const DewPointTemperature = (props: SVGProps<SVGSVGElement>) => {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="1em"
-      height="1em"
-      viewBox="0 0 24 24"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
       <path
         fill="currentColor"
         d="M15.5 10.5q-.413 0-.707-.293q-.293-.294-.293-.707q0-.271.113-.526q.112-.255.272-.473q.16-.218.33-.408q.17-.19.285-.324q.115.135.286.324q.17.19.33.408q.159.218.272.473q.112.255.112.526q0 .413-.293.707q-.294.293-.707.293Zm4-3q-.413 0-.707-.293q-.293-.294-.293-.707q0-.271.113-.526q.112-.255.272-.473q.16-.218.33-.408q.17-.19.285-.324q.115.135.286.324q.17.19.33.408q.159.218.272.473q.112.255.112.526q0 .413-.293.707q-.294.293-.707.293Zm0 6q-.413 0-.707-.293q-.293-.294-.293-.707q0-.271.113-.526q.112-.255.272-.473q.16-.218.33-.408q.17-.19.285-.324q.115.135.286.324q.17.19.33.408q.159.218.272.473q.112.255.112.526q0 .413-.293.707q-.294.293-.707.293ZM9.154 20q-1.671 0-2.836-1.164T5.154 16q0-1.046.525-1.959q.525-.912 1.475-1.503V6q0-.846.577-1.423Q8.308 4 9.154 4q.846 0 1.423.577q.577.577.577 1.423v6.538q.95.59 1.475 1.503T13.154 16q0 1.671-1.165 2.836T9.154 20Zm-3-4h6q0-.744-.4-1.437q-.398-.692-1.146-1.232L10.154 13V6q0-.425-.288-.712T9.154 5q-.425 0-.713.288T8.154 6v7l-.454.33q-.748.541-1.147 1.233q-.4.693-.4 1.437Z"

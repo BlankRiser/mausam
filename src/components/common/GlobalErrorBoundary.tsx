@@ -23,9 +23,10 @@ type GlobalErrorBoundaryFallbackProps = {
   reset: FallbackProps["resetErrorBoundary"];
 };
 
-const GlobalErrorBoundaryFallback: React.FC<
-  GlobalErrorBoundaryFallbackProps
-> = ({ error, reset }) => {
+const GlobalErrorBoundaryFallback: React.FC<GlobalErrorBoundaryFallbackProps> = ({
+  error,
+  reset,
+}) => {
   return (
     <section>
       <h3>Seomthing went wrong!</h3>

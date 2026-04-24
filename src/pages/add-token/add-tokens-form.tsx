@@ -58,11 +58,7 @@ export const TokensPage = () => {
                 <FormItem>
                   <FormLabel>Synoptic Token</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="********************"
-                      {...field}
-                    />
+                    <Input type="password" placeholder="********************" {...field} />
                   </FormControl>
                   <FormDescription>
                     This token is used to fetch weather data for the dashboard.

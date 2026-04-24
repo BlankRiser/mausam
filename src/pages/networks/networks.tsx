@@ -1,10 +1,7 @@
 import { Suspense } from "react";
 
 import { Loader } from "@/components/ui/loader";
-import {
-  NetworksTable,
-  NetworkTableSearch,
-} from "@/pages/networks/features/network-table";
+import { NetworksTable, NetworkTableSearch } from "@/pages/networks/features/network-table";
 
 export const NetworksPage = () => {
   return (

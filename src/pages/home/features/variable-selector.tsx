@@ -1,10 +1,6 @@
 import { Tooltip as RadixTooltip } from "radix-ui";
 import { Button } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { variables } from "@/data/variables";
 import { cn } from "@/lib/utils";
 import { useCurrentState } from "@/store/station.store";

@@ -42,14 +42,12 @@ const StationMarkerItem = memo(
     units: Record<string, string>;
     isSelected: boolean;
   }) => {
-    const setCurrentStation = useCurrentState(
-      (state) => state.setCurrentStation
-    );
+    const setCurrentStation = useCurrentState((state) => state.setCurrentStation);
     const currentVariable = useCurrentState((state) => state.currentVariable);
 
     const data = useMemo(
       () => getSensorVariableDetails(station, currentVariable),
-      [currentVariable, station]
+      [currentVariable, station],
     );
 
     const markerStyles = useMemo(
@@ -62,11 +60,10 @@ const StationMarkerItem = memo(
             : "",
           "font-sans text-xs mix-blend-difference text-center",
         ]),
-      [isSelected]
+      [isSelected],
     );
 
-    if (Object.keys(data ?? {}).length === 0 || !data?.latest.value)
-      return null;
+    if (Object.keys(data ?? {}).length === 0 || !data?.latest.value) return null;
 
     return (
       <>
@@ -95,7 +92,7 @@ const StationMarkerItem = memo(
         )}
       </>
     );
-  }
+  },
 );
 
 StationMarkerItem.displayName = "StationMarkerItem";
@@ -108,7 +105,7 @@ const MarkerTooltipContents: React.FC<{
 
   const variables = useMemo(
     () => getVariableData(station, currentVariable),
-    [station, currentVariable]
+    [station, currentVariable],
   );
 
   return (
@@ -131,10 +128,7 @@ const MarkerTooltipContents: React.FC<{
             stroke-width="2"
           />
         </svg>
-        <div
-          id="top-half"
-          className="absolute bottom-[50%] inset-0 px-4 p-1 grid grid-cols-4 "
-        >
+        <div id="top-half" className="absolute bottom-[50%] inset-0 px-4 p-1 grid grid-cols-4 ">
           <div className="col-span-3">
             {variables?.map((variable) => {
               const formattedDate = getFormattedTimezone({
@@ -152,12 +146,8 @@ const MarkerTooltipContents: React.FC<{
                   key={variable.sensor}
                   className="h-full flex flex-col gap-0.5 justify-center text-primary"
                 >
-                  <span className={"text-lg font-medium"}>
-                    {formattedValue}
-                  </span>
-                  <span className="text-muted-foreground text-xs">
-                    {formattedDate}
-                  </span>
+                  <span className={"text-lg font-medium"}>{formattedValue}</span>
+                  <span className="text-muted-foreground text-xs">{formattedDate}</span>
                 </div>
               );
             })}
@@ -191,7 +181,7 @@ const MarkerTooltipContents: React.FC<{
 
 const getSensorVariableDetails = (
   station: Station,
-  selectedVariable: keyof typeof station.SENSOR_VARIABLES
+  selectedVariable: keyof typeof station.SENSOR_VARIABLES,
 ) => {
   if (Object.keys(station.SENSOR_VARIABLES).length === 0) return null;
 
@@ -208,4 +198,3 @@ const getSensorVariableDetails = (
 
   return details;
 };
-

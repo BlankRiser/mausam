@@ -15,13 +15,7 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  ExternalLinkIcon,
-  Info,
-  SearchIcon,
-} from "lucide-react";
+import { ChevronDownIcon, ChevronUpIcon, ExternalLinkIcon, Info, SearchIcon } from "lucide-react";
 import { Fragment, useId, useMemo, useState } from "react";
 import { stationMetadataQueryOptions } from "@/api/query-factory";
 import { Button } from "@/components/ui/button";
@@ -48,7 +42,6 @@ import { compareStationsRoute } from "@/router/routes";
 
 declare module "@tanstack/react-table" {
   //allows us to define custom properties for our columns
-  // biome-ignore lint/correctness/noUnusedVariables: This is for allowing custom properties to be added to columns
   interface ColumnMeta<TData extends RowData, TValue> {
     filterVariant?: "text" | "range" | "select";
   }
@@ -57,9 +50,7 @@ declare module "@tanstack/react-table" {
 type Item = {
   id: string;
   keyword: string;
-  intents: Array<
-    "Informational" | "Navigational" | "Commercial" | "Transactional"
-  >;
+  intents: Array<"Informational" | "Navigational" | "Commercial" | "Transactional">;
   volume: number;
   cpc: number;
   traffic: number;
@@ -86,17 +77,9 @@ const columns: ColumnDef<Item>[] = [
           }}
         >
           {row.getIsExpanded() ? (
-            <ChevronUpIcon
-              className="opacity-60"
-              size={16}
-              aria-hidden="true"
-            />
+            <ChevronUpIcon className="opacity-60" size={16} aria-hidden="true" />
           ) : (
-            <ChevronDownIcon
-              className="opacity-60"
-              size={16}
-              aria-hidden="true"
-            />
+            <ChevronDownIcon className="opacity-60" size={16} aria-hidden="true" />
           )}
         </Button>
       ) : undefined;
@@ -107,8 +90,7 @@ const columns: ColumnDef<Item>[] = [
     header: ({ table }) => (
       <Checkbox
         checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
+          table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
@@ -125,9 +107,7 @@ const columns: ColumnDef<Item>[] = [
   {
     header: "Keyword",
     accessorKey: "keyword",
-    cell: ({ row }) => (
-      <div className="font-medium">{row.getValue("keyword")}</div>
-    ),
+    cell: ({ row }) => <div className="font-medium">{row.getValue("keyword")}</div>,
   },
   {
     header: "Intents",
@@ -149,7 +129,7 @@ const columns: ColumnDef<Item>[] = [
                 key={intent}
                 className={cn(
                   "flex size-5 items-center justify-center rounded text-xs font-medium",
-                  styles
+                  styles,
                 )}
               >
                 {intent.charAt(0)}
@@ -208,10 +188,7 @@ const columns: ColumnDef<Item>[] = [
     header: "Link",
     accessorKey: "link",
     cell: ({ row }) => (
-      <a
-        className="inline-flex items-center gap-1 hover:underline"
-        href="#some-link-here"
-      >
+      <a className="inline-flex items-center gap-1 hover:underline" href="#some-link-here">
         {row.getValue("link")} <ExternalLinkIcon size={12} aria-hidden="true" />
       </a>
     ),
@@ -300,7 +277,7 @@ export function CompareDataGrid() {
   const { data } = useSuspenseQuery(
     stationMetadataQueryOptions({
       stid: stids!,
-    })
+    }),
   );
 
   console.log(data);
@@ -378,28 +355,23 @@ export function CompareDataGrid() {
                   >
                     {header.isPlaceholder ? null : header.column.getCanSort() ? (
                       <div
+                        // oxlint-disable-next-line jsx_a11y/prefer-tag-over-role: need a custom div that acts like button
                         role="button"
                         className={cn(
                           header.column.getCanSort() &&
-                          "flex h-full cursor-pointer items-center justify-between gap-2 select-none"
+                            "flex h-full cursor-pointer items-center justify-between gap-2 select-none",
                         )}
                         onClick={header.column.getToggleSortingHandler()}
                         onKeyDown={(e) => {
                           // Enhanced keyboard handling for sorting
-                          if (
-                            header.column.getCanSort() &&
-                            (e.key === "Enter" || e.key === " ")
-                          ) {
+                          if (header.column.getCanSort() && (e.key === "Enter" || e.key === " ")) {
                             e.preventDefault();
                             header.column.getToggleSortingHandler()?.(e);
                           }
                         }}
                         tabIndex={header.column.getCanSort() ? 0 : undefined}
                       >
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                        {flexRender(header.column.columnDef.header, header.getContext())}
                         {{
                           asc: (
                             <ChevronUpIcon
@@ -416,14 +388,11 @@ export function CompareDataGrid() {
                             />
                           ),
                         }[header.column.getIsSorted() as string] ?? (
-                            <span className="size-4" aria-hidden="true" />
-                          )}
+                          <span className="size-4" aria-hidden="true" />
+                        )}
                       </div>
                     ) : (
-                      flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )
+                      flexRender(header.column.columnDef.header, header.getContext())
                     )}
                   </TableHead>
                 );
@@ -435,16 +404,10 @@ export function CompareDataGrid() {
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <Fragment key={row.id}>
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
+                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -485,9 +448,7 @@ function Filter({ column }: { column: Column<any, unknown> }) {
   const id = useId();
   const columnFilterValue = column.getFilterValue();
   const { filterVariant } = column.columnDef.meta ?? {};
-  const columnHeader =
-    typeof column.columnDef.header === "string" ? column.columnDef.header : "";
-  // biome-ignore lint/correctness/useExhaustiveDependencies: column.getFacetedUniqueValues() is a better dependency than column
+  const columnHeader = typeof column.columnDef.header === "string" ? column.columnDef.header : "";
   const sortedUniqueValues = useMemo(() => {
     if (filterVariant === "range") return [];
 
@@ -504,6 +465,7 @@ function Filter({ column }: { column: Column<any, unknown> }) {
 
     // Get unique values and sort them
     return Array.from(new Set(flattenedValues)).sort();
+    // oxlint-disable-next-line eslint-plugin-react-hooks/exhaustive-deps: column.getFacetedUniqueValues() is a better dependency than column
   }, [column.getFacetedUniqueValues(), filterVariant]);
 
   if (filterVariant === "range") {

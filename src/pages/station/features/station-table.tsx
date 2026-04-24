@@ -1,9 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
-import {
-  ColumnDef,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+import { ColumnDef, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { useEffect, useMemo, useState } from "react";
 import { DataTable } from "@/components/ui/data-table";
@@ -11,11 +7,7 @@ import { stationRoute } from "@/router/routes";
 import { useGlobalDataStore } from "@/store/global-data.store";
 import { LatestStationResponse } from "@/types/station";
 
-export const LatestStnDataTable = ({
-  data,
-}: {
-  data: LatestStationResponse;
-}) => {
+export const LatestStnDataTable = ({ data }: { data: LatestStationResponse }) => {
   const { stationId } = stationRoute.useParams();
   const navigate = useNavigate({ from: "/station/$stationId" });
   const { variable: selectedVariable } = stationRoute.useSearch();
@@ -28,8 +20,7 @@ export const LatestStnDataTable = ({
   const rows = useMemo(() => transformData(data), [data]);
 
   useEffect(() => {
-    const variable =
-      Object.keys(rowSelection)[0]?.split("|")[0] ?? selectedVariable;
+    const variable = Object.keys(rowSelection)[0]?.split("|")[0] ?? selectedVariable;
 
     void navigate({
       to: "/station/$stationId",
@@ -107,9 +98,7 @@ const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
         const { value, unit } = row.original.position;
 
         if (!value) {
-          return (
-            <span className="text-neutral-400 dark:text-neutral-600">-</span>
-          );
+          return <span className="text-neutral-400 dark:text-neutral-600">-</span>;
         }
 
         return `${value} ${unit}`;
@@ -120,19 +109,12 @@ const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
       header: "Date Time",
       cell: ({ row }) => {
         if (row.original.observation.dateTime === "N/A") {
-          return (
-            <span className="text-right text-neutral-400 dark:text-neutral-600">
-              -
-            </span>
-          );
+          return <span className="text-right text-neutral-400 dark:text-neutral-600">-</span>;
         }
 
         return (
           <span className="text-nowrap">
-            {format(
-              new Date(row.original.observation.dateTime),
-              "MMM d, yyyy h:mm a",
-            )}
+            {format(new Date(row.original.observation.dateTime), "MMM d, yyyy h:mm a")}
           </span>
         );
       },
@@ -146,11 +128,7 @@ const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
         const { value, unit } = row.original.observation;
 
         if (!value) {
-          return (
-            <p className="text-right text-neutral-400 dark:text-neutral-600 px-2">
-              -
-            </p>
-          );
+          return <p className="text-right text-neutral-400 dark:text-neutral-600 px-2">-</p>;
         }
 
         if (typeof value === "object") {
@@ -158,9 +136,7 @@ const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
           return (
             <p className="text-right text-nowrap px-2">
               {value["sky_condition"]} at {value["height_agl"]}{" "}
-              <span className="text-neutral-400 dark:text-neutral-600">
-                {unit}{" "}
-              </span>
+              <span className="text-neutral-400 dark:text-neutral-600">{unit} </span>
             </p>
           );
         }

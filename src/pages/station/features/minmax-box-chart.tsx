@@ -38,8 +38,7 @@ export const MinmaxBoxChart = ({
       <CardHeader>
         <CardTitle>
           Min/Max values of {formattedVariable}{" "}
-          {!!data && data?.UNITS?.[variable] ? `(${data.UNITS[variable]})` : ""}{" "}
-          last 7 days
+          {!!data && data?.UNITS?.[variable] ? `(${data.UNITS[variable]})` : ""} last 7 days
         </CardTitle>
       </CardHeader>
 
@@ -71,11 +70,8 @@ const getMinMaxData = (
 ) => {
   if (!sensorVariables || !minMaxData) return [];
 
-  const sensorKey = Object.keys(
-    sensorVariables ?? {},
-  )?.[0] as keyof typeof sensorVariables;
-  const selectedSensor =
-    sensorVariables[(sensor as keyof typeof sensorVariables) ?? sensorKey];
+  const sensorKey = Object.keys(sensorVariables ?? {})?.[0] as keyof typeof sensorVariables;
+  const selectedSensor = sensorVariables[(sensor as keyof typeof sensorVariables) ?? sensorKey];
 
   const firstSensor = Object.keys(selectedSensor ?? {})?.[0];
 

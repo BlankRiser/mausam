@@ -10,11 +10,7 @@ import { networksMetadataQueryOptions } from "@/api/query-factory";
 import { Badge, BadgeDot } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { networkRoute } from "@/router/routes";
 import type { MetadataStation } from "@/types/station-metadata";
 import { useNavigate } from "@tanstack/react-router";
@@ -65,9 +61,7 @@ export const NetworkStationsTable = () => {
         const networkId = row.original.ID?.toLowerCase() || "";
         const networkName = row.original.SHORTNAME?.toLowerCase() || "";
 
-        return (
-          networkId.includes(searchValue) || networkName.includes(searchValue)
-        );
+        return networkId.includes(searchValue) || networkName.includes(searchValue);
       },
     },
     state: {
@@ -118,9 +112,7 @@ const getNetworkStationsDataTableColumns = (): ColumnDef<MetadataStation>[] => {
       cell: ({ row }) => {
         return (
           <Badge
-            variant={
-              row.original.STATUS === "ACTIVE" ? "success" : "destructive"
-            }
+            variant={row.original.STATUS === "ACTIVE" ? "success" : "destructive"}
             appearance="ghost"
           >
             <BadgeDot /> {row.original.STATUS}
@@ -158,9 +150,7 @@ const getNetworkStationsDataTableColumns = (): ColumnDef<MetadataStation>[] => {
       id: "sensor_variables",
       header: "Sensor Variables",
       cell: ({ row }) => {
-        const sensorVariables = Object.keys(
-          row.original.SENSOR_VARIABLES ?? {},
-        );
+        const sensorVariables = Object.keys(row.original.SENSOR_VARIABLES ?? {});
 
         return (
           <div>
@@ -169,9 +159,7 @@ const getNetworkStationsDataTableColumns = (): ColumnDef<MetadataStation>[] => {
               <TooltipContent>
                 <ul className="list-disc pl-4 max-h-48 overflow-y-auto">
                   {sensorVariables.length > 0 &&
-                    sensorVariables.map((variable) => (
-                      <li key={variable}>{variable}</li>
-                    ))}
+                    sensorVariables.map((variable) => <li key={variable}>{variable}</li>)}
                 </ul>
               </TooltipContent>
             </Tooltip>
@@ -186,16 +174,12 @@ const getNetworkStationsDataTableColumns = (): ColumnDef<MetadataStation>[] => {
         return (
           <div className="flex gap-2">
             <Button asChild variant="primary" mode="link" underline="solid">
-              <a
-                href={`https://viewer.synopticdata.com/metadata/${row.original.STID}/all/now`}
-              >
+              <a href={`https://viewer.synopticdata.com/metadata/${row.original.STID}/all/now`}>
                 View Metadata
               </a>
             </Button>
             <Button asChild variant="primary" mode="link" underline="solid">
-              <a
-                href={`https://viewer.synopticdata.com/table/${row.original.STID}/all/now`}
-              >
+              <a href={`https://viewer.synopticdata.com/table/${row.original.STID}/all/now`}>
                 View Station
               </a>
             </Button>

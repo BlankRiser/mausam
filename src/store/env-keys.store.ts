@@ -8,7 +8,7 @@ type State = {
 
 type Actions = {
   setSynopticToken: (token: string) => void;
-  setTokens: (tokens: {  synopticToken: string }) => void;
+  setTokens: (tokens: { synopticToken: string }) => void;
   reset: () => void;
 };
 

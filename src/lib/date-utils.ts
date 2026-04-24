@@ -25,6 +25,6 @@ export const getFormattedTimezone = ({
 export const getTzOffset = (timezone: string) => {
   const tzDate = TZDate.tz(timezone);
   const utcDate = new Date(tzDate.getTime());
-  
+
   return (utcDate.getTimezoneOffset() - tzDate.getTimezoneOffset()) / 60;
 };

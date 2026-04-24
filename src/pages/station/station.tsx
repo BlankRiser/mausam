@@ -2,10 +2,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { Suspense, useEffect, useState } from "react";
-import {
-  stationLatestQueryOptions,
-  stationMetadataQueryOptions,
-} from "@/api/query-factory";
+import { stationLatestQueryOptions, stationMetadataQueryOptions } from "@/api/query-factory";
 import { Skeleton } from "@/components/ui/skeleton";
 import ExpandingLatestTable from "@/pages/station/features/expanding-latest-table";
 import { StnMetaDetails } from "@/pages/station/features/stn-meta-details";
@@ -110,9 +107,7 @@ const ReportingDetails = () => {
       {displayAll && (
         <DisplayAllVariables
           variables={
-            Object.keys(data?.STATION?.[0]?.SENSOR_VARIABLES ?? {}) as Array<
-              keyof SensorVariables
-            >
+            Object.keys(data?.STATION?.[0]?.SENSOR_VARIABLES ?? {}) as Array<keyof SensorVariables>
           }
         />
       )}
@@ -136,10 +131,7 @@ export const VariableTimeseries = () => {
 
   return (
     <div className="space-y-2">
-      <VariableTimeseriesChart
-        stationId={stationId}
-        variable={variable as keyof SensorVariables}
-      />
+      <VariableTimeseriesChart stationId={stationId} variable={variable as keyof SensorVariables} />
     </div>
   );
 };
@@ -156,21 +148,13 @@ const ReportingDetailsFallback = () => {
   );
 };
 
-const DisplayAllVariables = ({
-  variables,
-}: {
-  variables: Array<keyof SensorVariables>;
-}) => {
+const DisplayAllVariables = ({ variables }: { variables: Array<keyof SensorVariables> }) => {
   const { stationId } = stationRoute.useParams();
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
       {variables.map((variable) => (
-        <VariableTimeseriesChart
-          key={variable}
-          stationId={stationId}
-          variable={variable}
-        />
+        <VariableTimeseriesChart key={variable} stationId={stationId} variable={variable} />
       ))}
     </div>
   );

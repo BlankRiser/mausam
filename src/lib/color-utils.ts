@@ -2,8 +2,6 @@
  * Why use oklch instead of rgb or hex: https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl
  */
 
-
-
 export const sequential = {
   singleHue: {
     blue: [

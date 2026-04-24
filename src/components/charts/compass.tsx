@@ -84,36 +84,16 @@ export const Compass: React.FC<CompassProps> = ({ angle, size = 100 }) => {
 
         {/* Direction labels */}
         <g className="font-mono text-xs" fill="var(--muted-foreground)">
-          <text
-            x={radius}
-            y={labelOffset + 5}
-            textAnchor="middle"
-            dominantBaseline="middle"
-          >
+          <text x={radius} y={labelOffset + 5} textAnchor="middle" dominantBaseline="middle">
             N
           </text>
-          <text
-            x={size - labelOffset}
-            y={radius + 4}
-            textAnchor="middle"
-            dominantBaseline="middle"
-          >
+          <text x={size - labelOffset} y={radius + 4} textAnchor="middle" dominantBaseline="middle">
             E
           </text>
-          <text
-            x={radius}
-            y={size - labelOffset + 4}
-            textAnchor="middle"
-            dominantBaseline="middle"
-          >
+          <text x={radius} y={size - labelOffset + 4} textAnchor="middle" dominantBaseline="middle">
             S
           </text>
-          <text
-            x={labelOffset}
-            y={radius + 4}
-            textAnchor="middle"
-            dominantBaseline="middle"
-          >
+          <text x={labelOffset} y={radius + 4} textAnchor="middle" dominantBaseline="middle">
             W
           </text>
         </g>

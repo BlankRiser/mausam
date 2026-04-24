@@ -24,62 +24,59 @@ type WindCardProps = {
 export function WindCard({ data, ...rest }: WindCardProps) {
   const windSpeed = useMemo(() => {
     const values: Array<RenderedValues> = [];
-    Object.entries(
-      data?.STATION?.[0]?.SENSOR_VARIABLES?.wind_speed ?? {},
-    ).forEach(([key, value]) => {
-      values.push({
-        datetime: data?.STATION?.[0]?.OBSERVATIONS?.[key]?.date_time ?? "N/A",
-        value: data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value ?? "N/A",
-        valueUnit: data.UNITS?.["wind_speed"] ?? "N/A",
-        position: value?.position ?? "N/A",
-        positionUnit: data?.STATION?.[0]?.UNITS?.["position"] ?? "N/A",
-      });
-    });
+    Object.entries(data?.STATION?.[0]?.SENSOR_VARIABLES?.wind_speed ?? {}).forEach(
+      ([key, value]) => {
+        values.push({
+          datetime: data?.STATION?.[0]?.OBSERVATIONS?.[key]?.date_time ?? "N/A",
+          value: data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value ?? "N/A",
+          valueUnit: data.UNITS?.["wind_speed"] ?? "N/A",
+          position: value?.position ?? "N/A",
+          positionUnit: data?.STATION?.[0]?.UNITS?.["position"] ?? "N/A",
+        });
+      },
+    );
 
     return values;
   }, [data]);
 
   const windDirection = useMemo(() => {
     const values: Array<RenderedValues> = [];
-    Object.entries(
-      data?.STATION?.[0]?.SENSOR_VARIABLES?.wind_direction ?? {},
-    ).forEach(([key, value]) => {
-      values.push({
-        datetime: data?.STATION?.[0]?.OBSERVATIONS?.[key]?.date_time ?? "N/A",
-        value: data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value ?? "N/A",
-        valueUnit: data.UNITS?.["wind_direction"] ?? "N/A",
-        position: value?.position ?? "N/A",
-        positionUnit: data?.STATION?.[0]?.UNITS?.["position"] ?? "N/A",
-      });
-    });
+    Object.entries(data?.STATION?.[0]?.SENSOR_VARIABLES?.wind_direction ?? {}).forEach(
+      ([key, value]) => {
+        values.push({
+          datetime: data?.STATION?.[0]?.OBSERVATIONS?.[key]?.date_time ?? "N/A",
+          value: data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value ?? "N/A",
+          valueUnit: data.UNITS?.["wind_direction"] ?? "N/A",
+          position: value?.position ?? "N/A",
+          positionUnit: data?.STATION?.[0]?.UNITS?.["position"] ?? "N/A",
+        });
+      },
+    );
 
     return values;
   }, [data]);
 
   const windGust = useMemo(() => {
     const values: Array<RenderedValues> = [];
-    Object.entries(
-      data?.STATION?.[0]?.SENSOR_VARIABLES?.wind_gust ?? {},
-    ).forEach(([key, value]) => {
-      values.push({
-        datetime: data?.STATION?.[0]?.OBSERVATIONS?.[key]?.date_time ?? "N/A",
-        value: data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value ?? "N/A",
-        valueUnit: data.UNITS?.["wind_gust"] ?? "N/A",
-        position: value?.position ?? "N/A",
-        positionUnit: data?.STATION?.[0]?.UNITS?.["position"] ?? "N/A",
-      });
-    });
+    Object.entries(data?.STATION?.[0]?.SENSOR_VARIABLES?.wind_gust ?? {}).forEach(
+      ([key, value]) => {
+        values.push({
+          datetime: data?.STATION?.[0]?.OBSERVATIONS?.[key]?.date_time ?? "N/A",
+          value: data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value ?? "N/A",
+          valueUnit: data.UNITS?.["wind_gust"] ?? "N/A",
+          position: value?.position ?? "N/A",
+          positionUnit: data?.STATION?.[0]?.UNITS?.["position"] ?? "N/A",
+        });
+      },
+    );
 
     return values;
   }, [data]);
 
   return (
-    <div
-      className={cn([rest.className, "data-[selected=true]:bg-red-200"])}
-      {...rest}
-    >
+    <div className={cn([rest.className, "data-[selected=true]:bg-red-200"])} {...rest}>
       <div className="flex gap-4 w-full border border-border rounded-xl p-2">
-        <Compass angle={Number(windDirection[0]?.value) ?? 0} />
+        <Compass angle={Number(windDirection[0]?.value ?? 0)} />
         <div className="flex flex-col gap-2">
           <span>
             {windDirection[0]?.value} {windDirection[0]?.valueUnit}

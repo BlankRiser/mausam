@@ -68,7 +68,6 @@ export function Globe({
     }
   };
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: want to run only on a few deps
   useEffect(() => {
     const onResize = () => {
       if (canvasRef.current) {
@@ -96,6 +95,7 @@ export function Globe({
       globe.destroy();
       window.removeEventListener("resize", onResize);
     };
+    // oxlint-disable-next-line eslint-plugin-react-hooks/exhaustive-deps: phi and width always remain the same
   }, [rs, config]);
 
   return (
@@ -112,9 +112,7 @@ export function Globe({
         onPointerUp={() => updatePointerInteraction(null)}
         onPointerOut={() => updatePointerInteraction(null)}
         onMouseMove={(e) => updateMovement(e.clientX)}
-        onTouchMove={(e) =>
-          e.touches[0] && updateMovement(e.touches[0].clientX)
-        }
+        onTouchMove={(e) => e.touches[0] && updateMovement(e.touches[0].clientX)}
       />
     </div>
   );

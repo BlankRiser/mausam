@@ -26,8 +26,7 @@ Mausam is a minimalist weather visualization tool built with React, TypeScript, 
 
 ## Dev Note
 
-- [Use loader in tanstack/react-query to only seed cached data](https://github.com/TanStack/router/discussions/1563) 
-
+- [Use loader in tanstack/react-query to only seed cached data](https://github.com/TanStack/router/discussions/1563)
 
 ### Test Stations
 

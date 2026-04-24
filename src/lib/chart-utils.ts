@@ -90,10 +90,7 @@ export const constructCategoryColors = (
   return categoryColors;
 };
 
-export const getColorClassName = (
-  color: AvailableChartColorsKeys,
-  type: ColorUtility,
-): string => {
+export const getColorClassName = (color: AvailableChartColorsKeys, type: ColorUtility): string => {
   const fallbackColor = {
     bg: "bg-gray-500",
     stroke: "stroke-gray-500",
@@ -113,10 +110,7 @@ export const getYAxisDomain = (
   return [minDomain, maxDomain];
 };
 
-export const hasOnlyOneValueForKey = (
-  array: any[],
-  keyToCheck: string,
-): boolean => {
+export const hasOnlyOneValueForKey = (array: any[], keyToCheck: string): boolean => {
   const val: any[] = [];
 
   for (const obj of array) {

@@ -16,24 +16,24 @@ type GenericCardProps = {
 export function GenericCard({ variable, data, ...rest }: GenericCardProps) {
   const variableData = useMemo(() => {
     const values: Array<RenderedValues> = [];
-    Object.entries(
-      data?.STATION?.[0]?.SENSOR_VARIABLES?.[variable] ?? {},
-    ).forEach(([key, value]) => {
-      const variableValue =
-        typeof data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value === "object"
-          ? (Object.values(
-            data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value ?? {},
-          )[0] as string | number)
-          : data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value;
+    Object.entries(data?.STATION?.[0]?.SENSOR_VARIABLES?.[variable] ?? {}).forEach(
+      ([key, value]) => {
+        const variableValue =
+          typeof data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value === "object"
+            ? (Object.values(data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value ?? {})[0] as
+                | string
+                | number)
+            : data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value;
 
-      values.push({
-        datetime: data?.STATION?.[0]?.OBSERVATIONS?.[key]?.date_time,
-        value: variableValue,
-        valueUnit: data.UNITS?.[variable],
-        position: value?.position,
-        positionUnit: data?.STATION?.[0]?.UNITS?.["position"],
-      });
-    });
+        values.push({
+          datetime: data?.STATION?.[0]?.OBSERVATIONS?.[key]?.date_time,
+          value: variableValue,
+          valueUnit: data.UNITS?.[variable],
+          position: value?.position,
+          positionUnit: data?.STATION?.[0]?.UNITS?.["position"],
+        });
+      },
+    );
 
     return values;
   }, [data, variable]);

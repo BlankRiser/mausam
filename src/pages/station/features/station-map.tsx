@@ -23,10 +23,7 @@ export const StationMap = ({ data }: { data: StationMetadata }) => {
           cursor: "default",
         }}
       >
-        <Marker
-          longitude={+data?.STATION?.[0]?.LONGITUDE}
-          latitude={+data?.STATION?.[0]?.LATITUDE}
-        >
+        <Marker longitude={+data?.STATION?.[0]?.LONGITUDE} latitude={+data?.STATION?.[0]?.LATITUDE}>
           <LocationMarker className="size-8 text-blue-600 dark:text-blue-400" />
         </Marker>
       </MapWrapper>

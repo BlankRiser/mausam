@@ -1,10 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { api } from "@/api/api";
-import {
-  extractNetworkDetails,
-  extractVariableDetails,
-} from "@/lib/synoptic-utils";
+import { extractNetworkDetails, extractVariableDetails } from "@/lib/synoptic-utils";
 import type { MNETLabelItems } from "@/types/networks";
 import type { VariableLabelItems } from "@/types/variables";
 

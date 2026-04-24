@@ -7,6 +7,11 @@
     "**/routeTree.gen.ts": true
   },
 
+  //oxc linter
+  "oxc.typeAware": true,
+  "oxc.fmt.configPath": ".oxfmtrc.json",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+
   // TailwindCSS
   "tailwindCSS.classFunctions": ["cva", "cx", "cn"],
 
@@ -19,7 +24,6 @@
   "git.enableSmartCommit": true,
   "git.untrackedChanges": "separate",
   "git.openRepositoryInParentFolders": "never",
-
 
   // Editor
   "window.nativeTabs": true, // mac only
@@ -40,10 +44,7 @@
   "editor.lineNumbers": "on",
   "editor.renderWhitespace": "selection",
   "editor.codeActionsOnSave": {
-    "source.fixAll": "never",
-    "source.addMissingImports": "explicit",
-    "source.fixAll.eslint": "explicit",
-    "source.organizeImports": "never"
+    "source.fixAll.oxc": "always"
   },
   "terminal.integrated.env.osx": {},
   "diffEditor.ignoreTrimWhitespace": true,
@@ -80,4 +81,10 @@
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.inlayHints.variableTypes.enabled": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  }
 }

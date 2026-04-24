@@ -27,11 +27,7 @@ import { useGlobalDataStore } from "@/store/global-data.store";
 import { LatestStationResponse, SensorVariables } from "@/types/station";
 import { MinmaxBoxChart } from "@/pages/station/features/minmax-box-chart";
 
-export default function ExpandingLatestTable({
-  data,
-}: {
-  data: LatestStationResponse;
-}) {
+export default function ExpandingLatestTable({ data }: { data: LatestStationResponse }) {
   const { stationId } = stationRoute.useParams();
 
   const columns = useMemo(() => getLatestStnDataTableColumns(), []);
@@ -63,10 +59,7 @@ export default function ExpandingLatestTable({
                     <TableHead key={header.id}>
                       {header.isPlaceholder
                         ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                        : flexRender(header.column.columnDef.header, header.getContext())}
                     </TableHead>
                   );
                 })}
@@ -77,19 +70,13 @@ export default function ExpandingLatestTable({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <Fragment key={row.id}>
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
+                  <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
                     {row.getVisibleCells().map((cell) => (
                       <TableCell
                         key={cell.id}
                         className="whitespace-nowrap [&:has([aria-expanded])]:w-px [&:has([aria-expanded])]:py-0 [&:has([aria-expanded])]:pr-0"
                       >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </TableCell>
                     ))}
                   </TableRow>
@@ -100,14 +87,9 @@ export default function ExpandingLatestTable({
                           <VariableTimeseriesChart
                             key={row.original.variable}
                             stationId={stationId}
-                            variable={
-                              row.original.variable as keyof SensorVariables
-                            }
+                            variable={row.original.variable as keyof SensorVariables}
                           />
-                          <MinmaxBoxChart
-                            stationId={stationId}
-                            variable={row.original.variable}
-                          />
+                          <MinmaxBoxChart stationId={stationId} variable={row.original.variable} />
                         </div>
                       </TableCell>
                     </TableRow>
@@ -116,10 +98,7 @@ export default function ExpandingLatestTable({
               ))
             ) : (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
+                <TableCell colSpan={columns.length} className="h-24 text-center">
                   No results.
                 </TableCell>
               </TableRow>
@@ -151,17 +130,9 @@ const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
             }}
           >
             {row.getIsExpanded() ? (
-              <ChevronUpIcon
-                className="opacity-60"
-                size={16}
-                aria-hidden="true"
-              />
+              <ChevronUpIcon className="opacity-60" size={16} aria-hidden="true" />
             ) : (
-              <ChevronDownIcon
-                className="opacity-60"
-                size={16}
-                aria-hidden="true"
-              />
+              <ChevronDownIcon className="opacity-60" size={16} aria-hidden="true" />
             )}
           </Button>
         ) : undefined;
@@ -190,9 +161,7 @@ const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
         const { value, unit } = row.original.position;
 
         if (!value) {
-          return (
-            <span className="text-neutral-400 dark:text-neutral-600">-</span>
-          );
+          return <span className="text-neutral-400 dark:text-neutral-600">-</span>;
         }
 
         return `${value} ${unit}`;
@@ -203,19 +172,12 @@ const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
       header: "Date Time",
       cell: ({ row }) => {
         if (row.original.observation.dateTime === "N/A") {
-          return (
-            <span className="text-right text-neutral-400 dark:text-neutral-600">
-              -
-            </span>
-          );
+          return <span className="text-right text-neutral-400 dark:text-neutral-600">-</span>;
         }
 
         return (
           <span className="text-nowrap">
-            {format(
-              new Date(row.original.observation.dateTime),
-              "MMM d, yyyy h:mm a",
-            )}
+            {format(new Date(row.original.observation.dateTime), "MMM d, yyyy h:mm a")}
           </span>
         );
       },
@@ -229,11 +191,7 @@ const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
         const { value, unit } = row.original.observation;
 
         if (!value) {
-          return (
-            <p className="text-right text-neutral-400 dark:text-neutral-600 px-2">
-              -
-            </p>
-          );
+          return <p className="text-right text-neutral-400 dark:text-neutral-600 px-2">-</p>;
         }
 
         if (typeof value === "object") {
@@ -241,9 +199,7 @@ const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
           return (
             <p className="text-right text-nowrap px-2">
               {value["sky_condition"]} at {value["height_agl"]}{" "}
-              <span className="text-neutral-400 dark:text-neutral-600">
-                {unit}{" "}
-              </span>
+              <span className="text-neutral-400 dark:text-neutral-600">{unit} </span>
             </p>
           );
         }
@@ -316,9 +272,7 @@ const RenderVariableLabel = ({ variable }: { variable: string }) => {
   const navigate = useNavigate({ from: "/station/$stationId" });
   const variableLabels = useGlobalDataStore((s) => s.variableLabels);
 
-  const variableLabel = variableLabels
-    ? variableLabels[variable]?.long_name
-    : variable;
+  const variableLabel = variableLabels ? variableLabels[variable]?.long_name : variable;
 
   const handleClick = () => {
     void navigate({

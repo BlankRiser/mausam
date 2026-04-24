@@ -4,16 +4,14 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 export interface BadgeProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {
+  extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {
   asChild?: boolean;
   dotClassName?: string;
   disabled?: boolean;
 }
 
 export interface BadgeButtonProps
-  extends React.ButtonHTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeButtonVariants> {
+  extends React.ButtonHTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeButtonVariants> {
   asChild?: boolean;
 }
 
@@ -31,8 +29,7 @@ const badgeVariants = cva(
         warning:
           "bg-[var(--color-warning-accent,var(--color-yellow-500))] text-[var(--color-warning-foreground,var(--color-white))]",
         info: "bg-[var(--color-info-accent,var(--color-violet-500))] text-[var(--color-info-foreground,var(--color-white))]",
-        outline:
-          "bg-transparent border border-border text-secondary-foreground",
+        outline: "bg-transparent border border-border text-secondary-foreground",
         destructive: "bg-destructive text-destructive-foreground",
       },
       appearance: {
@@ -66,8 +63,7 @@ const badgeVariants = cva(
       {
         variant: "secondary",
         appearance: "light",
-        className:
-          "bg-secondary dark:bg-secondary/50 text-secondary-foreground",
+        className: "bg-secondary dark:bg-secondary/50 text-secondary-foreground",
       },
       {
         variant: "success",
@@ -192,17 +188,13 @@ function Badge({
   asChild = false,
   disabled,
   ...props
-}: React.ComponentProps<"span"> &
-  VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
+}: React.ComponentProps<"span"> & VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
   const Comp = asChild ? SlotPrimitive.Slot : "span";
 
   return (
     <Comp
       data-slot="badge"
-      className={cn(
-        badgeVariants({ variant, size, appearance, shape, disabled }),
-        className,
-      )}
+      className={cn(badgeVariants({ variant, size, appearance, shape, disabled }), className)}
       {...props}
     />
   );
@@ -220,6 +212,7 @@ function BadgeButton({
     <Comp
       data-slot="badge-button"
       className={cn(badgeButtonVariants({ variant, className }))}
+      // oxlint-disable-next-line jsx_a11y/prefer-tag-over-role: this could be any interactive element like button, a, etc
       role="button"
       {...props}
     />
@@ -230,10 +223,7 @@ function BadgeDot({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
       data-slot="badge-dot"
-      className={cn(
-        "size-1.5 rounded-full bg-[currentColor] opacity-75",
-        className,
-      )}
+      className={cn("size-1.5 rounded-full bg-[currentColor] opacity-75", className)}
       {...props}
     />
   );

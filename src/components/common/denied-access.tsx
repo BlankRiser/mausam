@@ -11,10 +11,7 @@ export const DeniedAccess = ({
 }: DrawerProps) => {
   return (
     <div
-      className={cn([
-        "p-2 bg-muted rounded-md h-full grid place-items-center",
-        className,
-      ])}
+      className={cn(["p-2 bg-muted rounded-md h-full grid place-items-center", className])}
       {...props}
     >
       <span>{label}</span>

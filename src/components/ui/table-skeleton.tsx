@@ -1,20 +1,7 @@
 import { Skeleton } from "./skeleton";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "./table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./table";
 
-export const TableSkeleton = ({
-  rows = 5,
-  columns = 4,
-}: {
-  rows?: number;
-  columns?: number;
-}) => {
+export const TableSkeleton = ({ rows = 5, columns = 4 }: { rows?: number; columns?: number }) => {
   return (
     <Table>
       <TableHeader>

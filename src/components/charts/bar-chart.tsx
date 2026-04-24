@@ -89,7 +89,7 @@ interface LegendItemProps {
 const LegendItem = ({ name, color, onClick, activeLegend }: LegendItemProps) => {
   const hasOnValueChange = !!onClick;
   return (
-    // biome-ignore lint/a11y/useKeyWithClickEvents: legend items are not clickable if onClick is not passed
+    // oxlint-disable-next-line jsx_a11y/click-events-have-key-events: legend items are not clickable if onClick is not passed
     <li
       className={cn(
         "group inline-flex flex-nowrap items-center gap-1.5 whitespace-nowrap rounded-sm px-2 py-1 transition",
@@ -295,7 +295,7 @@ const Legend = React.forwardRef<HTMLOListElement, LegendProps>((props, ref) => {
     <ol ref={ref} className={cn("relative overflow-hidden", className)} {...other}>
       <div
         ref={scrollableRef}
-        // biome-ignore lint/a11y/noNoninteractiveTabindex: this needs to be able to receive focus
+        // oxlint-disable-next-line jsx_a11y/no-noninteractive-tabindex: this needs to be able to receive focus
         tabIndex={0}
         className={cn(
           "flex h-full",
@@ -361,10 +361,8 @@ const ChartLegend = (
   legendPosition?: "left" | "center" | "right",
   yAxisWidth?: number,
 ) => {
-  // biome-ignore lint/correctness/useHookAtTopLevel: this is a ref and is allowed to be declared here
   const legendRef = React.useRef<HTMLDivElement>(null);
 
-  // biome-ignore lint/correctness/useHookAtTopLevel: this hook runs appropriately and its dependency ref is declared above
   useOnWindowResize(() => {
     const calculateHeight = (height: number | undefined) => (height ? Number(height) + 15 : 60);
     setLegendHeight(calculateHeight(legendRef.current?.clientHeight));
@@ -616,10 +614,10 @@ const BarChart = React.forwardRef<HTMLDivElement, BarChartProps>((props, forward
           onClick={
             hasOnValueChange && (activeLegend || activeBar)
               ? () => {
-                setActiveBar(undefined);
-                setActiveLegend(undefined);
-                onValueChange?.(null);
-              }
+                  setActiveBar(undefined);
+                  setActiveLegend(undefined);
+                  onValueChange?.(null);
+                }
               : undefined
           }
           margin={{
@@ -658,20 +656,20 @@ const BarChart = React.forwardRef<HTMLDivElement, BarChartProps>((props, forward
             minTickGap={tickGap}
             {...(layout !== "vertical"
               ? {
-                padding: {
-                  left: paddingValue,
-                  right: paddingValue,
-                },
-                dataKey: index,
-                interval: startEndOnly ? "preserveStartEnd" : intervalType,
-                ticks: startEndOnly ? [data[0][index], data[data.length - 1][index]] : undefined,
-              }
+                  padding: {
+                    left: paddingValue,
+                    right: paddingValue,
+                  },
+                  dataKey: index,
+                  interval: startEndOnly ? "preserveStartEnd" : intervalType,
+                  ticks: startEndOnly ? [data[0][index], data[data.length - 1][index]] : undefined,
+                }
               : {
-                type: "number",
-                domain: yAxisDomain as AxisDomain,
-                tickFormatter: type === "percent" ? valueToPercent : valueFormatter,
-                allowDecimals: allowDecimals,
-              })}
+                  type: "number",
+                  domain: yAxisDomain as AxisDomain,
+                  tickFormatter: type === "percent" ? valueToPercent : valueFormatter,
+                  allowDecimals: allowDecimals,
+                })}
           >
             {xAxisLabel && (
               <Label
@@ -701,17 +699,17 @@ const BarChart = React.forwardRef<HTMLDivElement, BarChartProps>((props, forward
             }}
             {...(layout !== "vertical"
               ? {
-                type: "number",
-                domain: yAxisDomain as AxisDomain,
-                tickFormatter: type === "percent" ? valueToPercent : valueFormatter,
-                allowDecimals: allowDecimals,
-              }
+                  type: "number",
+                  domain: yAxisDomain as AxisDomain,
+                  tickFormatter: type === "percent" ? valueToPercent : valueFormatter,
+                  allowDecimals: allowDecimals,
+                }
               : {
-                dataKey: index,
-                ticks: startEndOnly ? [data[0][index], data[data.length - 1][index]] : undefined,
-                type: "category",
-                interval: "equidistantPreserveStart",
-              })}
+                  dataKey: index,
+                  ticks: startEndOnly ? [data[0][index], data[data.length - 1][index]] : undefined,
+                  type: "category",
+                  interval: "equidistantPreserveStart",
+                })}
           >
             {yAxisLabel && (
               <Label
@@ -738,13 +736,13 @@ const BarChart = React.forwardRef<HTMLDivElement, BarChartProps>((props, forward
             content={({ active, payload, label }) => {
               const cleanPayload: TooltipProps["payload"] = payload
                 ? payload.map((item: any) => ({
-                  category: item.dataKey,
-                  value: item.value,
-                  index: item.payload[index],
-                  color: categoryColors.get(item.dataKey) as AvailableChartColorsKeys,
-                  type: item.type,
-                  payload: item.payload,
-                }))
+                    category: item.dataKey,
+                    value: item.value,
+                    index: item.payload[index],
+                    color: categoryColors.get(item.dataKey) as AvailableChartColorsKeys,
+                    type: item.type,
+                    payload: item.payload,
+                  }))
                 : [];
 
               if (

@@ -54,8 +54,7 @@ const buttonVariants = cva(
         circle: "rounded-full",
       },
       mode: {
-        default:
-          "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        default: "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         icon: "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shrink-0",
         link: "text-primary h-auto p-0 bg-transparent rounded-none hover:bg-transparent data-[state=open]:bg-transparent",
         input: `
@@ -77,40 +76,34 @@ const buttonVariants = cva(
       {
         variant: "ghost",
         mode: "default",
-        className:
-          "[&_svg:not([role=img]):not([class*=text-]):not([class*=opacity-])]:opacity-60",
+        className: "[&_svg:not([role=img]):not([class*=text-]):not([class*=opacity-])]:opacity-60",
       },
       {
         variant: "outline",
         mode: "default",
-        className:
-          "[&_svg:not([role=img]):not([class*=text-]):not([class*=opacity-])]:opacity-60",
+        className: "[&_svg:not([role=img]):not([class*=text-]):not([class*=opacity-])]:opacity-60",
       },
       {
         variant: "dashed",
         mode: "default",
-        className:
-          "[&_svg:not([role=img]):not([class*=text-]):not([class*=opacity-])]:opacity-60",
+        className: "[&_svg:not([role=img]):not([class*=text-]):not([class*=opacity-])]:opacity-60",
       },
       {
         variant: "secondary",
         mode: "default",
-        className:
-          "[&_svg:not([role=img]):not([class*=text-]):not([class*=opacity-])]:opacity-60",
+        className: "[&_svg:not([role=img]):not([class*=text-]):not([class*=opacity-])]:opacity-60",
       },
 
       // Icons opacity for default mode
       {
         variant: "outline",
         mode: "input",
-        className:
-          "[&_svg:not([role=img]):not([class*=text-]):not([class*=opacity-])]:opacity-60",
+        className: "[&_svg:not([role=img]):not([class*=text-]):not([class*=opacity-])]:opacity-60",
       },
       {
         variant: "outline",
         mode: "icon",
-        className:
-          "[&_svg:not([role=img]):not([class*=text-]):not([class*=opacity-])]:opacity-60",
+        className: "[&_svg:not([role=img]):not([class*=text-]):not([class*=opacity-])]:opacity-60",
       },
 
       // Auto height
@@ -418,18 +411,8 @@ interface ButtonArrowProps extends React.SVGProps<SVGSVGElement> {
   icon?: LucideIcon; // Allows passing any Lucide icon
 }
 
-function ButtonArrow({
-  icon: Icon = ChevronDown,
-  className,
-  ...props
-}: ButtonArrowProps) {
-  return (
-    <Icon
-      data-slot="button-arrow"
-      className={cn("ms-auto -me-1", className)}
-      {...props}
-    />
-  );
+function ButtonArrow({ icon: Icon = ChevronDown, className, ...props }: ButtonArrowProps) {
+  return <Icon data-slot="button-arrow" className={cn("ms-auto -me-1", className)} {...props} />;
 }
 
 export { Button, ButtonArrow, buttonVariants };

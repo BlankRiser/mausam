@@ -44,10 +44,7 @@ export const StationIndexPage = () => {
     <div className="w-full h-[calc(100dvh-var(--nav-height))] gap-4">
       <div className="h-full flex flex-col justify-center items-center w-full ">
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4 w-full max-w-md px-2"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full max-w-md px-2">
             <FormField
               control={form.control}
               name="stid"
@@ -68,9 +65,7 @@ export const StationIndexPage = () => {
                     />
                   </FormControl>
                   <div className="flex items-center gap-1">
-                    <FormDescription>
-                      You can also search in the
-                    </FormDescription>
+                    <FormDescription>You can also search in the</FormDescription>
                     <Button asChild mode="link" underline={"solid"}>
                       <Link to="/">home page.</Link>
                     </Button>

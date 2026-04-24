@@ -14,9 +14,7 @@ export const StationSummary = () => {
     return (
       <Drawer
         open={!!currentStation}
-        onOpenChange={(open) =>
-          !open && useCurrentState.getState().setCurrentStation(null)
-        }
+        onOpenChange={(open) => !open && useCurrentState.getState().setCurrentStation(null)}
       >
         <DrawerContent className="p-1">
           <Summary />
@@ -50,11 +48,7 @@ const Summary = () => {
   }
 
   return (
-    <div
-      className={cn([
-        "bg-transparent flex flex-col gap-1 rounded-md h-full overflow-y-auto ",
-      ])}
-    >
+    <div className={cn(["bg-transparent flex flex-col gap-1 rounded-md h-full overflow-y-auto "])}>
       <InfoCard name="Status" value={currentStation.STATUS} />
       <InfoCard name="Station Name" value={currentStation.NAME} />
       <InfoCard

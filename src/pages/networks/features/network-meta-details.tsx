@@ -52,14 +52,9 @@ export const NetworkMetaDetails = () => {
       {CardData.map((card, index) => (
         <Card
           key={card.value.toString() + index.toString()}
-          className={cn([
-            "px-4 py-2 rounded-sm bg-neutral-50 dark:bg-neutral-950",
-            card.className,
-          ])}
+          className={cn(["px-4 py-2 rounded-sm bg-neutral-50 dark:bg-neutral-950", card.className])}
         >
-          <p className="text-xs text-neutral-500 dark:text-neutral-300">
-            {card.label}
-          </p>
+          <p className="text-xs text-neutral-500 dark:text-neutral-300">{card.label}</p>
           <span>{card.value}</span>
         </Card>
       ))}

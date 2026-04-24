@@ -51,14 +51,8 @@ const ScrollArea = React.forwardRef<
       const element = viewportRef.current;
       if (!element) return;
 
-      const {
-        scrollTop,
-        scrollLeft,
-        scrollWidth,
-        clientWidth,
-        scrollHeight,
-        clientHeight,
-      } = element;
+      const { scrollTop, scrollLeft, scrollWidth, clientWidth, scrollHeight, clientHeight } =
+        element;
       setShowMask((prev) => ({
         ...prev,
         top: scrollTop > 0,
@@ -68,7 +62,6 @@ const ScrollArea = React.forwardRef<
       }));
     }, []);
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: need this to run on touch/mouse mode change
     React.useEffect(() => {
       if (typeof window === "undefined") return;
 
@@ -107,22 +100,15 @@ const ScrollArea = React.forwardRef<
             <div
               ref={viewportRef}
               data-slot="scroll-area-viewport"
-              className={cn(
-                "size-full overflow-auto rounded-[inherit]",
-                viewportClassName,
-              )}
-              // biome-ignore lint/a11y/noNoninteractiveTabindex: necessary for scrolling
+              className={cn("size-full overflow-auto rounded-[inherit]", viewportClassName)}
+              // oxlint-disable-next-line jsx_a11y/no-noninteractive-tabindex: necessary for scrolling
               tabIndex={0}
             >
               {children}
             </div>
 
             {maskHeight > 0 && (
-              <ScrollMask
-                showMask={showMask}
-                className={maskClassName}
-                maskHeight={maskHeight}
-              />
+              <ScrollMask showMask={showMask} className={maskClassName} maskHeight={maskHeight} />
             )}
           </div>
         ) : (
@@ -142,11 +128,7 @@ const ScrollArea = React.forwardRef<
             </ScrollAreaPrimitive.Viewport>
 
             {maskHeight > 0 && (
-              <ScrollMask
-                showMask={showMask}
-                className={maskClassName}
-                maskHeight={maskHeight}
-              />
+              <ScrollMask showMask={showMask} className={maskClassName} maskHeight={maskHeight} />
             )}
             <ScrollBar />
             <ScrollAreaPrimitive.Corner />
@@ -174,10 +156,8 @@ const ScrollBar = React.forwardRef<
       data-slot="scroll-area-scrollbar"
       className={cn(
         "hover:bg-neutral-100 data-[state=visible]:fade-in-0 data-[state=hidden]:fade-out-0 data-[state=visible]:animate-in data-[state=hidden]:animate-out flex touch-none p-px transition-[colors] duration-150 select-none dark:hover:bg-neutral-800 dark:dark:hover:bg-neutral-800/50",
-        orientation === "vertical" &&
-        "h-full w-2.5 border-l border-l-transparent",
-        orientation === "horizontal" &&
-        "h-2.5 flex-col border-t border-t-transparent px-1 pr-1.25",
+        orientation === "vertical" && "h-full w-2.5 border-l border-l-transparent",
+        orientation === "horizontal" && "h-2.5 flex-col border-t border-t-transparent px-1 pr-1.25",
         className,
       )}
       {...props}
