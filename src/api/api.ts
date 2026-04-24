@@ -36,12 +36,11 @@ const createAPI = ({ base }: { base: string }) => {
             toast.error(
               `Error: ${data.SUMMARY.RESPONSE_MESSAGE} (Code: ${data.SUMMARY.RESPONSE_CODE})`,
             );
-
-            // window.location.href = "/token";
           }
         },
       ],
     },
+    searchParams: defaultSearchParams,
   };
 
   const fetcher = ky.create(kyOptions);
@@ -49,32 +48,17 @@ const createAPI = ({ base }: { base: string }) => {
   return {
     variables: {
       getAllVariables: () => {
-        return fetcher
-          .get("variables", {
-            searchParams: {
-              ...defaultSearchParams,
-            },
-          })
-          .json<Variables>();
+        return fetcher.get("variables").json<Variables>();
       },
     },
     networks: {
       getAllNetworks: () => {
-        return fetcher
-          .get("networks", {
-            searchParams: {
-              ...defaultSearchParams,
-            },
-          })
-          .json<Networks>();
+        return fetcher.get("networks").json<Networks>();
       },
       getNetwork: ({ searchParams }: { searchParams: SearchParamsType }) => {
         return fetcher
           .get("networks", {
-            searchParams: {
-              ...searchParams,
-              ...defaultSearchParams,
-            },
+            searchParams,
           })
           .json<Networks>();
       },
@@ -83,30 +67,21 @@ const createAPI = ({ base }: { base: string }) => {
       getLatest: ({ searchParams }: { searchParams: SearchParamsType }) => {
         return fetcher
           .get("stations/latest", {
-            searchParams: {
-              ...searchParams,
-              ...defaultSearchParams,
-            },
+            searchParams,
           })
           .json<LatestStationResponse>();
       },
       getMetadata: ({ searchParams }: { searchParams: SearchParamsType }) => {
         return fetcher
           .get("stations/metadata", {
-            searchParams: {
-              ...searchParams,
-              ...defaultSearchParams,
-            },
+            searchParams,
           })
           .json<StationMetadata>();
       },
       getTimeSeries: ({ searchParams }: { searchParams: SearchParamsType }) => {
         return fetcher
           .get("stations/timeseries", {
-            searchParams: {
-              ...searchParams,
-              ...defaultSearchParams,
-            },
+            searchParams,
           })
           .json<LatestStationResponse>();
       },

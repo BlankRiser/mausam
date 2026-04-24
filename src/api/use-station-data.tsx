@@ -26,7 +26,7 @@ export const useStationMetadata = () => {
 
   const reactQuery = useQuery({
     enabled: !!map,
-    queryKey: ["latest", map, currentVariable, controller.signal],
+    queryKey: ["latest", map, currentVariable],
     placeholderData: (data) => data,
     queryFn: async () => {
       const boundingBox = getBoundingBox();
@@ -35,8 +35,6 @@ export const useStationMetadata = () => {
       const height = map?.getContainer().clientHeight;
       const width = map?.getContainer().clientWidth;
       const zoom = map?.getZoom();
-
-      console.log("queries");
 
       return await query
         .get(`${API.BaseUrl}/stations/latest`, {

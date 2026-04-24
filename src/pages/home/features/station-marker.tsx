@@ -1,14 +1,13 @@
+import { Link } from "@tanstack/react-router";
 import { Marker, Popup } from "@vis.gl/react-maplibre";
+import { MoveUpRight } from "lucide-react";
 import { memo, useMemo } from "react";
+import { Button } from "@/components/ui/button";
 import { getFormattedTimezone } from "@/lib/date-utils";
 import { getVariableData } from "@/lib/synoptic-utils";
 import { cn } from "@/lib/utils";
 import { useCurrentState } from "@/store/station.store";
 import { Station } from "@/types/station";
-import { latest } from "maplibre-gl";
-import { Button, ButtonArrow } from "@/components/ui/button";
-import { MoveUpRight } from "lucide-react";
-import { Link } from "@tanstack/react-router";
 
 export const StationMarker: React.FC<{
   stations: Array<Station>;
@@ -56,7 +55,7 @@ const StationMarkerItem = memo(
     const markerStyles = useMemo(
       () =>
         cn([
-          "w-6 h-6 rounded-sm grid place-items-center will-change-auto",
+          "min-w-6 h-6 rounded-sm grid place-items-center will-change-auto",
           "bg-blue-50/90 dark:bg-blue-900/20 border border-blue-300 dark:border-blue-700/50 hover:bg-blue-100 transition-colors",
           isSelected
             ? "relative outline-2 bg-blue-200 dark:bg-blue-800 outline-blue-500 dark:outline-blue-400 after:absolute after:ring-3 after:content-[''] after:ring-blue-500 after:animate-ping after:w-5 after:h-5 after:grid after:place-items-center after:rounded-full"
@@ -113,12 +112,9 @@ const MarkerTooltipContents: React.FC<{
   );
 
   return (
-    <div
-      className="relative"
-      // className="p-0.5 text-black bg-neutral-200/70 dark:bg-neutral-900/70 backdrop-blur-sm shadow-md dark:text-white rounded-md"
-    >
+    <div className="relative">
       <div className="absolute bottom-[45%] right-[calc(95%)]">
-        <span className="text-lg font-medium text-primary writing-vertical-lr left-0 ml-1 [writing-mode:vertical-rl] rotate-180 px-2 backdrop-blur-3xl bg-blue-500/15">
+        <span className="text-lg font-medium text-blue-700 dark:text-blue-400 writing-vertical-lr left-0 ml-1 [writing-mode:vertical-rl] rotate-180 px-2 backdrop-blur-3xl ">
           {station.STID}
         </span>
       </div>
@@ -144,7 +140,7 @@ const MarkerTooltipContents: React.FC<{
               const formattedDate = getFormattedTimezone({
                 dateString: variable.dateTime,
                 timezone: station.TIMEZONE,
-                formatString: "yyyy-MM-dd HH:mm (z)",
+                formatString: "HH:mm MMM dd yyyy (z)",
               });
 
               const formattedValue = variable.value
@@ -156,10 +152,12 @@ const MarkerTooltipContents: React.FC<{
                   key={variable.sensor}
                   className="h-full flex flex-col gap-0.5 justify-center text-primary"
                 >
-                  <span className={"text-base font-medium "}>
+                  <span className={"text-lg font-medium"}>
                     {formattedValue}
                   </span>
-                  <span className="text-muted-foreground">{formattedDate}</span>
+                  <span className="text-muted-foreground text-xs">
+                    {formattedDate}
+                  </span>
                 </div>
               );
             })}
@@ -182,7 +180,7 @@ const MarkerTooltipContents: React.FC<{
         </div>
         <div id="bottom-half" className="absolute top-[50%] inset-0">
           <div className="size-full text-accent-foreground px-1.5 py-3">
-            <p className="truncate text-sm font-medium">{station.NAME}</p>
+            <p className="truncate text-base font-medium">{station.NAME}</p>
             <p className="text-xs">{station.SHORTNAME ?? ""}</p>
           </div>
         </div>
@@ -198,34 +196,16 @@ const getSensorVariableDetails = (
   if (Object.keys(station.SENSOR_VARIABLES).length === 0) return null;
 
   const sensorVariable = station.SENSOR_VARIABLES[selectedVariable];
-  const details = {} as SensorVariableDetails;
+  const details = {};
 
   Object.entries(sensorVariable ?? {}).map(([key, _value]) => {
     if (station.OBSERVATIONS?.[key]) {
-      details["latest"] = station.OBSERVATIONS[key] as Latest;
+      details["latest"] = station.OBSERVATIONS[key];
     }
-    // @ts-expect-error - this is a hack to get around the fact that the API is not typed
+
     details["minMax"] = station.MINMAX?.[key];
   });
 
   return details;
 };
 
-interface SensorVariableDetails {
-  latest: Latest;
-  minMax?: MinMax;
-}
-
-type MinMax = {
-  dates: Array<string>;
-  value_min_local: Array<number>;
-  value_max_local: Array<number>;
-  datetime_min_local: Array<string>;
-  datetime_max_local: Array<string>;
-  datetime_timezone: string;
-};
-
-interface Latest {
-  value: number;
-  date_time: string;
-}

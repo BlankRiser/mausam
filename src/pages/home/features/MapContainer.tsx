@@ -1,16 +1,16 @@
-import { useMediaQuery } from "@uidotdev/usehooks";
-import { NavigationControl } from "@vis.gl/react-maplibre";
 import { useStationMetadata } from "@/api/use-station-data";
 import { GlobalErrorBoundary } from "@/components/common/GlobalErrorBoundary";
 import { MapWrapper } from "@/components/common/map-wrapper";
 import { Loader } from "@/components/ui/loader";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useMediaQuery } from "@uidotdev/usehooks";
+import { NavigationControl } from "@vis.gl/react-maplibre";
 import { StationMarker } from "./station-marker";
 import { VariableSelector } from "./variable-selector";
-import { Skeleton } from "@/components/ui/skeleton";
 
 export const MapContainer = () => {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
-  const { data, refetch, isFetching, dataUpdatedAt } = useStationMetadata();
+  const { data, refetch, isFetching } = useStationMetadata();
 
   return (
     <GlobalErrorBoundary>

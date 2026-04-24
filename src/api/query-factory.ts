@@ -3,7 +3,7 @@ import { api } from "./api";
 
 export const variablesQueryOptions = () => {
   return queryOptions({
-    queryKey: ["variables"],
+    queryKey: ["persist", "variables"],
     queryFn: async () => {
       return await api.variables.getAllVariables();
     },
@@ -13,7 +13,7 @@ export const variablesQueryOptions = () => {
 
 export const networksQueryOptions = () => {
   return queryOptions({
-    queryKey: ["networks"],
+    queryKey: ["persist", "networks"],
     queryFn: async () => {
       return await api.networks.getAllNetworks();
     },
@@ -35,11 +35,7 @@ export const networkQueryOptions = ({ networkId }: { networkId: string }) => {
   });
 };
 
-export const networksMetadataQueryOptions = ({
-  network,
-}: {
-  network: string;
-}) => {
+export const networksMetadataQueryOptions = ({ network }: { network: string }) => {
   return queryOptions({
     queryKey: ["networks", "metadata", network],
     queryFn: async () => {
@@ -61,7 +57,7 @@ export const stationMetadataQueryOptions = ({ stid }: { stid: string | string[] 
     queryFn: async () => {
       return await api.stations.getMetadata({
         searchParams: {
-          stid: typeof stid === 'string' ? stid : stid.join(","),
+          stid: typeof stid === "string" ? stid : stid.join(","),
           complete: 1,
           sensorvars: 1,
           stationhistory: 1,

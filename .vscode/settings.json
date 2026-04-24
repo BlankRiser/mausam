@@ -8,7 +8,6 @@
   },
 
   // TailwindCSS
-
   "tailwindCSS.classFunctions": ["cva", "cx", "cn"],
 
   //Visuals
@@ -19,12 +18,14 @@
   "git.autofetch": true,
   "git.enableSmartCommit": true,
   "git.untrackedChanges": "separate",
+  "git.openRepositoryInParentFolders": "never",
+
 
   // Editor
   "window.nativeTabs": true, // mac only
   "workbench.editor.highlightModifiedTabs": true,
+
   "editor.stickyScroll.enabled": true,
-  // "editor.fontFamily": "'Fira Code'",
   "editor.fontFamily": "DankMono-Regular",
   "terminal.integrated.fontFamily": "'Fira Code'",
   "editor.fontLigatures": true,
@@ -77,19 +78,6 @@
   "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
   "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
-  // "typescript.inlayHints.variableTypes.enabled": true,
-
-  "workbench.productIconTheme": "icons-carbon",
-
+  "typescript.inlayHints.variableTypes.enabled": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "github.copilot.enable": {
-    "*": true,
-    "plaintext": false,
-    "markdown": true,
-    "scminput": false,
-    "yaml": false,
-    "typescriptreact": true,
-    "typescript": true
-  },
-  "git.openRepositoryInParentFolders": "never"
 }
