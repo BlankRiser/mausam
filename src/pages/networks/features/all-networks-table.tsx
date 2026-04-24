@@ -112,10 +112,11 @@ export const AllNetworksTable = () => {
                       }
                     >
                       {header.isPlaceholder ? null : header.column.getCanSort() ? (
+                        // biome-ignore lint/a11y/noStaticElementInteractions: need this to capture keyboard events for sorting
                         <div
                           className={cn(
                             header.column.getCanSort() &&
-                              "flex h-full cursor-pointer items-center justify-between gap-2 select-none",
+                            "flex h-full cursor-pointer items-center justify-between gap-2 select-none",
                           )}
                           onClick={header.column.getToggleSortingHandler()}
                           onKeyDown={(e) => {
@@ -150,8 +151,8 @@ export const AllNetworksTable = () => {
                               />
                             ),
                           }[header.column.getIsSorted() as string] ?? (
-                            <span className="size-4" aria-hidden="true" />
-                          )}
+                              <span className="size-4" aria-hidden="true" />
+                            )}
                         </div>
                       ) : (
                         flexRender(
@@ -205,6 +206,8 @@ function Filter({ column }: { column: Column<any, unknown> }) {
   const { filterVariant } = column.columnDef.meta ?? {};
   const columnHeader =
     typeof column.columnDef.header === "string" ? column.columnDef.header : "";
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: column.getFacetedUniqueValues() is the right dependency here
   const sortedUniqueValues = useMemo(() => {
     if (filterVariant === "range") return [];
 

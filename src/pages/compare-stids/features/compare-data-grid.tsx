@@ -48,6 +48,7 @@ import { compareStationsRoute } from "@/router/routes";
 
 declare module "@tanstack/react-table" {
   //allows us to define custom properties for our columns
+  // biome-ignore lint/correctness/noUnusedVariables: This is for allowing custom properties to be added to columns
   interface ColumnMeta<TData extends RowData, TValue> {
     filterVariant?: "text" | "range" | "select";
   }
@@ -371,8 +372,8 @@ export function CompareDataGrid() {
                       header.column.getIsSorted() === "asc"
                         ? "ascending"
                         : header.column.getIsSorted() === "desc"
-                        ? "descending"
-                        : "none"
+                          ? "descending"
+                          : "none"
                     }
                   >
                     {header.isPlaceholder ? null : header.column.getCanSort() ? (
@@ -380,7 +381,7 @@ export function CompareDataGrid() {
                         role="button"
                         className={cn(
                           header.column.getCanSort() &&
-                            "flex h-full cursor-pointer items-center justify-between gap-2 select-none"
+                          "flex h-full cursor-pointer items-center justify-between gap-2 select-none"
                         )}
                         onClick={header.column.getToggleSortingHandler()}
                         onKeyDown={(e) => {
@@ -415,8 +416,8 @@ export function CompareDataGrid() {
                             />
                           ),
                         }[header.column.getIsSorted() as string] ?? (
-                          <span className="size-4" aria-hidden="true" />
-                        )}
+                            <span className="size-4" aria-hidden="true" />
+                          )}
                       </div>
                     ) : (
                       flexRender(
@@ -486,6 +487,7 @@ function Filter({ column }: { column: Column<any, unknown> }) {
   const { filterVariant } = column.columnDef.meta ?? {};
   const columnHeader =
     typeof column.columnDef.header === "string" ? column.columnDef.header : "";
+  // biome-ignore lint/correctness/useExhaustiveDependencies: column.getFacetedUniqueValues() is a better dependency than column
   const sortedUniqueValues = useMemo(() => {
     if (filterVariant === "range") return [];
 

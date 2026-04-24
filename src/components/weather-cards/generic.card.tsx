@@ -22,8 +22,8 @@ export function GenericCard({ variable, data, ...rest }: GenericCardProps) {
       const variableValue =
         typeof data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value === "object"
           ? (Object.values(
-              data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value ?? {},
-            )[0] as string | number)
+            data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value ?? {},
+          )[0] as string | number)
           : data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value;
 
       values.push({
@@ -36,7 +36,7 @@ export function GenericCard({ variable, data, ...rest }: GenericCardProps) {
     });
 
     return values;
-  }, [data]);
+  }, [data, variable]);
 
   if (!variableData[0]?.value) {
     return null;

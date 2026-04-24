@@ -40,7 +40,7 @@ export const LatestStnDataTable = ({
         variable: variable,
       },
     });
-  }, [navigate, rowSelection, stationId]);
+  }, [navigate, rowSelection, stationId, selectedVariable]);
 
   const table = useReactTable({
     state: {
@@ -227,8 +227,7 @@ const RenderVariableLabel = ({ variable }: { variable: string }) => {
   const variableLabels = useGlobalDataStore((s) => s.variableLabels);
 
   const variableLabel = variableLabels
-    ? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      (variableLabels?.variable?.long_name ?? variable)
+    ? (variableLabels?.variable?.long_name ?? variable)
     : variable;
 
   return <span className="px-2">{variableLabel}</span>;

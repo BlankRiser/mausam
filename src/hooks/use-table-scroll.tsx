@@ -121,6 +121,7 @@ export const useTableScroll = (options: UseTableScrollOptions = {}) => {
     }
   }, [useColumnWidths, startFromColumn, getColumnPositions, syncColumnIndex]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: some of the dependencies are not needed
   const scrollLeft = useCallback(
     (smooth = true) => {
       const container = containerRef.current;
@@ -203,6 +204,7 @@ export const useTableScroll = (options: UseTableScrollOptions = {}) => {
     [scrollAmount, useColumnWidths, startFromColumn, getColumnPositions],
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: some of the dependencies are not needed
   const scrollRight = useCallback(
     (smooth = true) => {
       const container = containerRef.current;
