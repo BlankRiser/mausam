@@ -1,7 +1,7 @@
-import createGlobe, { COBEOptions } from "cobe";
-import { useMotionValue, useSpring } from "motion/react";
-import { useEffect, useRef } from "react";
-import { cn } from "@/lib/utils";
+import createGlobe, { COBEOptions } from 'cobe';
+import { useMotionValue, useSpring } from 'motion/react';
+import { useEffect, useRef } from 'react';
+import { cn } from '@/lib/utils';
 
 const MOVEMENT_DAMPING = 1400;
 
@@ -33,13 +33,7 @@ const GLOBE_CONFIG: COBEOptions = {
   ],
 };
 
-export function Globe({
-  className,
-  config = GLOBE_CONFIG,
-}: {
-  className?: string;
-  config?: COBEOptions;
-}) {
+export function Globe({ className, config = GLOBE_CONFIG }: { className?: string; config?: COBEOptions }) {
   let phi = 0;
   let width = 0;
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -56,7 +50,7 @@ export function Globe({
   const updatePointerInteraction = (value: number | null) => {
     pointerInteracting.current = value;
     if (canvasRef.current) {
-      canvasRef.current.style.cursor = value !== null ? "grabbing" : "grab";
+      canvasRef.current.style.cursor = value !== null ? 'grabbing' : 'grab';
     }
   };
 
@@ -75,7 +69,7 @@ export function Globe({
       }
     };
 
-    window.addEventListener("resize", onResize);
+    window.addEventListener('resize', onResize);
     onResize();
 
     const globe = createGlobe(canvasRef.current!, {
@@ -90,20 +84,18 @@ export function Globe({
       },
     });
 
-    setTimeout(() => (canvasRef.current!.style.opacity = "1"), 0);
+    setTimeout(() => (canvasRef.current!.style.opacity = '1'), 0);
     return () => {
       globe.destroy();
-      window.removeEventListener("resize", onResize);
+      window.removeEventListener('resize', onResize);
     };
     // oxlint-disable-next-line eslint-plugin-react-hooks/exhaustive-deps: phi and width always remain the same
   }, [rs, config]);
 
   return (
-    <div className={cn("aspect-[1/1] w-full max-w-sm", className)}>
+    <div className={cn('aspect-[1/1] w-full max-w-sm', className)}>
       <canvas
-        className={cn(
-          "size-full opacity-0 transition-opacity duration-500 [contain:layout_paint_size]",
-        )}
+        className={cn('size-full opacity-0 transition-opacity duration-500 [contain:layout_paint_size]')}
         ref={canvasRef}
         onPointerDown={(e) => {
           pointerInteracting.current = e.clientX;

@@ -1,6 +1,6 @@
-import React from "react";
-import { ErrorBoundary, FallbackProps } from "react-error-boundary";
-import { Button } from "../ui/button";
+import React from 'react';
+import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
+import { Button } from '../ui/button';
 
 type Props = {
   children: React.ReactNode;
@@ -19,14 +19,11 @@ export const GlobalErrorBoundary = ({ children }: Props) => {
 };
 
 type GlobalErrorBoundaryFallbackProps = {
-  error: FallbackProps["error"];
-  reset: FallbackProps["resetErrorBoundary"];
+  error: FallbackProps['error'];
+  reset: FallbackProps['resetErrorBoundary'];
 };
 
-const GlobalErrorBoundaryFallback: React.FC<GlobalErrorBoundaryFallbackProps> = ({
-  error,
-  reset,
-}) => {
+const GlobalErrorBoundaryFallback: React.FC<GlobalErrorBoundaryFallbackProps> = ({ error, reset }) => {
   return (
     <section>
       <h3>Seomthing went wrong!</h3>

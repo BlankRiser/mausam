@@ -1,5 +1,5 @@
-import { TZDate } from "@date-fns/tz";
-import { format } from "date-fns";
+import { TZDate } from '@date-fns/tz';
+import { format } from 'date-fns';
 
 type GetFormattedTimezone = {
   dateString: string;
@@ -11,10 +11,10 @@ type GetFormattedTimezone = {
 export const getFormattedTimezone = ({
   dateString,
   timezone,
-  formatString = "yyyy-MM-dd HH:mm:ssxxx",
+  formatString = 'yyyy-MM-dd HH:mm:ssxxx',
 }: GetFormattedTimezone) => {
   if (dateString.length === 0) {
-    return "";
+    return '';
   }
 
   const tzDate = TZDate.tz(timezone, dateString);

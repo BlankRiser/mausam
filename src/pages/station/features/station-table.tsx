@@ -1,29 +1,29 @@
-import { useNavigate } from "@tanstack/react-router";
-import { ColumnDef, getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import { format } from "date-fns";
-import { useEffect, useMemo, useState } from "react";
-import { DataTable } from "@/components/ui/data-table";
-import { stationRoute } from "@/router/routes";
-import { useGlobalDataStore } from "@/store/global-data.store";
-import { LatestStationResponse } from "@/types/station";
+import { useNavigate } from '@tanstack/react-router';
+import { ColumnDef, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { format } from 'date-fns';
+import { useEffect, useMemo, useState } from 'react';
+import { DataTable } from '@/components/ui/data-table';
+import { stationRoute } from '@/router/routes';
+import { useGlobalDataStore } from '@/store/global-data.store';
+import { LatestStationResponse } from '@/types/station';
 
 export const LatestStnDataTable = ({ data }: { data: LatestStationResponse }) => {
   const { stationId } = stationRoute.useParams();
-  const navigate = useNavigate({ from: "/station/$stationId" });
+  const navigate = useNavigate({ from: '/station/$stationId' });
   const { variable: selectedVariable } = stationRoute.useSearch();
 
   const [rowSelection, setRowSelection] = useState({
-    [selectedVariable ?? ""]: true,
+    [selectedVariable ?? '']: true,
   });
 
   const columns = useMemo(() => getLatestStnDataTableColumns(), []);
   const rows = useMemo(() => transformData(data), [data]);
 
   useEffect(() => {
-    const variable = Object.keys(rowSelection)[0]?.split("|")[0] ?? selectedVariable;
+    const variable = Object.keys(rowSelection)[0]?.split('|')[0] ?? selectedVariable;
 
     void navigate({
-      to: "/station/$stationId",
+      to: '/station/$stationId',
       params: {
         stationId: stationId,
       },
@@ -48,10 +48,7 @@ export const LatestStnDataTable = ({ data }: { data: LatestStationResponse }) =>
     columns,
   });
 
-  if (
-    data?.STATION?.length === 0 ||
-    Object.keys(data.STATION?.[0].SENSOR_VARIABLES ?? {}).length === 0
-  ) {
+  if (data?.STATION?.length === 0 || Object.keys(data.STATION?.[0].SENSOR_VARIABLES ?? {}).length === 0) {
     return <LatestStnDataTableFallback />;
   }
 
@@ -76,76 +73,76 @@ interface TransformedData {
 const getLatestStnDataTableColumns = (): ColumnDef<TransformedData>[] => {
   return [
     {
-      id: "variable",
+      id: 'variable',
       header: () => {
-        return <p className="px-2">Variable</p>;
+        return <p className='px-2'>Variable</p>;
       },
       cell: ({ row }) => {
         return <RenderVariableLabel variable={row.original.variable} />;
       },
     },
     {
-      id: "identifier",
-      header: "Synoptic Identifier",
+      id: 'identifier',
+      header: 'Synoptic Identifier',
       cell: ({ row }) => {
         return row.original.variable;
       },
     },
     {
-      id: "position",
-      header: "Sensor Position",
+      id: 'position',
+      header: 'Sensor Position',
       cell: ({ row }) => {
         const { value, unit } = row.original.position;
 
         if (!value) {
-          return <span className="text-neutral-400 dark:text-neutral-600">-</span>;
+          return <span className='text-neutral-400 dark:text-neutral-600'>-</span>;
         }
 
         return `${value} ${unit}`;
       },
     },
     {
-      id: "sensor-date-time",
-      header: "Date Time",
+      id: 'sensor-date-time',
+      header: 'Date Time',
       cell: ({ row }) => {
-        if (row.original.observation.dateTime === "N/A") {
-          return <span className="text-right text-neutral-400 dark:text-neutral-600">-</span>;
+        if (row.original.observation.dateTime === 'N/A') {
+          return <span className='text-right text-neutral-400 dark:text-neutral-600'>-</span>;
         }
 
         return (
-          <span className="text-nowrap">
-            {format(new Date(row.original.observation.dateTime), "MMM d, yyyy h:mm a")}
+          <span className='text-nowrap'>
+            {format(new Date(row.original.observation.dateTime), 'MMM d, yyyy h:mm a')}
           </span>
         );
       },
     },
     {
-      id: "sensor-value",
+      id: 'sensor-value',
       header: () => {
-        return <p className="text-right px-2">Current Value</p>;
+        return <p className='px-2 text-right'>Current Value</p>;
       },
       cell: ({ row }) => {
         const { value, unit } = row.original.observation;
 
         if (!value) {
-          return <p className="text-right text-neutral-400 dark:text-neutral-600 px-2">-</p>;
+          return <p className='px-2 text-right text-neutral-400 dark:text-neutral-600'>-</p>;
         }
 
-        if (typeof value === "object") {
+        if (typeof value === 'object') {
           // If this value is an object, it probably is cloud layer with `sky_condition` and `height_agl` keys
           return (
-            <p className="text-right text-nowrap px-2">
-              {value["sky_condition"]} at {value["height_agl"]}{" "}
-              <span className="text-neutral-400 dark:text-neutral-600">{unit} </span>
+            <p className='px-2 text-right text-nowrap'>
+              {value['sky_condition']} at {value['height_agl']}{' '}
+              <span className='text-neutral-400 dark:text-neutral-600'>{unit} </span>
             </p>
           );
         }
 
         return (
-          <p className="text-right text-nowrap px-2">
-            {value}{" "}
-            <span className="text-neutral-400 dark:text-neutral-600">
-              {["text", "code", undefined].includes(unit) ? "" : unit}
+          <p className='px-2 text-right text-nowrap'>
+            {value}{' '}
+            <span className='text-neutral-400 dark:text-neutral-600'>
+              {['text', 'code', undefined].includes(unit) ? '' : unit}
             </span>
           </p>
         );
@@ -166,19 +163,19 @@ const transformData = (data: LatestStationResponse) => {
   Object.entries(sensorVariables).forEach(([key, value]) => {
     const hasMultipleSensors = Object.keys(value).length > 1;
     Object.entries(value).forEach(([sensorKey, sensorValue]) => {
-      if (station["OBSERVATIONS"]?.[sensorKey]) {
+      if (station['OBSERVATIONS']?.[sensorKey]) {
         sensorRows.push({
           variable: key,
-          sensorKey: key + "|" + sensorKey,
+          sensorKey: key + '|' + sensorKey,
           hasMultipleSensors,
           position: {
-            value: sensorValue["position"]!,
-            unit: station["UNITS"]["position"],
+            value: sensorValue['position']!,
+            unit: station['UNITS']['position'],
           },
 
           observation: {
-            dateTime: station["OBSERVATIONS"][sensorKey]["date_time"] ?? "N/A",
-            value: station["OBSERVATIONS"][sensorKey]["value"] ?? -Infinity,
+            dateTime: station['OBSERVATIONS'][sensorKey]['date_time'] ?? 'N/A',
+            value: station['OBSERVATIONS'][sensorKey]['value'] ?? -Infinity,
             unit: data.UNITS[key],
           },
         });
@@ -191,8 +188,8 @@ const transformData = (data: LatestStationResponse) => {
 
 const LatestStnDataTableFallback = () => {
   return (
-    <div className="aspect-video rounded-md grid place-items-center border border-neutral-200 dark:border-neutral-800">
-      <span className="">
+    <div className='grid aspect-video place-items-center rounded-md border border-neutral-200 dark:border-neutral-800'>
+      <span className=''>
         There seems to be an issue with the data. <br /> Please try again later.
       </span>
     </div>
@@ -202,9 +199,7 @@ const LatestStnDataTableFallback = () => {
 const RenderVariableLabel = ({ variable }: { variable: string }) => {
   const variableLabels = useGlobalDataStore((s) => s.variableLabels);
 
-  const variableLabel = variableLabels
-    ? (variableLabels?.variable?.long_name ?? variable)
-    : variable;
+  const variableLabel = variableLabels ? (variableLabels?.variable?.long_name ?? variable) : variable;
 
-  return <span className="px-2">{variableLabel}</span>;
+  return <span className='px-2'>{variableLabel}</span>;
 };

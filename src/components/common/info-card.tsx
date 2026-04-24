@@ -1,7 +1,7 @@
-import { Link, LinkProps } from "@tanstack/react-router";
-import { MoveUpRight } from "lucide-react";
-import { motion } from "motion/react";
-import { Button } from "../ui/button";
+import { Link, LinkProps } from '@tanstack/react-router';
+import { MoveUpRight } from 'lucide-react';
+import { motion } from 'motion/react';
+import { Button } from '../ui/button';
 
 export const InfoCard: React.FC<{
   name: string;
@@ -16,9 +16,9 @@ export const InfoCard: React.FC<{
   const animationKey = `${value}-${JSON.stringify(linkValue)}`;
 
   return (
-    <div className="flex justify-between items-center px-4 py-2 rounded-sm bg-neutral-100 dark:bg-neutral-800">
-      <div className="flex flex-col">
-        <p className="text-xs text-neutral-500 dark:text-neutral-300">{name}</p>
+    <div className='flex items-center justify-between rounded-sm bg-neutral-100 px-4 py-2 dark:bg-neutral-800'>
+      <div className='flex flex-col'>
+        <p className='text-xs text-neutral-500 dark:text-neutral-300'>{name}</p>
         <motion.span
           key={animationKey}
           initial={{ opacity: 0, y: 5 }}
@@ -29,16 +29,16 @@ export const InfoCard: React.FC<{
         </motion.span>
       </div>
       {!!linkValue && (
-        <Button variant={"ghost"} asChild>
+        <Button variant={'ghost'} asChild>
           <Link {...linkValue}>
-            <MoveUpRight className="w-4 h-4 text-blue-500" />
+            <MoveUpRight className='h-4 w-4 text-blue-500' />
           </Link>
         </Button>
       )}
       {!!href && (
-        <Button variant={"ghost"} asChild>
-          <a href={href} target="_blank" rel="noopener noreferrer">
-            <MoveUpRight className="w-4 h-4 text-blue-500" />
+        <Button variant={'ghost'} asChild>
+          <a href={href} target='_blank' rel='noopener noreferrer'>
+            <MoveUpRight className='h-4 w-4 text-blue-500' />
           </a>
         </Button>
       )}

@@ -1,6 +1,6 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-import { useKeysStore } from "@/store/env-keys.store";
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+import { useKeysStore } from '@/store/env-keys.store';
 
 export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
@@ -19,7 +19,7 @@ export const urlSerializer = ({ url, params }: UrlSerializerParams) => {
 
     httpUrl.searchParams.append(key, value.toString());
   });
-  httpUrl.searchParams.append("token", useKeysStore.getState().synopticToken);
+  httpUrl.searchParams.append('token', useKeysStore.getState().synopticToken);
   return httpUrl.toString();
 };
 
@@ -33,13 +33,13 @@ export const fetcher = async <T>(url: string) => {
 
 export const formatLargeNumber = (value: number): string => {
   if (Math.abs(value) >= 1000000000) {
-    return (value / 1000000000).toFixed(1).replace(/\.0$/, "") + "B";
+    return (value / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
   }
   if (Math.abs(value) >= 1000000) {
-    return (value / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
+    return (value / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
   }
   if (Math.abs(value) >= 1000) {
-    return (value / 1000).toFixed(1).replace(/\.0$/, "") + "k";
+    return (value / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
   }
   return value.toString();
 };

@@ -1,15 +1,15 @@
-import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
-import { RouterProvider } from "@tanstack/react-router";
-import { MapProvider } from "@vis.gl/react-maplibre";
-import { Toaster } from "sonner";
-import { ThemeProvider } from "@/hooks/use-theme";
-import { localStoragePersistor, queryClient } from "@/lib/query-client";
-import { TooltipProvider } from "./components/ui/tooltip";
-import { router } from "./router/router";
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
+import { RouterProvider } from '@tanstack/react-router';
+import { MapProvider } from '@vis.gl/react-maplibre';
+import { Toaster } from 'sonner';
+import { TooltipProvider } from './components/ui/tooltip';
+import { router } from './router/router';
+import { ThemeProvider } from '@/hooks/use-theme';
+import { localStoragePersistor, queryClient } from '@/lib/query-client';
 
 const App = () => {
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
       <MapProvider>
         <TooltipProvider>
           <PersistQueryClientProvider
@@ -18,7 +18,7 @@ const App = () => {
               persister: localStoragePersistor,
               dehydrateOptions: {
                 shouldDehydrateQuery: (query) => {
-                  if (query.queryKey[0] === "persist") {
+                  if (query.queryKey[0] === 'persist') {
                     return true;
                   }
                   return false;

@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { SensorVariables, Station } from "@/types/station";
+import { create } from 'zustand';
+import { SensorVariables, Station } from '@/types/station';
 
 type State = {
   fetchedStations: Array<Station>;
@@ -16,7 +16,7 @@ type Actions = {
 
 const initialState: State = {
   currentStation: null,
-  currentVariable: "air_temp",
+  currentVariable: 'air_temp',
   fetchedStations: [],
 };
 

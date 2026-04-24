@@ -1,4 +1,4 @@
-import { SUMMARY } from "./common";
+import { SUMMARY } from './common';
 
 export interface Networks {
   MNET: MNETLabelItems[];

@@ -1,16 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
-import { format } from "date-fns";
-import { Info } from "lucide-react";
-import { useMemo } from "react";
-import { variableTimeseriesQueryOptions } from "@/api/query-factory";
-import { LineChart, TooltipProps } from "@/components/charts/line-chart";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { useGlobalDataStore } from "@/store/global-data.store";
-import { LatestStationResponse, SensorVariables } from "@/types/station";
+import { useQuery } from '@tanstack/react-query';
+import { format } from 'date-fns';
+import { Info } from 'lucide-react';
+import { useMemo } from 'react';
+import { variableTimeseriesQueryOptions } from '@/api/query-factory';
+import { LineChart, TooltipProps } from '@/components/charts/line-chart';
+import { Card, CardHeader, CardTitle } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { useGlobalDataStore } from '@/store/global-data.store';
+import { LatestStationResponse, SensorVariables } from '@/types/station';
 
-const numberFormatter = new Intl.NumberFormat("en-US", {
+const numberFormatter = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 2,
 });
 
@@ -26,7 +26,7 @@ export const VariableTimeseriesChart = ({
   const formattedVariable = variableLabels?.[variable]?.long_name ?? variable;
 
   const { data, isFetched, isPending } = useQuery(
-    variableTimeseriesQueryOptions({ stid: stationId, vars: [variable] }),
+    variableTimeseriesQueryOptions({ stid: stationId, vars: [variable] })
   );
 
   const { chartData } = useMemo(() => getChartData({ data: data!, variable }), [data, variable]);
@@ -35,17 +35,16 @@ export const VariableTimeseriesChart = ({
     <Card>
       <CardHeader>
         <CardTitle>
-          <div className="flex gap-2 justify-between items-center">
-            <p className="text-nowrap">
-              {formattedVariable}{" "}
-              {isFetched && data?.UNITS?.[variable] ? `(${data.UNITS[variable]})` : ""}{" "}
-              <i className="opacity-60 font-normal">for last 24 hours</i>
+          <div className='flex items-center justify-between gap-2'>
+            <p className='text-nowrap'>
+              {formattedVariable} {isFetched && data?.UNITS?.[variable] ? `(${data.UNITS[variable]})` : ''}{' '}
+              <i className='font-normal opacity-60'>for last 24 hours</i>
             </p>
             <Tooltip delayDuration={0}>
               <TooltipTrigger>
-                <Info className="w-4 h-4 text-gray-500" />
+                <Info className='h-4 w-4 text-gray-500' />
               </TooltipTrigger>
-              <TooltipContent className="text-sm font-normal max-w-sm">
+              <TooltipContent className='max-w-sm text-sm font-normal'>
                 Shows the timeseries data for the last 24 hours for the selected variable.
               </TooltipContent>
             </Tooltip>
@@ -53,18 +52,18 @@ export const VariableTimeseriesChart = ({
         </CardTitle>
       </CardHeader>
       {isPending ? (
-        <Skeleton className="h-80 w-full" />
+        <Skeleton className='h-80 w-full' />
       ) : !isPending && isFetched && data?.STATION?.length === 0 ? (
-        <div className="h-full min-h-80 grid place-items-center">
-          <p className="text-center">No data available</p>
+        <div className='grid h-full min-h-80 place-items-center'>
+          <p className='text-center'>No data available</p>
         </div>
       ) : (
         <>
           {isFetched && (
             <LineChart
               data={chartData}
-              index="dateTime"
-              categories={["value"]}
+              index='dateTime'
+              categories={['value']}
               customTooltip={CustomTooltip}
               valueFormatter={(value) => {
                 return numberFormatter.format(value);
@@ -98,19 +97,19 @@ const CustomTooltip = ({ payload, active, label }: TooltipProps) => {
 
   return (
     <>
-      <div className="w-60 rounded-md border border-gray-500/10 bg-blue-500 px-2 py-1.5 text-sm shadow-md dark:border-gray-400/20 ">
-        <p className="flex items-center justify-between">
-          <span className="text-gray-50 dark:text-gray-50">Date</span>
-          <span className="font-medium text-gray-50 dark:text-gray-50">{label}</span>
+      <div className='w-60 rounded-md border border-gray-500/10 bg-blue-500 px-2 py-1.5 text-sm shadow-md dark:border-gray-400/20 '>
+        <p className='flex items-center justify-between'>
+          <span className='text-gray-50 dark:text-gray-50'>Date</span>
+          <span className='font-medium text-gray-50 dark:text-gray-50'>{label}</span>
         </p>
       </div>
-      <div className="mt-1 w-60 space-y-1 rounded-md border border-gray-500/10  bg-white p-2 text-sm shadow-md dark:border-gray-400/20 dark:bg-black">
+      <div className='mt-1 w-60 space-y-1 rounded-md border border-gray-500/10  bg-white p-2 text-sm shadow-md dark:border-gray-400/20 dark:bg-black'>
         {data.map((item, index) => (
-          <div key={index} className="flex items-center space-x-2.5">
-            <div className="flex w-full justify-between">
-              <span className=" text-gray-700 dark:text-gray-300">{item.label}</span>
-              <div className="flex items-center space-x-1">
-                <span className="font-medium text-gray-900 dark:text-gray-50">
+          <div key={index} className='flex items-center space-x-2.5'>
+            <div className='flex w-full justify-between'>
+              <span className=' text-gray-700 dark:text-gray-300'>{item.label}</span>
+              <div className='flex items-center space-x-1'>
+                <span className='font-medium text-gray-900 dark:text-gray-50'>
                   {numberFormatter.format(item.value)}
                 </span>
               </div>
@@ -122,13 +121,7 @@ const CustomTooltip = ({ payload, active, label }: TooltipProps) => {
   );
 };
 
-const getChartData = ({
-  data,
-  variable,
-}: {
-  data: LatestStationResponse;
-  variable: keyof SensorVariables;
-}) => {
+const getChartData = ({ data, variable }: { data: LatestStationResponse; variable: keyof SensorVariables }) => {
   if (!data || data?.STATION?.length === 0 || variable?.length === 0) {
     return { chartData: [], sets: [] };
   }
@@ -138,7 +131,7 @@ const getChartData = ({
   const sensorVariableSet = variableSets[0];
 
   const observations = data?.STATION?.[0]?.OBSERVATIONS;
-  if (!observations || !observations["date_time"]) {
+  if (!observations || !observations['date_time']) {
     return { chartData: [], sets: [] };
   }
 
@@ -148,13 +141,13 @@ const getChartData = ({
     variable: keyof SensorVariables;
   }> = [];
 
-  if (Array.isArray(observations["date_time"])) {
-    (observations["date_time"] as string[]).forEach((value, index) => {
+  if (Array.isArray(observations['date_time'])) {
+    (observations['date_time'] as string[]).forEach((value, index) => {
       const sensorValue = observations[sensorVariableSet];
       if (Array.isArray(sensorValue)) {
         chartData.push({
           variable: variable,
-          dateTime: format(new Date(parseInt(value) * 1000), "HH:mm"),
+          dateTime: format(new Date(parseInt(value) * 1000), 'HH:mm'),
           value: sensorValue[index] as number,
         });
       }

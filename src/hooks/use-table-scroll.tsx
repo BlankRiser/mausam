@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useHotkeys } from "react-hotkeys-hook";
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 interface UseTableScrollOptions {
   scrollAmount?: number;
@@ -21,13 +21,13 @@ export const useTableScroll = (options: UseTableScrollOptions = {}) => {
     const container = containerRef.current;
     if (!container) return [];
 
-    const table = container.querySelector("table");
+    const table = container.querySelector('table');
     if (!table) return [];
 
-    const headerRow = table.querySelector("thead tr");
+    const headerRow = table.querySelector('thead tr');
     if (!headerRow) return [];
 
-    const columns = Array.from(headerRow.querySelectorAll("th"));
+    const columns = Array.from(headerRow.querySelectorAll('th'));
     const positions: number[] = [];
     let currentPosition = 0;
 
@@ -69,10 +69,7 @@ export const useTableScroll = (options: UseTableScrollOptions = {}) => {
       const columnWidth = columnEnd - columnStart;
       const nextDistance = accumulatedDistance + columnWidth;
 
-      if (
-        Math.abs(currentScrollLeft - accumulatedDistance) <=
-        Math.abs(currentScrollLeft - nextDistance)
-      ) {
+      if (Math.abs(currentScrollLeft - accumulatedDistance) <= Math.abs(currentScrollLeft - nextDistance)) {
         detectedColumn = i;
         break;
       }
@@ -81,10 +78,7 @@ export const useTableScroll = (options: UseTableScrollOptions = {}) => {
       detectedColumn = i + 1;
     }
 
-    currentColumnIndex.current = Math.max(
-      startFromColumn,
-      Math.min(detectedColumn, allColumnPositions.length - 1),
-    );
+    currentColumnIndex.current = Math.max(startFromColumn, Math.min(detectedColumn, allColumnPositions.length - 1));
   }, [useColumnWidths, startFromColumn, getColumnPositions]);
 
   const checkScrollability = useCallback(() => {
@@ -100,8 +94,7 @@ export const useTableScroll = (options: UseTableScrollOptions = {}) => {
       const allColumnPositions = getColumnPositions();
       const maxColumnIndex = allColumnPositions.length - 1;
 
-      const newCanScrollLeft =
-        currentColumnIndex.current > startFromColumn || container.scrollLeft > 10;
+      const newCanScrollLeft = currentColumnIndex.current > startFromColumn || container.scrollLeft > 10;
       const newCanScrollRight = currentColumnIndex.current < maxColumnIndex;
 
       setIsScrollable(isScrollableTable);
@@ -132,7 +125,7 @@ export const useTableScroll = (options: UseTableScrollOptions = {}) => {
           isScrollingProgrammatically.current = true;
           container.scrollTo({
             left: 0,
-            behavior: "smooth",
+            behavior: 'smooth',
           });
 
           setTimeout(() => {
@@ -153,8 +146,7 @@ export const useTableScroll = (options: UseTableScrollOptions = {}) => {
 
         if (Math.abs(currentScrollLeft - maxScrollLeft) < 10) {
           const lastColumnStart = allColumnPositions[originalColumnIndex] ?? 0;
-          const lastColumnEnd =
-            allColumnPositions[originalColumnIndex + 1] ?? lastColumnStart + 150;
+          const lastColumnEnd = allColumnPositions[originalColumnIndex + 1] ?? lastColumnStart + 150;
           const lastColumnWidth = lastColumnEnd - lastColumnStart;
 
           targetScrollLeft = Math.max(0, currentScrollLeft - lastColumnWidth);
@@ -172,7 +164,7 @@ export const useTableScroll = (options: UseTableScrollOptions = {}) => {
 
         container.scrollTo({
           left: targetScrollLeft,
-          behavior: "smooth",
+          behavior: 'smooth',
         });
 
         setTimeout(() => {
@@ -183,12 +175,12 @@ export const useTableScroll = (options: UseTableScrollOptions = {}) => {
       } else {
         container.scrollBy({
           left: -scrollAmount,
-          behavior: smooth ? "smooth" : "auto",
+          behavior: smooth ? 'smooth' : 'auto',
         });
       }
     },
     // oxlint-disable-next-line eslint-plugin-react-hooks/exhaustive-deps: the functions return the same value
-    [scrollAmount, useColumnWidths, startFromColumn, getColumnPositions],
+    [scrollAmount, useColumnWidths, startFromColumn, getColumnPositions]
   );
 
   const scrollRight = useCallback(
@@ -216,7 +208,7 @@ export const useTableScroll = (options: UseTableScrollOptions = {}) => {
         if (currentColumnIndex.current === maxColumnIndex) {
           container.scrollTo({
             left: container.scrollWidth - container.clientWidth,
-            behavior: "smooth",
+            behavior: 'smooth',
           });
         } else {
           // Calculate scroll position for this column
@@ -229,7 +221,7 @@ export const useTableScroll = (options: UseTableScrollOptions = {}) => {
 
           container.scrollTo({
             left: targetScrollLeft,
-            behavior: "smooth",
+            behavior: 'smooth',
           });
         }
 
@@ -241,12 +233,12 @@ export const useTableScroll = (options: UseTableScrollOptions = {}) => {
       } else {
         container.scrollBy({
           left: scrollAmount,
-          behavior: smooth ? "smooth" : "auto",
+          behavior: smooth ? 'smooth' : 'auto',
         });
       }
     },
     // oxlint-disable-next-line eslint-plugin-react-hooks/exhaustive-deps: the functions return the same value`
-    [scrollAmount, useColumnWidths, startFromColumn, getColumnPositions],
+    [scrollAmount, useColumnWidths, startFromColumn, getColumnPositions]
   );
 
   useEffect(() => {
@@ -278,8 +270,8 @@ export const useTableScroll = (options: UseTableScrollOptions = {}) => {
       checkScrollability();
     };
 
-    container.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", handleResize);
+    container.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleResize);
 
     // Use ResizeObserver to detect table content changes
     const resizeObserver = new ResizeObserver(() => {
@@ -290,8 +282,8 @@ export const useTableScroll = (options: UseTableScrollOptions = {}) => {
     resizeObserver.observe(container);
 
     return () => {
-      container.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
+      container.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
       resizeObserver.disconnect();
 
       // Clear any pending scroll timeout
@@ -303,19 +295,19 @@ export const useTableScroll = (options: UseTableScrollOptions = {}) => {
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   useHotkeys(
-    "ArrowLeft, ArrowRight",
+    'ArrowLeft, ArrowRight',
     (event: KeyboardEvent) => {
-      if (event.key === "ArrowLeft" && canScrollLeft) {
+      if (event.key === 'ArrowLeft' && canScrollLeft) {
         scrollLeft();
       }
-      if (event.key === "ArrowRight" && canScrollRight) {
+      if (event.key === 'ArrowRight' && canScrollRight) {
         scrollRight();
       }
     },
     {
       enabled: isScrollable,
       preventDefault: true,
-    },
+    }
   );
 
   return {

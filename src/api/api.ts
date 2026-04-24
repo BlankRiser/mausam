@@ -1,12 +1,13 @@
-import ky, { type Options } from "ky";
-import { toast } from "sonner";
-import { useKeysStore } from "@/store/env-keys.store";
-import type { ApiErrorResponse } from "@/types/common";
-import type { Networks } from "@/types/networks";
-import type { LatestStationResponse } from "@/types/station";
-import type { StationMetadata } from "@/types/station-metadata";
-import type { Variables } from "@/types/variables";
-import { API } from "./constants";
+import ky, { type Options } from 'ky';
+import { toast } from 'sonner';
+import { API } from './constants';
+import { useKeysStore } from '@/store/env-keys.store';
+
+import type { ApiErrorResponse } from '@/types/common';
+import type { Networks } from '@/types/networks';
+import type { LatestStationResponse } from '@/types/station';
+import type { StationMetadata } from '@/types/station-metadata';
+import type { Variables } from '@/types/variables';
 
 type SearchParamsType = Record<string, string | number>;
 
@@ -25,7 +26,7 @@ const createAPI = ({ base }: { base: string }) => {
       beforeRequest: [
         () => {
           if (!apiToken) {
-            toast.error("API token is not set");
+            toast.error('API token is not set');
           }
         },
       ],
@@ -33,9 +34,7 @@ const createAPI = ({ base }: { base: string }) => {
         async (_request, _options, response) => {
           if (!response.ok) {
             const data: ApiErrorResponse = await response.json();
-            toast.error(
-              `Error: ${data.SUMMARY.RESPONSE_MESSAGE} (Code: ${data.SUMMARY.RESPONSE_CODE})`,
-            );
+            toast.error(`Error: ${data.SUMMARY.RESPONSE_MESSAGE} (Code: ${data.SUMMARY.RESPONSE_CODE})`);
           }
         },
       ],
@@ -48,16 +47,16 @@ const createAPI = ({ base }: { base: string }) => {
   return {
     variables: {
       getAllVariables: () => {
-        return fetcher.get("variables").json<Variables>();
+        return fetcher.get('variables').json<Variables>();
       },
     },
     networks: {
       getAllNetworks: () => {
-        return fetcher.get("networks").json<Networks>();
+        return fetcher.get('networks').json<Networks>();
       },
       getNetwork: ({ searchParams }: { searchParams: SearchParamsType }) => {
         return fetcher
-          .get("networks", {
+          .get('networks', {
             searchParams,
           })
           .json<Networks>();
@@ -66,21 +65,21 @@ const createAPI = ({ base }: { base: string }) => {
     stations: {
       getLatest: ({ searchParams }: { searchParams: SearchParamsType }) => {
         return fetcher
-          .get("stations/latest", {
+          .get('stations/latest', {
             searchParams,
           })
           .json<LatestStationResponse>();
       },
       getMetadata: ({ searchParams }: { searchParams: SearchParamsType }) => {
         return fetcher
-          .get("stations/metadata", {
+          .get('stations/metadata', {
             searchParams,
           })
           .json<StationMetadata>();
       },
       getTimeSeries: ({ searchParams }: { searchParams: SearchParamsType }) => {
         return fetcher
-          .get("stations/timeseries", {
+          .get('stations/timeseries', {
             searchParams,
           })
           .json<LatestStationResponse>();

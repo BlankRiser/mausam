@@ -1,12 +1,12 @@
-import { defineConfig } from "oxlint";
+import { defineConfig } from 'oxlint';
 
 export default defineConfig({
-  ignorePatterns: ["dist/**", "node_modules/**"],
-  plugins: ["eslint", "unicorn", "react", "oxc", "react-perf", "promise", "jsx-a11y"],
+  ignorePatterns: ['dist/**', 'node_modules/**'],
+  plugins: ['eslint', 'unicorn', 'react', 'oxc', 'react-perf', 'promise', 'jsx-a11y'],
   categories: {
-    correctness: "warn",
+    correctness: 'warn',
   },
   rules: {
-    "eslint/no-unused-vars": "error",
+    'eslint/no-unused-vars': 'error',
   },
 });

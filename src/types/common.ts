@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const summarySchema = z.object({
   RESPONSE_CODE: z.number(),

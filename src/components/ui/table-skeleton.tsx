@@ -1,5 +1,5 @@
-import { Skeleton } from "./skeleton";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./table";
+import { Skeleton } from './skeleton';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table';
 
 export const TableSkeleton = ({ rows = 5, columns = 4 }: { rows?: number; columns?: number }) => {
   return (
@@ -8,7 +8,7 @@ export const TableSkeleton = ({ rows = 5, columns = 4 }: { rows?: number; column
         <TableRow>
           {Array.from({ length: columns }).map((_, index) => (
             <TableHead key={index}>
-              <Skeleton className="h-6 w-full" />
+              <Skeleton className='h-6 w-full' />
             </TableHead>
           ))}
         </TableRow>
@@ -18,7 +18,7 @@ export const TableSkeleton = ({ rows = 5, columns = 4 }: { rows?: number; column
           <TableRow key={rowIndex}>
             {Array.from({ length: columns }).map((_j, colIndex) => (
               <TableCell key={colIndex}>
-                <Skeleton className="h-6 w-full" />
+                <Skeleton className='h-6 w-full' />
               </TableCell>
             ))}
           </TableRow>

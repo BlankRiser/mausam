@@ -47,7 +47,7 @@
     "source.fixAll.oxc": "always"
   },
   "terminal.integrated.env.osx": {},
-  "diffEditor.ignoreTrimWhitespace": true,
+  "diffEditor.ignoreTrimWhitespace": false,
   "search.exclude": {
     "**/routeTree.gen.ts": true,
     "**/.git": true,

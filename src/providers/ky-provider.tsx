@@ -1,5 +1,5 @@
-import ky from "ky";
-import React from "react";
+import ky from 'ky';
+import React from 'react';
 
 export const KyProvider: React.FC<KyProviderProps> = ({ children }) => {
   return <KyContext.Provider value={ky.create({})}>{children}</KyContext.Provider>;

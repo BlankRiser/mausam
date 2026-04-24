@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface CompassProps {
   angle: number; // Angle in degrees (0 = North, 90 = East, 180 = South, 270 = West)
@@ -50,50 +50,50 @@ export const Compass: React.FC<CompassProps> = ({ angle, size = 100 }) => {
   const labelOffset = 16;
 
   return (
-    <div className="flex items-center justify-center">
-      <svg width={size} height={size} className="overflow-visible">
+    <div className='flex items-center justify-center'>
+      <svg width={size} height={size} className='overflow-visible'>
         {/* Outer circle border */}
         <circle
           cx={radius}
           cy={radius}
           r={radius - borderWidth / 2}
-          fill="none"
-          stroke="var(--border)"
+          fill='none'
+          stroke='var(--border)'
           strokeWidth={borderWidth}
           opacity={0.3}
         />
 
         {/* Inner background circle */}
-        <circle cx={radius} cy={radius} r={innerRadius} fill="var(--card)" />
+        <circle cx={radius} cy={radius} r={innerRadius} fill='var(--card)' />
 
         {/* White (tail) part of arrow */}
         <polygon
           points={`${tailX},${tailY} ${whiteSide1X},${whiteSide1Y} ${centerX},${centerY} ${whiteSide2X},${whiteSide2Y}`}
-          fill="white"
-          stroke="var(--muted-foreground)"
-          strokeWidth="1"
+          fill='white'
+          stroke='var(--muted-foreground)'
+          strokeWidth='1'
         />
 
         {/* Red (tip) part of arrow */}
         <polygon
           points={`${tipX},${tipY} ${redSide1X},${redSide1Y} ${centerX},${centerY} ${redSide2X},${redSide2Y}`}
-          fill="var(--destructive-foreground)"
-          stroke="var(--muted-foreground)"
-          strokeWidth="1"
+          fill='var(--destructive-foreground)'
+          stroke='var(--muted-foreground)'
+          strokeWidth='1'
         />
 
         {/* Direction labels */}
-        <g className="font-mono text-xs" fill="var(--muted-foreground)">
-          <text x={radius} y={labelOffset + 5} textAnchor="middle" dominantBaseline="middle">
+        <g className='font-mono text-xs' fill='var(--muted-foreground)'>
+          <text x={radius} y={labelOffset + 5} textAnchor='middle' dominantBaseline='middle'>
             N
           </text>
-          <text x={size - labelOffset} y={radius + 4} textAnchor="middle" dominantBaseline="middle">
+          <text x={size - labelOffset} y={radius + 4} textAnchor='middle' dominantBaseline='middle'>
             E
           </text>
-          <text x={radius} y={size - labelOffset + 4} textAnchor="middle" dominantBaseline="middle">
+          <text x={radius} y={size - labelOffset + 4} textAnchor='middle' dominantBaseline='middle'>
             S
           </text>
-          <text x={labelOffset} y={radius + 4} textAnchor="middle" dominantBaseline="middle">
+          <text x={labelOffset} y={radius + 4} textAnchor='middle' dominantBaseline='middle'>
             W
           </text>
         </g>

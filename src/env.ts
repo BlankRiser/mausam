@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 const envSchema = z.object({
   VITE_MAPBOX_PUBLIC_KEY: z.string().min(1),

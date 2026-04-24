@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
-import env from "@/env";
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
+import env from '@/env';
 
 type State = {
   synopticToken: string;
@@ -13,7 +13,7 @@ type Actions = {
 };
 
 const initialState: State = {
-  synopticToken: env.data?.VITE_SYNOPTIC_KEY ?? "",
+  synopticToken: env.data?.VITE_SYNOPTIC_KEY ?? '',
 };
 
 export const useKeysStore = create<State & Actions>()(
@@ -31,8 +31,8 @@ export const useKeysStore = create<State & Actions>()(
       reset: () => set(() => initialState),
     }),
     {
-      name: "env-keys",
+      name: 'env-keys',
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 );

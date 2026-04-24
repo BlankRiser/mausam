@@ -1,6 +1,6 @@
-import { QueryClient } from "@tanstack/react-query";
-import { createRouter, ErrorComponent } from "@tanstack/react-router";
-import { rootRoute } from "./root-route";
+import { QueryClient } from '@tanstack/react-query';
+import { createRouter, ErrorComponent } from '@tanstack/react-router';
+import { rootRoute } from './root-route';
 import {
   compareStationsRoute,
   indexRoute,
@@ -13,7 +13,7 @@ import {
   tokenIndexRoute,
   tokenRoute,
   wallpaperRoute,
-} from "./routes";
+} from './routes';
 
 const queryClient = new QueryClient();
 
@@ -39,13 +39,13 @@ export const router = createRouter({
   //   </div>
   // ),
   defaultErrorComponent: ErrorComponent,
-  defaultPreload: "intent",
+  defaultPreload: 'intent',
   // Since we're using React Query, we don't want loader calls to ever be stale
   // This will ensure that the loader is always called when the route is preloaded or visited
   defaultPreloadStaleTime: 0,
 });
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router;
   }

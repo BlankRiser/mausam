@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@plugin "tailwindcss-animate";
+@import 'tailwindcss';
+@plugin 'tailwindcss-animate';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -48,7 +48,7 @@
   --footer-height: 42px;
   --banner-height: 40px;
 
-  --container-mask: url("/assets/masks/container-mask.svg");
+  --container-mask: url('/assets/masks/container-mask.svg');
 }
 
 .dark {
@@ -131,7 +131,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply w-full h-full bg-background text-foreground;
+    @apply h-full w-full bg-background text-foreground;
   }
 }
 

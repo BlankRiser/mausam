@@ -1,16 +1,16 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { COBEOptions, Marker } from "cobe";
-import { useMemo } from "react";
-import { networksMetadataQueryOptions } from "@/api/query-factory";
-import { Globe } from "@/components/ui/globe";
-import { networkRoute } from "@/router/routes";
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { COBEOptions, Marker } from 'cobe';
+import { useMemo } from 'react';
+import { networksMetadataQueryOptions } from '@/api/query-factory';
+import { Globe } from '@/components/ui/globe';
+import { networkRoute } from '@/router/routes';
 
 export const NetworkStationsGlobe = () => {
   const { networkId } = networkRoute.useParams();
   const { data } = useSuspenseQuery(
     networksMetadataQueryOptions({
       network: networkId,
-    }),
+    })
   );
 
   const globeConfig = useMemo(() => {
@@ -42,7 +42,7 @@ export const NetworkStationsGlobe = () => {
   }, [data]);
 
   return (
-    <div className="w-full h-full grid place-items-center">
+    <div className='grid h-full w-full place-items-center'>
       <Globe config={globeConfig} />
     </div>
   );

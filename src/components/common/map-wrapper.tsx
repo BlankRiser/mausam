@@ -1,20 +1,20 @@
-/** biome-ignore-all lint/suspicious/noShadowRestrictedNames: Map is a component from maplibre */
+/** Biome-ignore-all lint/suspicious/noShadowRestrictedNames: Map is a component from maplibre */
 
-import { Map, MapProps } from "@vis.gl/react-maplibre";
-import { MAP_STYLES } from "@/assets/data/mapbox";
-import { useTheme } from "@/hooks/use-theme";
+import { Map, MapProps } from '@vis.gl/react-maplibre';
+import { MAP_STYLES } from '@/assets/data/mapbox';
+import { useTheme } from '@/hooks/use-theme';
 
 export const MapWrapper: React.FC<MapProps> = ({ children, ...mapProps }) => {
   const { theme } = useTheme();
 
-  if (theme === "dark") {
+  if (theme === 'dark') {
     return (
       <Map
         style={{
-          width: "100%",
-          height: "100%",
+          width: '100%',
+          height: '100%',
         }}
-        mapStyle="/assets/dark-map.json"
+        mapStyle='/assets/dark-map.json'
         {...mapProps}
       >
         {children}
@@ -24,10 +24,10 @@ export const MapWrapper: React.FC<MapProps> = ({ children, ...mapProps }) => {
   return (
     <Map
       style={{
-        width: "100%",
-        height: "100%",
+        width: '100%',
+        height: '100%',
       }}
-      mapStyle={MAP_STYLES["openfreemap-liberty"]}
+      mapStyle={MAP_STYLES['openfreemap-liberty']}
       {...mapProps}
     >
       {children}
