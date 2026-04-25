@@ -7,8 +7,12 @@
     "**/routeTree.gen.ts": true
   },
 
-  // TailwindCSS
+  //oxc linter
+  "oxc.typeAware": true,
+  "oxc.fmt.configPath": ".oxfmtrc.json",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
 
+  // TailwindCSS
   "tailwindCSS.classFunctions": ["cva", "cx", "cn"],
 
   //Visuals
@@ -19,12 +23,13 @@
   "git.autofetch": true,
   "git.enableSmartCommit": true,
   "git.untrackedChanges": "separate",
+  "git.openRepositoryInParentFolders": "never",
 
   // Editor
   "window.nativeTabs": true, // mac only
   "workbench.editor.highlightModifiedTabs": true,
+
   "editor.stickyScroll.enabled": true,
-  // "editor.fontFamily": "'Fira Code'",
   "editor.fontFamily": "DankMono-Regular",
   "terminal.integrated.fontFamily": "'Fira Code'",
   "editor.fontLigatures": true,
@@ -39,13 +44,10 @@
   "editor.lineNumbers": "on",
   "editor.renderWhitespace": "selection",
   "editor.codeActionsOnSave": {
-    "source.fixAll": "never",
-    "source.addMissingImports": "explicit",
-    "source.fixAll.eslint": "explicit",
-    "source.organizeImports": "never"
+    "source.fixAll.oxc": "always"
   },
   "terminal.integrated.env.osx": {},
-  "diffEditor.ignoreTrimWhitespace": true,
+  "diffEditor.ignoreTrimWhitespace": false,
   "search.exclude": {
     "**/routeTree.gen.ts": true,
     "**/.git": true,
@@ -77,19 +79,12 @@
   "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
   "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
-  // "typescript.inlayHints.variableTypes.enabled": true,
-
-  "workbench.productIconTheme": "icons-carbon",
-
+  "typescript.inlayHints.variableTypes.enabled": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "github.copilot.enable": {
-    "*": true,
-    "plaintext": false,
-    "markdown": true,
-    "scminput": false,
-    "yaml": false,
-    "typescriptreact": true,
-    "typescript": true
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
   },
-  "git.openRepositoryInParentFolders": "never"
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  }
 }

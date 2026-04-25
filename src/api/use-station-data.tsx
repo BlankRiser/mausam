@@ -1,11 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
-import { useMap } from "@vis.gl/react-maplibre";
-import { useCallback } from "react";
-import { useKy } from "@/providers/ky-provider";
-import { useKeysStore } from "@/store/env-keys.store";
-import { useCurrentState } from "@/store/station.store";
-import { LatestStationResponse } from "@/types/station";
-import { API } from "./constants";
+import { useQuery } from '@tanstack/react-query';
+import { useMap } from '@vis.gl/react-maplibre';
+import { useCallback } from 'react';
+import { API } from './constants';
+import { useKy } from '@/providers/ky-provider';
+import { useKeysStore } from '@/store/env-keys.store';
+import { useCurrentState } from '@/store/station.store';
+import { LatestStationResponse } from '@/types/station';
 
 const NETWORK_IMPORTANCE = [1, 2, 28, 153, 185, 206, 210, 239, 240];
 
@@ -26,17 +26,15 @@ export const useStationMetadata = () => {
 
   const reactQuery = useQuery({
     enabled: !!map,
-    queryKey: ["latest", map, currentVariable, controller.signal],
+    queryKey: ['latest', map, currentVariable],
     placeholderData: (data) => data,
     queryFn: async () => {
       const boundingBox = getBoundingBox();
-      if (!boundingBox) throw new Error("No map bounds available");
+      if (!boundingBox) throw new Error('No map bounds available');
 
       const height = map?.getContainer().clientHeight;
       const width = map?.getContainer().clientWidth;
       const zoom = map?.getZoom();
-
-      console.log("queries");
 
       return await query
         .get(`${API.BaseUrl}/stations/latest`, {
@@ -47,15 +45,15 @@ export const useStationMetadata = () => {
             spacing: transformZoom({ zoom: zoom! }),
             minmax: 2,
             bbox: boundingBox,
-            networkimportance: NETWORK_IMPORTANCE.join(","),
+            networkimportance: NETWORK_IMPORTANCE.join(','),
             // sensorvars: 1,
             // fields: "stid,name,latitude,longitude,mnet_id",
             // timeformat: "%s",
             vars: currentVariable as string,
-            obtimezone: "utc",
+            obtimezone: 'utc',
             complete: 1,
-            units: "temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa",
-            status: "active",
+            units: 'temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa',
+            status: 'active',
             token: useKeysStore.getState().synopticToken,
           },
         })
@@ -75,13 +73,7 @@ type transformParams = {
   spacingMax?: number;
 };
 
-export const transformZoom = ({
-  zoom,
-  zoomMin = 5,
-  zoomMax = 8,
-  spacingMin = 1,
-  spacingMax = 37,
-}: transformParams) => {
+export const transformZoom = ({ zoom, zoomMin = 5, zoomMax = 8, spacingMin = 1, spacingMax = 37 }: transformParams) => {
   // Ensure that the input value is within the input range
   zoom = Math.min(Math.max(zoom, zoomMin), zoomMax);
 

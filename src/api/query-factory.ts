@@ -1,9 +1,9 @@
-import { queryOptions } from "@tanstack/react-query";
-import { api } from "./api";
+import { queryOptions } from '@tanstack/react-query';
+import { api } from './api';
 
 export const variablesQueryOptions = () => {
   return queryOptions({
-    queryKey: ["variables"],
+    queryKey: ['persist', 'variables'],
     queryFn: async () => {
       return await api.variables.getAllVariables();
     },
@@ -13,7 +13,7 @@ export const variablesQueryOptions = () => {
 
 export const networksQueryOptions = () => {
   return queryOptions({
-    queryKey: ["networks"],
+    queryKey: ['persist', 'networks'],
     queryFn: async () => {
       return await api.networks.getAllNetworks();
     },
@@ -23,7 +23,7 @@ export const networksQueryOptions = () => {
 
 export const networkQueryOptions = ({ networkId }: { networkId: string }) => {
   return queryOptions({
-    queryKey: ["networks", networkId],
+    queryKey: ['networks', networkId],
     queryFn: async () => {
       return await api.networks.getNetwork({
         searchParams: {
@@ -35,13 +35,9 @@ export const networkQueryOptions = ({ networkId }: { networkId: string }) => {
   });
 };
 
-export const networksMetadataQueryOptions = ({
-  network,
-}: {
-  network: string;
-}) => {
+export const networksMetadataQueryOptions = ({ network }: { network: string }) => {
   return queryOptions({
-    queryKey: ["networks", "metadata", network],
+    queryKey: ['networks', 'metadata', network],
     queryFn: async () => {
       return await api.stations.getMetadata({
         searchParams: {
@@ -54,13 +50,14 @@ export const networksMetadataQueryOptions = ({
     },
   });
 };
-export const stationMetadataQueryOptions = ({ stid }: { stid: string }) => {
+
+export const stationMetadataQueryOptions = ({ stid }: { stid: string | string[] }) => {
   return queryOptions({
-    queryKey: ["stations", "metadata", stid],
+    queryKey: ['stations', 'metadata', stid],
     queryFn: async () => {
       return await api.stations.getMetadata({
         searchParams: {
-          stid: stid,
+          stid: typeof stid === 'string' ? stid : stid.join(','),
           complete: 1,
           sensorvars: 1,
           stationhistory: 1,
@@ -72,7 +69,7 @@ export const stationMetadataQueryOptions = ({ stid }: { stid: string }) => {
 
 export const stationLatestQueryOptions = ({ stid }: { stid: string }) => {
   return queryOptions({
-    queryKey: ["stations", "latest", stid],
+    queryKey: ['stations', 'latest', stid],
     queryFn: async () => {
       return await api.stations.getLatest({
         searchParams: {
@@ -80,11 +77,11 @@ export const stationLatestQueryOptions = ({ stid }: { stid: string }) => {
           complete: 1,
           sensorvars: 1,
           minmax: 7,
-          status: "active",
-          obtimezone: "utc",
-          minmaxtype: "utc",
-          minmaxtimezone: "utc",
-          units: "temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa",
+          status: 'active',
+          obtimezone: 'utc',
+          minmaxtype: 'utc',
+          minmaxtimezone: 'utc',
+          units: 'temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa',
           within: 1 * 24 * 60, // 1 day
           // vars: "air_temp,relative_humidity,wind_speed,wind_gust,wind_direction,solar_radiation,precip_accum",
         },
@@ -93,22 +90,16 @@ export const stationLatestQueryOptions = ({ stid }: { stid: string }) => {
   });
 };
 
-export const variableTimeseriesQueryOptions = ({
-  stid,
-  vars,
-}: {
-  stid: string;
-  vars: Array<string>;
-}) => {
+export const variableTimeseriesQueryOptions = ({ stid, vars }: { stid: string; vars: Array<string> }) => {
   return queryOptions({
-    queryKey: ["stations", "timeseries", stid, vars],
+    queryKey: ['stations', 'timeseries', stid, vars],
     queryFn: async () => {
       return await api.stations.getTimeSeries({
         searchParams: {
           stid,
-          vars: vars.join(","),
-          units: "temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa",
-          timeformat: "%s",
+          vars: vars.join(','),
+          units: 'temp|c,speed|kph,pres|mb,height|m,precip|mm,alti|pa',
+          timeformat: '%s',
           recent: 24 * 60, // last 24 hours
         },
       });

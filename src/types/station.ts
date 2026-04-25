@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { SUMMARY, summarySchema } from "./common";
+import { z } from 'zod';
+import { SUMMARY, summarySchema } from './common';
 
 // Base Types
 
@@ -43,13 +43,13 @@ type ObservationValues = {
   date_time: string;
 };
 
-const unitsSchema = z.record(z.string());
+const unitsSchema = z.record(z.string(), z.string());
 // Units type
 type Units = {
   [key: string]: string;
 };
 
-const sensorMeasurementSchema = z.record(variableMetaBaseSchema);
+const sensorMeasurementSchema = variableMetaBaseSchema;
 
 // Base type for sensor measurements
 type SensorMeasurement = {
@@ -87,7 +87,7 @@ export type MinMax = {
 };
 
 export const sensorVariablesSchema = z.union([
-  z.record(sensorMeasurementSchema),
+  sensorMeasurementSchema,
   z.object({
     air_temp: sensorMeasurementSchema.optional(),
     dew_point_temperature: sensorMeasurementSchema.optional(),
@@ -315,9 +315,9 @@ const qcSummmarySchema = z.object({
   QC_CHECKS_APPLIED: z.array(z.string()),
   TOTAL_OBSERVATIONS_FLAGGED: z.number(),
   PERCENT_OF_TOTAL_OBSERVATIONS_FLAGGED: z.number(),
-  QC_NAMES: z.record(z.string()),
-  QC_SHORTNAMES: z.record(z.string()),
-  QC_SOURCENAMES: z.record(z.string()),
+  QC_NAMES: z.record(z.string(), z.string()),
+  QC_SHORTNAMES: z.record(z.string(), z.string()),
+  QC_SOURCENAMES: z.record(z.string(), z.string()),
 });
 interface QcSummmary {
   QC_CHECKS_APPLIED: string[];
@@ -352,13 +352,13 @@ export const stationSchema = z.object({
   PERIOD_OF_RECORD: periodOfRecordSchema,
   PROVIDERS: z.array(providerSchema),
   SENSOR_VARIABLES: sensorVariablesSchema,
-  OBSERVATIONS: z.record(observationValuesSchema).optional(),
+  OBSERVATIONS: observationValuesSchema.optional(),
   MNET_SHORTNAME: z.string().optional(),
   MNET_LONGNAME: z.string().optional(),
   UNITS: unitsSchema,
   RESTRICTED: z.boolean(),
   QC_FLAGGED: z.boolean(),
-  MINMAX: z.record(minMaxSchema),
+  MINMAX: minMaxSchema,
 });
 // Main Station Type
 export type Station = {
@@ -399,7 +399,7 @@ export const latestStationResponseSchema = z.object({
   STATION: z.array(stationSchema),
   SUMMARY: summarySchema,
   QC_SUMMARY: qcSummmarySchema,
-  UNITS: z.record(z.string()),
+  UNITS: z.record(z.string(), z.string()),
 });
 
 export interface LatestStationResponse {

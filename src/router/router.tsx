@@ -2,6 +2,7 @@ import { QueryClient } from "@tanstack/react-query";
 import { createRouter, ErrorComponent } from "@tanstack/react-router";
 import { rootRoute } from "./root-route";
 import {
+  compareStationsRoute,
   indexRoute,
   networkRoute,
   networksIndexRoute,
@@ -11,6 +12,9 @@ import {
   stationsRoute,
   tokenIndexRoute,
   tokenRoute,
+  tokenValidationLayoutRoute,
+  toolsIndexRoute,
+  toolsRoute,
   wallpaperRoute,
 } from "./routes";
 
@@ -18,11 +22,14 @@ const queryClient = new QueryClient();
 
 const routeTree = rootRoute.addChildren([
   indexRoute.addChildren([
-    stationsRoute.addChildren([stationIndexRoute, stationRoute]),
-    tokenRoute.addChildren([tokenIndexRoute]),
-    networksRoute.addChildren([networksIndexRoute, networkRoute]),
-    wallpaperRoute,
+    tokenValidationLayoutRoute.addChildren([
+      stationsRoute.addChildren([stationIndexRoute, stationRoute]),
+      networksRoute.addChildren([networksIndexRoute, networkRoute]),
+      compareStationsRoute,
+    ]),
   ]),
+  tokenRoute.addChildren([tokenIndexRoute]),
+  toolsRoute.addChildren([toolsIndexRoute, wallpaperRoute]),
 ]);
 
 export const router = createRouter({

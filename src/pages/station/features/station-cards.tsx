@@ -1,27 +1,28 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { useMemo } from "react";
-import { stationLatestQueryOptions } from "@/api/query-factory";
-import { GenericCard } from "@/components/weather-cards/generic.card";
-import { windCardDetails } from "@/components/weather-cards/wind.card";
-import { cn } from "@/lib/utils";
-import { stationRoute } from "@/router/routes";
-import type { SensorVariables } from "@/types/station";
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useMemo } from 'react';
+import { stationLatestQueryOptions } from '@/api/query-factory';
+import { GenericCard } from '@/components/weather-cards/generic.card';
+import { windCardDetails } from '@/components/weather-cards/wind.card';
+import { cn } from '@/lib/utils';
+import { stationRoute } from '@/router/routes';
+
+import type { SensorVariables } from '@/types/station';
 
 const CardVariableMapper = {
   altimeter: {
-    id: "altimeter",
+    id: 'altimeter',
     component: () => <></>,
   },
   air_temp: {
-    id: "air_temp",
+    id: 'air_temp',
     component: () => <></>,
   },
   dew_point_temperature: {
-    id: "dew_point",
+    id: 'dew_point',
     component: () => <></>,
   },
   relative_humidity: {
-    id: "relative_humidity",
+    id: 'relative_humidity',
     component: () => <></>,
   },
   wind_speed: windCardDetails,
@@ -69,22 +70,17 @@ export const StationCards = () => {
   const { data } = useSuspenseQuery(
     stationLatestQueryOptions({
       stid: stationId,
-    }),
+    })
   );
 
   const filteredVariables = useMemo(() => {
     let isPresent: string[] = [];
     const uniqueVariables: string[] = [];
     Object.keys(data?.STATION?.[0]?.SENSOR_VARIABLES ?? {}).forEach((key) => {
-      const variableIdentifier =
-        CardVariableMapper[key as keyof typeof CardVariableMapper];
+      const variableIdentifier = CardVariableMapper[key as keyof typeof CardVariableMapper];
 
       if (variableIdentifier) {
-        if (
-          isPresent.includes(variableIdentifier.id ?? "") &&
-          variableIdentifier.id !== "generic"
-        )
-          return;
+        if (isPresent.includes(variableIdentifier.id ?? '') && variableIdentifier.id !== 'generic') return;
 
         isPresent.push(variableIdentifier.id);
       }
@@ -95,10 +91,9 @@ export const StationCards = () => {
   }, [data]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-2">
+    <div className='grid grid-cols-1 gap-2 md:grid-cols-3 xl:grid-cols-5'>
       {filteredVariables.map((variable) => {
-        const cardInfo =
-          CardVariableMapper[variable as keyof typeof CardVariableMapper];
+        const cardInfo = CardVariableMapper[variable as keyof typeof CardVariableMapper];
 
         if (cardInfo) {
           const CardComponent = cardInfo.component;
@@ -106,9 +101,7 @@ export const StationCards = () => {
             <CardComponent
               key={variable}
               data-selected={selectedVariable === variable}
-              className={cn([
-                selectedVariable === variable && "col-span-full w-full",
-              ])}
+              className={cn([selectedVariable === variable && 'col-span-full w-full'])}
               data={data}
             />
           );
@@ -118,10 +111,7 @@ export const StationCards = () => {
           <GenericCard
             key={variable}
             data-selected={selectedVariable === variable}
-            className={cn([
-              selectedVariable === variable &&
-                "col-span-full w-full order-first",
-            ])}
+            className={cn([selectedVariable === variable && 'order-first col-span-full w-full'])}
             variable={variable as keyof SensorVariables}
             data={data}
           />

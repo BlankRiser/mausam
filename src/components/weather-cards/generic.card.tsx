@@ -1,9 +1,10 @@
-import { useMemo } from "react";
-import { cn } from "@/lib/utils";
-import type { LatestStationResponse, SensorVariables } from "@/types/station";
+import { useMemo } from 'react';
+import { cn } from '@/lib/utils';
+
+import type { LatestStationResponse, SensorVariables } from '@/types/station';
 
 export const genericCardDetails = {
-  id: "generic",
+  id: 'generic',
   component: GenericCard,
   group: [],
 };
@@ -11,19 +12,15 @@ export const genericCardDetails = {
 type GenericCardProps = {
   variable: keyof SensorVariables;
   data: LatestStationResponse;
-} & React.ComponentProps<"div">;
+} & React.ComponentProps<'div'>;
 
 export function GenericCard({ variable, data, ...rest }: GenericCardProps) {
   const variableData = useMemo(() => {
     const values: Array<RenderedValues> = [];
-    Object.entries(
-      data?.STATION?.[0]?.SENSOR_VARIABLES?.[variable] ?? {},
-    ).forEach(([key, value]) => {
+    Object.entries(data?.STATION?.[0]?.SENSOR_VARIABLES?.[variable] ?? {}).forEach(([key, value]) => {
       const variableValue =
-        typeof data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value === "object"
-          ? (Object.values(
-              data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value ?? {},
-            )[0] as string | number)
+        typeof data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value === 'object'
+          ? (Object.values(data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value ?? {})[0] as string | number)
           : data?.STATION?.[0]?.OBSERVATIONS?.[key]?.value;
 
       values.push({
@@ -31,23 +28,23 @@ export function GenericCard({ variable, data, ...rest }: GenericCardProps) {
         value: variableValue,
         valueUnit: data.UNITS?.[variable],
         position: value?.position,
-        positionUnit: data?.STATION?.[0]?.UNITS?.["position"],
+        positionUnit: data?.STATION?.[0]?.UNITS?.['position'],
       });
     });
 
     return values;
-  }, [data]);
+  }, [data, variable]);
 
   if (!variableData[0]?.value) {
     return null;
   }
   return (
     <div className={cn([rest.className])} {...rest}>
-      <div className="border border-border rounded-xl p-2 flex flex-col gap-2 ">
-        <span className="text-4xl">{variableData[0]?.value ?? "N/A"}</span>
-        <div className="flex flex-col">
-          <span className="text-sm">{variableData[0]?.valueUnit ?? "N/A"}</span>
-          <span className="text-sm">{variable}</span>
+      <div className='flex flex-col gap-2 rounded-xl border border-border p-2 '>
+        <span className='text-4xl'>{variableData[0]?.value ?? 'N/A'}</span>
+        <div className='flex flex-col'>
+          <span className='text-sm'>{variableData[0]?.valueUnit ?? 'N/A'}</span>
+          <span className='text-sm'>{variable}</span>
         </div>
       </div>
     </div>

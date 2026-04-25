@@ -1,26 +1,11 @@
 import { QueryClient } from "@tanstack/react-query";
-import { createRootRouteWithContext, redirect } from "@tanstack/react-router";
+import { createRootRouteWithContext } from "@tanstack/react-router";
 import { RootComponent } from "@/components/common/global-layout";
-import { useKeysStore } from "@/store/env-keys.store";
-import { useGlobalDataStore } from "@/store/global-data.store";
 
 export const rootRoute = createRootRouteWithContext<{
   queryClient: QueryClient;
 }>()({
   component: RootComponent,
-  beforeLoad: ({ location }) => {
-    if (
-      !useKeysStore.getState().synopticToken &&
-      location.pathname !== "/token"
-    ) {
-      throw redirect({
-        to: "/token",
-      });
-    }
-  },
-  loader: async () => {
-    await useGlobalDataStore.getState().fetchVariables();
-  },
   head: () => ({
     meta: [
       {
@@ -29,8 +14,7 @@ export const rootRoute = createRootRouteWithContext<{
       },
       {
         name: "keywords",
-        content:
-          "weather, data, visualization, synoptic, mausam, meteorology, climate",
+        content: "weather, data, visualization, synoptic, mausam, meteorology, climate",
       },
       {
         name: "author",

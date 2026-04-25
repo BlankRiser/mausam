@@ -1,28 +1,41 @@
 import { createRoute, redirect } from "@tanstack/react-router";
 import { z } from "zod";
+import { rootRoute } from "./root-route";
 import {
   networkQueryOptions,
   stationLatestQueryOptions,
   stationMetadataQueryOptions,
 } from "@/api/query-factory";
 import { TokensPage } from "@/pages/add-token/add-tokens-form";
+import { CompareStations } from "@/pages/compare-stids/compare-stations";
 import { Home } from "@/pages/home/home";
 import { NetworkDetailsPage } from "@/pages/networks/features/network-details";
 import { NetworksPage } from "@/pages/networks/networks";
 import { StationIndexPage } from "@/pages/station/features/choose-station";
 import { StationDetailsPage } from "@/pages/station/station";
-import { WallpaperPage } from "@/pages/wallpaper/wallpaper";
 import { SensorVariables } from "@/types/station";
-import { rootRoute } from "./root-route";
+import { ToolsPage } from "@/pages/tools/tools-page";
+import { WallpaperPage } from "@/pages/tools/wallpapr/wallpaper-page";
+import { useKeysStore } from "@/store/env-keys.store";
+import { useGlobalDataStore } from "@/store/global-data.store";
 
 export const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
   component: Home,
+  beforeLoad: () => {
+    if (!useKeysStore.getState().synopticToken) {
+      throw redirect({
+        to: "/token",
+      });
+    }
+  },
+  loader: async () => {
+    await useGlobalDataStore.getState().fetchVariables();
+  },
   staticData: {
     title: "Mausam",
-    description:
-      "Mausam is a weather app that provides weather information for your location.",
+    description: "Mausam is a weather app that provides weather information for your location.",
   },
 });
 
@@ -37,8 +50,23 @@ export const tokenIndexRoute = createRoute({
   component: TokensPage,
 });
 
-export const stationsRoute = createRoute({
+export const tokenValidationLayoutRoute = createRoute({
   getParentRoute: () => rootRoute,
+  id: "tokenValidationRoute",
+  beforeLoad: () => {
+    if (!useKeysStore.getState().synopticToken) {
+      throw redirect({
+        to: "/token",
+      });
+    }
+  },
+  loader: async () => {
+    await useGlobalDataStore.getState().fetchVariables();
+  },
+});
+
+export const stationsRoute = createRoute({
+  getParentRoute: () => tokenValidationLayoutRoute,
   path: "station",
 });
 
@@ -83,7 +111,7 @@ export const stationRoute = createRoute({
 });
 
 export const networksRoute = createRoute({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => tokenValidationLayoutRoute,
   path: "networks",
 });
 
@@ -120,8 +148,27 @@ export const networkRoute = createRoute({
   }),
 });
 
-export const wallpaperRoute = createRoute({
+export const compareStationsRoute = createRoute({
+  getParentRoute: () => tokenValidationLayoutRoute,
+  path: "compare/",
+  component: CompareStations,
+  validateSearch: z.object({
+    stids: z.string().optional(),
+  }),
+});
+
+export const toolsRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "wallpaper/$stationId",
+  path: "tools",
+});
+export const toolsIndexRoute = createRoute({
+  getParentRoute: () => toolsRoute,
+  path: "/",
+  component: ToolsPage,
+});
+
+export const wallpaperRoute = createRoute({
+  getParentRoute: () => toolsRoute,
+  path: "wallpaper",
   component: WallpaperPage,
 });

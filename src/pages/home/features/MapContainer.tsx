@@ -1,26 +1,25 @@
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { NavigationControl } from "@vis.gl/react-maplibre";
+import { StationMarker } from "./station-marker";
+import { VariableSelector } from "./variable-selector";
 import { useStationMetadata } from "@/api/use-station-data";
 import { GlobalErrorBoundary } from "@/components/common/GlobalErrorBoundary";
 import { MapWrapper } from "@/components/common/map-wrapper";
 import { Loader } from "@/components/ui/loader";
-import { StationMarker } from "./station-marker";
-import { VariableSelector } from "./variable-selector";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export const MapContainer = () => {
   const isSmallDevice = useMediaQuery("only screen and (max-width : 768px)");
-  const { data, refetch, isFetching, dataUpdatedAt } = useStationMetadata();
+  const { data, refetch, isFetching } = useStationMetadata();
 
   return (
     <GlobalErrorBoundary>
-      <div className="relative w-full h-full">
+      <div className="relative h-full w-full">
         <MapWrapper
           id="map"
           hash="map"
           reuseMaps={true}
           onZoomEnd={() => {
-            console.log("zoom end");
             void refetch();
           }}
           onDragEnd={() => {
@@ -35,18 +34,16 @@ export const MapContainer = () => {
             zoom: 7,
           }}
         >
-          <Skeleton className="w-fit h-fit" />
+          <Skeleton className="h-fit w-fit" />
           {!isSmallDevice && <NavigationControl position="bottom-left" />}
-          {!!data && (
-            <StationMarker stations={data.STATION} units={data.UNITS} />
-          )}
+          {!!data && <StationMarker stations={data.STATION} units={data.UNITS} />}
         </MapWrapper>
         {isFetching ? (
-          <div className="w-fit h-fit z-100 absolute top-1/2 translate-y-[-50%] left-1/2 translate-x-[-50%] bg-transparent flex justify-center items-center">
+          <div className="absolute top-1/2 left-1/2 z-100 flex h-fit w-fit translate-x-[-50%] translate-y-[-50%] items-center justify-center bg-transparent">
             <Loader />
           </div>
         ) : null}
-        <div className="absolute bottom-8 inset-x-0 grid place-items-center ">
+        <div className="absolute inset-x-0 bottom-8 grid place-items-center ">
           <VariableSelector />
         </div>
       </div>
