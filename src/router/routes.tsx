@@ -16,11 +16,23 @@ import { StationDetailsPage } from "@/pages/station/station";
 import { SensorVariables } from "@/types/station";
 import { ToolsPage } from "@/pages/tools/tools-page";
 import { WallpaperPage } from "@/pages/tools/wallpapr/wallpaper-page";
+import { useKeysStore } from "@/store/env-keys.store";
+import { useGlobalDataStore } from "@/store/global-data.store";
 
 export const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
   component: Home,
+  beforeLoad: () => {
+    if (!useKeysStore.getState().synopticToken) {
+      throw redirect({
+        to: "/token",
+      });
+    }
+  },
+  loader: async () => {
+    await useGlobalDataStore.getState().fetchVariables();
+  },
   staticData: {
     title: "Mausam",
     description: "Mausam is a weather app that provides weather information for your location.",
@@ -38,8 +50,23 @@ export const tokenIndexRoute = createRoute({
   component: TokensPage,
 });
 
-export const stationsRoute = createRoute({
+export const tokenValidationLayoutRoute = createRoute({
   getParentRoute: () => rootRoute,
+  id: "tokenValidationRoute",
+  beforeLoad: () => {
+    if (!useKeysStore.getState().synopticToken) {
+      throw redirect({
+        to: "/token",
+      });
+    }
+  },
+  loader: async () => {
+    await useGlobalDataStore.getState().fetchVariables();
+  },
+});
+
+export const stationsRoute = createRoute({
+  getParentRoute: () => tokenValidationLayoutRoute,
   path: "station",
 });
 
@@ -84,7 +111,7 @@ export const stationRoute = createRoute({
 });
 
 export const networksRoute = createRoute({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => tokenValidationLayoutRoute,
   path: "networks",
 });
 
@@ -122,7 +149,7 @@ export const networkRoute = createRoute({
 });
 
 export const compareStationsRoute = createRoute({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => tokenValidationLayoutRoute,
   path: "compare/",
   component: CompareStations,
   validateSearch: z.object({

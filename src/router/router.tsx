@@ -12,6 +12,7 @@ import {
   stationsRoute,
   tokenIndexRoute,
   tokenRoute,
+  tokenValidationLayoutRoute,
   toolsIndexRoute,
   toolsRoute,
   wallpaperRoute,
@@ -21,12 +22,14 @@ const queryClient = new QueryClient();
 
 const routeTree = rootRoute.addChildren([
   indexRoute.addChildren([
-    stationsRoute.addChildren([stationIndexRoute, stationRoute]),
-    tokenRoute.addChildren([tokenIndexRoute]),
-    networksRoute.addChildren([networksIndexRoute, networkRoute]),
-    toolsRoute.addChildren([toolsIndexRoute, wallpaperRoute]),
-    compareStationsRoute,
+    tokenValidationLayoutRoute.addChildren([
+      stationsRoute.addChildren([stationIndexRoute, stationRoute]),
+      networksRoute.addChildren([networksIndexRoute, networkRoute]),
+      compareStationsRoute,
+    ]),
   ]),
+  tokenRoute.addChildren([tokenIndexRoute]),
+  toolsRoute.addChildren([toolsIndexRoute, wallpaperRoute]),
 ]);
 
 export const router = createRouter({

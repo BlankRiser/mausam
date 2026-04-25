@@ -1,36 +1,18 @@
-/** Biome-ignore-all lint/suspicious/noShadowRestrictedNames: Map is a component from maplibre */
+import { Map, MapProps } from "@vis.gl/react-maplibre";
+import { MAP_STYLES } from "@/assets/data/mapbox";
+import { useTheme } from "@/hooks/use-theme";
+import { forwardRef } from "react";
 
-import { Map, MapProps } from '@vis.gl/react-maplibre';
-import { MAP_STYLES } from '@/assets/data/mapbox';
-import { useTheme } from '@/hooks/use-theme';
-
-export const MapWrapper: React.FC<MapProps> = ({ children, ...mapProps }) => {
+export const MapWrapper = forwardRef<any, MapProps>(({ children, ...mapProps }, ref) => {
   const { theme } = useTheme();
 
-  if (theme === 'dark') {
-    return (
-      <Map
-        style={{
-          width: '100%',
-          height: '100%',
-        }}
-        mapStyle='/assets/dark-map.json'
-        {...mapProps}
-      >
-        {children}
-      </Map>
-    );
-  }
+  const mapStyle = theme === "dark" ? "/assets/dark-map.json" : MAP_STYLES["openfreemap-liberty"];
+
   return (
-    <Map
-      style={{
-        width: '100%',
-        height: '100%',
-      }}
-      mapStyle={MAP_STYLES['openfreemap-liberty']}
-      {...mapProps}
-    >
+    <Map ref={ref} style={{ width: "100%", height: "100%" }} mapStyle={mapStyle} {...mapProps}>
       {children}
     </Map>
   );
-};
+});
+
+MapWrapper.displayName = "MapWrapper";

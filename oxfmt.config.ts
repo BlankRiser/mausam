@@ -3,7 +3,7 @@ import { defineConfig } from 'oxfmt';
 export default defineConfig({
   ignorePatterns: ['dist/**', '*.min.js', 'node_modules/**', '**/*.d.ts'],
   embeddedLanguageFormatting: 'auto',
-  printWidth: 120,
+  printWidth: 150,
   useTabs: false,
   tabWidth: 2,
   trailingComma: 'es5',
