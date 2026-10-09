@@ -16,6 +16,8 @@
     "knip": "knip"
   },
   "dependencies": {
+    "@danfessler/trellis": "0.3.0",
+    "@danfessler/trellis-react": "0.3.0",
     "@date-fns/tz": "1.4.1",
     "@devhaven/synoptic-sdk": "0.1.5",
     "@devhaven/unit-conversion": "0.1.1",

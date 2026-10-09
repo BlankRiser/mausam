@@ -24,6 +24,7 @@ export const InfoCard: React.FC<{
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 5 }}
+          className='text-neutral-800 dark:text-neutral-200'
         >
           {value}
         </motion.span>

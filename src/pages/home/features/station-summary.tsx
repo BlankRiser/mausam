@@ -28,10 +28,8 @@ export const StationSummary = () => {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 10 }}
       transition={{ duration: 0.2 }}
-      // className="absolute top-1/2 translate-y-[-50%] right-4 bg-red-400"
       className='h-full bg-gradient-to-bl from-neutral-50 to-transparent p-1 backdrop-blur-sm dark:from-neutral-950'
       style={{
-        // clipPath: "polygon(70% 0, 100% 0, 100% 100%, 0 100%, 36% 54%)",
         mask: 'linear-gradient(to top, transparent, var(--background) 60%)',
       }}
     >

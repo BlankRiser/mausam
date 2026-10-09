@@ -1,29 +1,51 @@
-import { motion } from 'motion/react';
+import { useTheme } from '@/hooks/use-theme';
 import { MapContainer } from './features/MapContainer';
 import { StationSummary } from './features/station-summary';
-import { cn } from '@/lib/utils';
 import { useCurrentState } from '@/store/station.store';
+import { Workspace, ViewType, Stage, View, useOptionalWorkspace, WorkspaceProvider } from '@danfessler/trellis-react';
+import { useEffect } from 'react';
+
+const StationSummaryController = () => {
+  const currentStation = useCurrentState((state) => state.currentStation);
+  const workspace = useOptionalWorkspace();
+
+  useEffect(() => {
+    if (currentStation && workspace) {
+      workspace.open('station-summary', {
+        placement: 'side',
+        reuse: 'type'
+      });
+    }
+  }, [currentStation, workspace]);
+
+  return null;
+};
 
 export const Home = () => {
-  const currentStation = useCurrentState((state) => state.currentStation);
+  const { theme } = useTheme();
 
   return (
     <section className='h-[calc(100dvh-var(--nav-height)-var(--footer-height))] rounded-md bg-neutral-50 dark:bg-neutral-950'>
       <Banner />
-      <div className=' h-full'>
-        <div className={cn(['col-span-1 h-full'])}>
-          <MapContainer />
-        </div>
-        <motion.div
-          className={cn([
-            'h-full will-change-auto',
-            !currentStation
-              ? 'hidden'
-              : 'fixed top-[calc(var(--nav-height)+var(--banner-height)-1px)] right-0 w-full max-w-md',
-          ])}
-        >
-          <StationSummary />
-        </motion.div>
+      <div className='relative h-full'>
+        <WorkspaceProvider>
+          <Workspace theme={theme === 'light' ? 'light' : 'darker'} version={2}>
+            <ViewType id='map' closable={false} tabbar='never'>
+              <MapContainer />
+            </ViewType>
+            <ViewType id='station-summary' title='Station Summary' closable={true} singleton={true} placement={{ beside: 'map', edge: 'right' }}>
+              <div className='@container h-full w-full'>
+                <div className='h-full w-full @min-aspect-video:min-h-[40vh] @max-aspect-video:min-w-[28rem]'>
+                  <StationSummary />
+                </div>
+              </div>
+            </ViewType>
+            <Stage>
+              <View type='map' />
+            </Stage>
+          </Workspace>
+          <StationSummaryController />
+        </WorkspaceProvider>
       </div>
     </section>
   );

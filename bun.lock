@@ -5,6 +5,8 @@
     "": {
       "name": "mausam",
       "dependencies": {
+        "@danfessler/trellis": "0.3.0",
+        "@danfessler/trellis-react": "0.3.0",
         "@date-fns/tz": "1.4.1",
         "@devhaven/synoptic-sdk": "0.1.5",
         "@devhaven/unit-conversion": "0.1.1",
@@ -111,6 +113,10 @@
     "@clack/core": ["@clack/core@0.3.5", "", { "dependencies": { "picocolors": "^1.0.0", "sisteransi": "^1.0.5" } }, "sha512-5cfhQNH+1VQ2xLQlmzXMqUoiaH0lRBq9/CLW9lTyMbuKLC3+xEK01tHVvyut++mLOn5urSHmkm6I0Lg9MaJSTQ=="],
 
     "@clack/prompts": ["@clack/prompts@0.8.2", "", { "dependencies": { "@clack/core": "0.3.5", "picocolors": "^1.0.0", "sisteransi": "^1.0.5" } }, "sha512-6b9Ab2UiZwJYA9iMyboYyW9yJvAO9V753ZhS+DHKEjZRKAxPPOb7MXXu84lsPFG+vZt6FRFniZ8rXi+zCIw4yQ=="],
+
+    "@danfessler/trellis": ["@danfessler/trellis@0.3.0", "", {}, "sha512-pvlexewXbyws7/l7oXEJt8/pdb7c5IECV/10Hm/zMIy1Hn4CweyL2fBrygj4BjxX/bE9nGx0V1dbhRccWqiC/A=="],
+
+    "@danfessler/trellis-react": ["@danfessler/trellis-react@0.3.0", "", { "peerDependencies": { "@danfessler/trellis": "^0.3.0", "react": ">=18.3", "react-dom": ">=18.3" } }, "sha512-hQtAuTbe8JVL8lIniLNbmEiKio1D6MgUnl6WxRZLJWvztFiKxkO/QjBsZ8SVbLD9MTmaw0m/ExTRKAZ0NMSp/Q=="],
 
     "@date-fns/tz": ["@date-fns/tz@1.4.1", "", {}, "sha512-P5LUNhtbj6YfI3iJjw5EL9eUAG6OitD0W3fWQcpQjDRc/QIsL0tRNuO1PcDvPccWL1fSTXXdE1ds+l95DV/OFA=="],
 

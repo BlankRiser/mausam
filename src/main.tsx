@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.css';
+import "@danfessler/trellis/style.css";
 import './map.css';
 import ReactDOM from 'react-dom/client';
 import { scan } from 'react-scan'; // must be imported before React and React DOM
