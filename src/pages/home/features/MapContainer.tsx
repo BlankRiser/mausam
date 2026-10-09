@@ -43,7 +43,7 @@ export const MapContainer = () => {
             <Loader />
           </div>
         ) : null}
-        <div className="absolute inset-x-0 bottom-8 grid place-items-center ">
+        <div className="absolute inset-x-0 bottom-2 grid place-items-center ">
           <VariableSelector />
         </div>
       </div>

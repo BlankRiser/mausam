@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { api } from '@/api/api';
+import { networksQueryOptions, variablesQueryOptions } from '@/api/query-factory';
+import { queryClient } from '@/lib/query-client';
 import { extractNetworkDetails, extractVariableDetails } from '@/lib/synoptic-utils';
 
 import type { MNETLabelItems } from '@/types/networks';
@@ -12,8 +13,8 @@ type State = {
 };
 
 type Actions = {
-  fetchVariables: () => Promise<void>;
-  fetchNetworks: () => Promise<void>;
+  fetchVariables: () => Promise<Record<string, VariableLabelItems>>;
+  fetchNetworks: () => Promise<Record<string, MNETLabelItems>>;
   setData: (data: { variableLabels: State['variableLabels']; networkLabels: State['networkLabels'] }) => void;
   reset: () => void;
 };
@@ -28,22 +29,26 @@ export const useGlobalDataStore = create<State & Actions>()(
     (set, get) => ({
       ...initialState,
       fetchVariables: async () => {
-        if (Object.keys(get().variableLabels).length > 0) return;
+        const existing = get().variableLabels;
+        if (Object.keys(existing).length > 0) return existing;
 
-        const data = await api.variables.getAllVariables();
-        set({
-          variableLabels: extractVariableDetails({
-            variableArr: data.VARIABLES,
-          }),
+        const data = await queryClient.ensureQueryData(variablesQueryOptions());
+        const variableLabels = extractVariableDetails({
+          variableArr: data.VARIABLES,
         });
+        set({ variableLabels });
+        return variableLabels;
       },
       fetchNetworks: async () => {
-        if (Object.keys(get().networkLabels).length > 0) return;
+        const existing = get().networkLabels;
+        if (Object.keys(existing).length > 0) return existing;
 
-        const data = await api.networks.getAllNetworks();
-        set({
-          networkLabels: extractNetworkDetails({ networksArr: data.MNET }),
+        const data = await queryClient.ensureQueryData(networksQueryOptions());
+        const networkLabels = extractNetworkDetails({
+          networksArr: data.MNET,
         });
+        set({ networkLabels });
+        return networkLabels;
       },
       setData: ({ variableLabels, networkLabels }) => {
         set({ variableLabels, networkLabels });

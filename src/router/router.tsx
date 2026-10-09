@@ -1,6 +1,5 @@
-import { QueryClient } from "@tanstack/react-query";
-import { createRouter, ErrorComponent } from "@tanstack/react-router";
-import { rootRoute } from "./root-route";
+import { createRouter, ErrorComponent } from '@tanstack/react-router';
+import { rootRoute } from './root-route';
 import {
   compareStationsRoute,
   indexRoute,
@@ -16,17 +15,15 @@ import {
   toolsIndexRoute,
   toolsRoute,
   wallpaperRoute,
-} from "./routes";
-
-const queryClient = new QueryClient();
+} from './routes';
+import { queryClient } from '@/lib/query-client';
 
 const routeTree = rootRoute.addChildren([
-  indexRoute.addChildren([
-    tokenValidationLayoutRoute.addChildren([
-      stationsRoute.addChildren([stationIndexRoute, stationRoute]),
-      networksRoute.addChildren([networksIndexRoute, networkRoute]),
-      compareStationsRoute,
-    ]),
+  tokenValidationLayoutRoute.addChildren([
+    indexRoute,
+    stationsRoute.addChildren([stationIndexRoute, stationRoute]),
+    networksRoute.addChildren([networksIndexRoute, networkRoute]),
+    compareStationsRoute,
   ]),
   tokenRoute.addChildren([tokenIndexRoute]),
   toolsRoute.addChildren([toolsIndexRoute, wallpaperRoute]),
@@ -38,19 +35,12 @@ export const router = createRouter({
   context: {
     queryClient,
   },
-  // defaultPendingComponent: () => (
-  //   <div className="w-screen h-screen grid place-items-center">
-  //     <Loader />
-  //   </div>
-  // ),
   defaultErrorComponent: ErrorComponent,
-  defaultPreload: "intent",
-  // Since we're using React Query, we don't want loader calls to ever be stale
-  // This will ensure that the loader is always called when the route is preloaded or visited
+  defaultPreload: 'intent',
   defaultPreloadStaleTime: 0,
 });
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router;
   }

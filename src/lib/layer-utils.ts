@@ -213,17 +213,20 @@ export function prepareStationMarkers(
   for (let i = 0; i < stations.length; i++) {
     const station = stations[i];
     const data = getSensorVariableDetails(station, currentVariable);
-    if (!data?.latest || data.latest.value == null || !data.latest.value) continue;
+    const rawValue = data?.latest?.value;
+    if (rawValue == null || Number.isNaN(Number(rawValue))) continue;
 
     const longitude = +station.LONGITUDE;
     const latitude = +station.LATITUDE;
     if (Number.isNaN(longitude) || Number.isNaN(latitude)) continue;
 
+    const label = typeof rawValue === 'number' ? rawValue.toFixed(0) : String(rawValue);
+
     items.push({
       id: station.STID,
       longitude,
       latitude,
-      label: data.latest.value.toFixed(0),
+      label,
       data: station,
     });
   }
